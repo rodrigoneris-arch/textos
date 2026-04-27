@@ -1,511 +1,530 @@
-Aqui está o código convertido para o formato widescreen 16:9, com cada etapa em um slide individual e navegação estilo apresentação.
-```html
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Apresentação | Inovação EMPREL - Absenteísmo nas Carretas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação 16:4 | Inovação EMPREL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
-            background-color: #0f172a;
-            overflow: hidden;
-        }
-
-        /* Container principal com snap scroll vertical */
-        .slides-container {
+            background-color: #020617; /* Fundo escuro profundo (slate-950) */
+            margin: 0;
+            padding: 0;
+            width: 100vw;
             height: 100vh;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Cada slide ocupa 100% da viewport */
-        .slide {
-            min-height: 100vh;
+        /* O wrapper gere o espaço disponível e centraliza o palco */
+        #presentation-wrapper {
+            flex: 1;
             width: 100%;
-            scroll-snap-align: start;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        /* Container interno do conteúdo */
-        .slide-content {
-            max-width: 1280px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        /* Cards e elementos de design */
-        .card {
-            background: white;
-            border-radius: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             overflow: hidden;
-            transition: transform 0.2s ease;
         }
 
-        /* Barra de progresso personalizada */
-        .progress-bar-custom {
-            transition: width 0.2s ease-out;
+        /* O palco tem um tamanho fixo de 1600x400 (Proporção exata de 16:4) */
+        #presentation-area {
+            width: 1600px;
+            height: 400px;
+            transform-origin: center center;
+            position: relative;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            overflow: hidden;
         }
 
-        /* Rolagem personalizada */
-        .slides-container::-webkit-scrollbar {
-            width: 6px;
-        }
-        .slides-container::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        .slides-container::-webkit-scrollbar-thumb {
-            background: #6366f1;
-            border-radius: 10px;
+        /* Em modo Ecrã Inteiro, removemos as bordas arredondadas para encostar aos limites */
+        :fullscreen #presentation-area {
+            border-radius: 0;
         }
 
-        /* Efeitos hover */
-        .step-card:hover {
-            transform: translateY(-4px);
+        /* Classes base para os slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: scale(0.98);
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Para impressão */
-        @media print {
-            body {
-                overflow: auto;
-                background: white;
-            }
-            .slides-container {
-                height: auto;
-                overflow: visible;
-                scroll-snap-type: none;
-            }
-            .slide {
-                min-height: 0;
-                page-break-after: always;
-                break-inside: avoid;
-                padding: 1rem;
-            }
-            .no-print {
-                display: none;
-            }
-            .card {
-                box-shadow: none;
-                border: 1px solid #ddd;
-            }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        /* Elementos de UI sobrepostos (fora do escalonamento) */
+        .controls-overlay {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 10px 24px;
+            border-radius: 100px;
+            z-index: 50;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        button.nav-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        button.nav-btn:hover { background: rgba(255,255,255,0.2); }
+        button.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        /* Estrutura interna dos slides adaptada para pouca altura (400px) */
+        .slide-header {
+            padding: 1.5rem 3rem 0.5rem 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .slide-body {
+            flex: 1;
+            padding: 0.5rem 3rem 1.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
 
-    <!-- Barra de progresso fixa no topo -->
-    <div class="fixed top-0 left-0 w-full h-1 bg-slate-800/30 z-50 no-print">
-        <div id="progressBar" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500 progress-bar-custom" style="width: 0%;"></div>
-    </div>
+    <div id="presentation-wrapper">
+        <!-- Container da Apresentação Fixa (1600x400) - Proporção 16:4 -->
+        <div id="presentation-area">
 
-    <!-- Navegação flutuante -->
-    <div class="fixed bottom-6 right-6 z-50 flex gap-3 no-print">
-        <button id="prevSlide" class="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-xl border border-indigo-200 text-indigo-700 hover:bg-indigo-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
-            <i data-lucide="chevron-up" class="w-5 h-5"></i>
-        </button>
-        <button id="nextSlide" class="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-xl border border-indigo-200 text-indigo-700 hover:bg-indigo-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
-            <i data-lucide="chevron-down" class="w-5 h-5"></i>
-        </button>
-    </div>
-
-    <!-- Indicador de slide atual -->
-    <div class="fixed bottom-6 left-6 bg-black/60 backdrop-blur-md text-white text-sm px-4 py-2 rounded-full font-mono z-50 no-print">
-        <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
-    </div>
-
-    <!-- Container de slides -->
-    <div class="slides-container" id="slidesContainer">
-        
-        <!-- SLIDE 1 - CAPA -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card">
-                    <div class="bg-gradient-to-br from-indigo-700 via-purple-700 to-indigo-900 p-10 md:p-16 text-white">
-                        <div class="inline-flex items-center justify-center p-4 bg-white/20 rounded-2xl mb-8 backdrop-blur-sm">
-                            <i data-lucide="book-open" class="w-10 h-10"></i>
-                        </div>
-                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                            Processo de inovação EMPREL
-                        </h1>
-                        <p class="text-xl md:text-2xl text-indigo-100 max-w-3xl mb-4">
-                            Exemplo: <strong class="font-bold">Absenteísmo nas Carretas</strong>
-                        </p>
-                        <p class="text-lg text-indigo-200 max-w-3xl">
-                            Metodologia de Design Thinking: Do Mapeamento do Ecossistema à Consolidação do Desafio Estruturado.
-                        </p>
-                        <div class="mt-10 flex flex-wrap gap-3 text-sm">
-                            <span class="flex items-center gap-2 bg-white/20 rounded-full px-4 py-2"><i data-lucide="calendar" class="w-4 h-4"></i> Documento de Análise Metodológica</span>
+            <!-- SLIDE 1: CAPA -->
+            <div class="slide active">
+                <div class="w-full h-full flex items-center justify-between bg-gradient-to-br from-indigo-800 via-purple-800 to-indigo-900 text-white px-16 relative overflow-hidden">
+                    <!-- Decorativo -->
+                    <div class="absolute -top-32 -right-32 w-[600px] h-[600px] bg-white opacity-5 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-32 -left-32 w-[600px] h-[600px] bg-purple-400 opacity-10 rounded-full blur-3xl"></div>
+                    
+                    <div class="z-10 w-2/3 pr-8">
+                        <h1 class="text-5xl font-extrabold mb-4 tracking-tight">Processo de Inovação EMPREL</h1>
+                        <h2 class="text-3xl font-light text-indigo-200 mb-6">Estudo de Caso: <strong class="font-bold text-white">Absenteísmo nas Carretas</strong></h2>
+                        
+                        <div class="inline-flex bg-black/20 px-5 py-2.5 rounded-full border border-white/10 text-indigo-100 items-center gap-3">
+                            <i data-lucide="git-commit" class="w-5 h-5"></i>
+                            <span class="text-lg">Metodologia de Design Thinking aplicada à Inovação Pública</span>
                         </div>
                     </div>
-                    <div class="p-8 md:p-12 bg-white">
-                        <p class="text-lg text-slate-600 leading-relaxed">
-                            <span class="font-bold text-indigo-800">Contextualização:</span> Na gestão pública, é comum que as equipas se deparem com problemas complexos e, na urgência de os resolver, saltem diretamente para a construção de soluções. Essa abordagem resulta frequentemente no desperdício de recursos públicos, pois ataca apenas os sintomas e ignora as causas reais do problema.
-                        </p>
-                        <p class="text-lg text-slate-600 mt-4">
-                            A metodologia detalhada neste documento baseia-se no <strong>Design Thinking</strong>. A sequência de artefactos produzidos pela equipa demonstra um processo maduro de divergência (exploração do cenário) e convergência (foco estratégico), garantindo que a solução futura seja desenvolvida para o problema correto e para as pessoas certas.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- SLIDE 2 - MAPEAMENTO DO ECOSSISTEMA -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card border-l-[12px] border-l-indigo-500">
-                    <div class="grid md:grid-cols-3 gap-0">
-                        <div class="bg-indigo-50 p-8 md:p-10 flex flex-col justify-center items-center text-center">
-                            <div class="bg-indigo-100 w-20 h-20 rounded-2xl flex items-center justify-center text-indigo-700 mb-4">
-                                <i data-lucide="map" class="w-10 h-10"></i>
-                            </div>
-                            <div class="text-7xl font-black text-indigo-200 mb-2">01</div>
-                            <h2 class="text-2xl md:text-3xl font-bold text-indigo-900">Mapeamento do Ecossistema</h2>
-                        </div>
-                        <div class="md:col-span-2 p-8 md:p-10">
-                            <p class="text-slate-700 text-lg mb-6">
-                                O primeiro passo fundamental foi estabelecer uma visão macro de todo o território onde o serviço ocorre. Antes de discutir o que está "estragado", é necessário entender como o sistema deveria funcionar e quem faz parte dele.
-                            </p>
-                            <div class="grid sm:grid-cols-2 gap-5 mb-6">
-                                <div class="bg-slate-50 p-5 rounded-xl">
-                                    <i data-lucide="users" class="w-6 h-6 text-indigo-600 mb-3"></i>
-                                    <h3 class="font-bold text-slate-800 text-lg">Atores</h3>
-                                    <p class="text-slate-600">Pacientes, profissionais de saúde, gestores de UBS, órgãos reguladores (AgSUS).</p>
-                                </div>
-                                <div class="bg-slate-50 p-5 rounded-xl">
-                                    <i data-lucide="building-2" class="w-6 h-6 text-indigo-600 mb-3"></i>
-                                    <h3 class="font-bold text-slate-800 text-lg">Locais</h3>
-                                    <p class="text-slate-600">UBS, Carretas Móveis, Hospitais, sistemas online.</p>
-                                </div>
-                            </div>
-                            <div class="bg-indigo-50 p-5 rounded-xl flex items-start gap-3">
-                                <i data-lucide="lightbulb" class="w-6 h-6 text-indigo-600 flex-shrink-0 mt-0.5"></i>
-                                <p class="text-indigo-800 font-medium italic"><strong>Por que é crucial:</strong> Este mapeamento cria empatia sistémica. Evita-se o "ponto cego", garantindo que as soluções propostas não prejudiquem atores secundários.</p>
-                            </div>
+                    <div class="z-10 w-1/3 flex justify-end">
+                        <div class="bg-white/10 p-8 rounded-[2rem] backdrop-blur-sm border border-white/10 shadow-2xl">
+                            <i data-lucide="book-open" class="w-32 h-32 text-indigo-200"></i>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SLIDE 3 - LEVANTAMENTO DE DORES -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card border-l-[12px] border-l-rose-500">
-                    <div class="grid md:grid-cols-3 gap-0">
-                        <div class="bg-rose-50 p-8 md:p-10 flex flex-col justify-center items-center text-center">
-                            <div class="bg-rose-100 w-20 h-20 rounded-2xl flex items-center justify-center text-rose-600 mb-4">
-                                <i data-lucide="clipboard-list" class="w-10 h-10"></i>
+            <!-- SLIDE 2: CONTEXTUALIZAÇÃO -->
+            <div class="slide">
+                <div class="slide-header border-b border-slate-200">
+                    <i data-lucide="info" class="w-8 h-8 text-indigo-600"></i>
+                    <h2 class="text-3xl font-bold text-slate-800">O Problema (O "Sintoma")</h2>
+                </div>
+                <div class="slide-body">
+                    <div class="grid grid-cols-[2fr_1fr] gap-10 h-full items-center">
+                        <div>
+                            <p class="text-xl text-slate-600 leading-relaxed mb-4">Na gestão pública, a urgência em resolver problemas faz com que as equipas saltem frequentemente para a solução, ignorando as causas reais.</p>
+                            <h3 class="text-lg font-bold text-slate-800 mb-3">O Cenário Atual:</h3>
+                            <div class="flex gap-4">
+                                <div class="flex-1 flex items-center text-base text-slate-700 bg-rose-50 p-3 rounded-xl border border-rose-100">
+                                    <i data-lucide="alert-circle" class="w-6 h-6 mr-3 text-rose-500 shrink-0"></i> Alto índice de absenteísmo.
+                                </div>
+                                <div class="flex-1 flex items-center text-base text-slate-700 bg-rose-50 p-3 rounded-xl border border-rose-100">
+                                    <i data-lucide="clock" class="w-6 h-6 mr-3 text-rose-500 shrink-0"></i> Equipas técnicas ociosas.
+                                </div>
+                                <div class="flex-1 flex items-center text-base text-slate-700 bg-rose-50 p-3 rounded-xl border border-rose-100">
+                                    <i data-lucide="users" class="w-6 h-6 mr-3 text-rose-500 shrink-0"></i> Longas filas noutras unidades.
+                                </div>
                             </div>
-                            <div class="text-7xl font-black text-rose-200 mb-2">02</div>
-                            <h2 class="text-2xl md:text-3xl font-bold text-rose-900">Levantamento de Dores e Cenários</h2>
                         </div>
-                        <div class="md:col-span-2 p-8 md:p-10">
-                            <p class="text-slate-700 text-lg mb-4">
-                                Com o terreno mapeado, a equipa iniciou a fase de imersão nos problemas quotidianos. Nesta etapa de divergência, o objetivo não é julgar as reclamações, mas sim recolher o máximo de evidências sobre as fricções que ocorrem no serviço.
-                            </p>
-                            <ul class="space-y-2 mb-6 list-disc pl-6 text-slate-700">
-                                <li>Dificuldades de acessibilidade e transporte dos pacientes</li>
-                                <li>Aparelhos avariados por falta de manutenção</li>
-                                <li>Alto índice de absenteísmo (pacientes que agendam e não comparecem)</li>
+                        <div class="bg-indigo-50 rounded-3xl h-full py-6 flex items-center justify-center border-4 border-white shadow-inner">
+                            <i data-lucide="search-x" class="w-28 h-28 text-indigo-200"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: ETAPA 1 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="bg-indigo-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">1</div>
+                    <h2 class="text-3xl font-bold text-indigo-900">Mapeamento do Ecossistema</h2>
+                </div>
+                <div class="slide-body">
+                    <p class="text-xl text-slate-600 mb-4">O primeiro passo é estabelecer uma visão macro de todo o território antes de propor qualquer intervenção.</p>
+                    
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-indigo-500 flex items-center gap-4 hover:scale-[1.02] transition-transform">
+                            <i data-lucide="users" class="w-10 h-10 text-indigo-500 shrink-0"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-800 mb-1">Atores</h3>
+                                <p class="text-sm text-slate-600">Pacientes, profissionais de saúde, gestores e AgSUS.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-indigo-500 flex items-center gap-4 hover:scale-[1.02] transition-transform">
+                            <i data-lucide="map-pin" class="w-10 h-10 text-indigo-500 shrink-0"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-800 mb-1">Locais</h3>
+                                <p class="text-sm text-slate-600">Unidades de Saúde, Carretas Móveis e sistemas digitais.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-indigo-500 flex items-center gap-4 hover:scale-[1.02] transition-transform">
+                            <i data-lucide="activity" class="w-10 h-10 text-indigo-500 shrink-0"></i>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-800 mb-1">Serviços</h3>
+                                <p class="text-sm text-slate-600">Consultas, exames e entregas de valor na jornada.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: ETAPA 2 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="bg-rose-500 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">2</div>
+                    <h2 class="text-3xl font-bold text-rose-900">Levantamento de Dores e Cenários</h2>
+                </div>
+                <div class="slide-body">
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex gap-6 items-center">
+                        <div class="bg-rose-100 p-5 rounded-full shrink-0 ml-4">
+                            <i data-lucide="clipboard-list" class="w-16 h-16 text-rose-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Sintomas captados no terreno:</h3>
+                            <ul class="text-base text-slate-600 space-y-2 list-disc pl-5">
+                                <li>Dificuldades de acessibilidade e transporte dos pacientes.</li>
+                                <li>Aparelhos médicos avariados por falta de manutenção preventiva.</li>
+                                <li><strong class="text-rose-700">Alto índice de absenteísmo</strong> (agendamentos sem comparência).</li>
                             </ul>
-                            <div class="bg-rose-50 p-5 rounded-xl border-l-4 border-rose-500">
-                                <p class="text-rose-800 font-medium"><strong>Insight da Etapa:</strong> Tratar estas dores como "sintomas". Uma dor como "o aparelho avariou" é o que o utilizador sente na ponta, mas raramente é a causa raiz do problema de gestão.</p>
-                            </div>
+                        </div>
+                        <div class="w-1/3 bg-rose-50 p-5 border-l-4 border-rose-500 text-rose-800 text-base font-medium rounded-r-2xl mr-4">
+                            <i data-lucide="lightbulb" class="inline-block w-4 h-4 mr-1 text-rose-600"></i>
+                            O objetivo aqui não é julgar, mas recolher evidências brutas das fricções do serviço na ponta.
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SLIDE 4 - ANÁLISE CAUSA E EFEITO (ISHIKAWA) -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card border-l-[12px] border-l-purple-500">
-                    <div class="grid md:grid-cols-3 gap-0">
-                        <div class="bg-purple-50 p-8 md:p-10 flex flex-col justify-center items-center text-center">
-                            <div class="bg-purple-100 w-20 h-20 rounded-2xl flex items-center justify-center text-purple-700 mb-4">
-                                <i data-lucide="git-branch" class="w-10 h-10"></i>
+            <!-- SLIDE 5: ETAPA 3 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="bg-purple-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">3</div>
+                    <h2 class="text-3xl font-bold text-purple-900">Análise de Causa e Efeito (Ishikawa)</h2>
+                </div>
+                <div class="slide-body">
+                    <p class="text-xl text-slate-600 mb-4">Estruturação do caos: agrupar os sintomas para encontrar a origem estrutural.</p>
+                    
+                    <div class="grid grid-cols-[1fr_1.5fr] gap-6 h-full items-stretch">
+                        <div class="flex flex-col justify-center gap-3">
+                            <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl flex items-center gap-4">
+                                <div class="bg-purple-200 p-2 rounded-lg"><i data-lucide="settings" class="text-purple-700 w-5 h-5"></i></div>
+                                <span class="text-base font-semibold text-slate-700">Falhas em Processos</span>
                             </div>
-                            <div class="text-7xl font-black text-purple-200 mb-2">03</div>
-                            <h2 class="text-2xl md:text-3xl font-bold text-purple-900">Análise de Causa e Efeito</h2>
-                            <p class="text-purple-700 mt-2">Diagrama de Ishikawa</p>
+                            <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl flex items-center gap-4">
+                                <div class="bg-purple-200 p-2 rounded-lg"><i data-lucide="users" class="text-purple-700 w-5 h-5"></i></div>
+                                <span class="text-base font-semibold text-slate-700">Falta de Informação (Pessoas)</span>
+                            </div>
+                            <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl flex items-center gap-4">
+                                <div class="bg-purple-200 p-2 rounded-lg"><i data-lucide="thermometer" class="text-purple-700 w-5 h-5"></i></div>
+                                <span class="text-base font-semibold text-slate-700">Meio Ambiente & Equipamentos</span>
+                            </div>
                         </div>
-                        <div class="md:col-span-2 p-8 md:p-10">
-                            <p class="text-slate-700 text-lg mb-4">
-                                Este é o momento de estruturar o caos das reclamações levantadas na etapa anterior. A equipa utilizou uma variação do Diagrama de Ishikawa (Espinha de Peixe) aplicado num Canva de Imersão.
+                        
+                        <div class="bg-white p-6 rounded-2xl shadow-md border-l-8 border-purple-600 flex flex-col justify-center">
+                            <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                                <i data-lucide="search" class="text-purple-600 w-5 h-5"></i> A Grande Descoberta
+                            </h3>
+                            <p class="text-base text-slate-600 leading-relaxed">
+                                A ociosidade das carretas <strong class="text-slate-800">não era um problema de infraestrutura</strong> ou falta de médicos. Era o <em>"efeito colateral"</em> de causas estruturais ligadas a falhas de processo de agendamento e falta de compromisso/informação das pessoas.
                             </p>
-                            <p class="text-slate-700 mb-4">
-                                Os sintomas foram categorizados metodicamente em grandes blocos: <strong>Meio Ambiente, Processos, Pessoas, Locais e Equipamentos</strong>. Ao cruzar essas categorias, a equipa conseguiu rastrear a origem dos problemas.
-                            </p>
-                            <div class="bg-purple-50 p-5 rounded-xl">
-                                <i data-lucide="trending-up" class="inline-block w-5 h-5 mr-2 text-purple-600"></i>
-                                <span class="font-semibold text-purple-900">Conclusão:</span>
-                                <p class="text-purple-800 mt-2">A ociosidade das carretas e o absenteísmo não eram primariamente um problema de falta de infraestrutura ou médicos, mas sim o "Efeito" de causas estruturais mais profundas ligadas a processos e pessoas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: ETAPA 4 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="bg-teal-500 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">4</div>
+                    <h2 class="text-3xl font-bold text-teal-900">(Re)definição do Problema</h2>
+                </div>
+                <div class="slide-body">
+                    <p class="text-xl text-slate-600 mb-5">A fase de convergência: focar os esforços escolhendo a batalha certa para lutar.</p>
+                    
+                    <div class="grid grid-cols-2 gap-6 items-stretch">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition-transform">
+                            <div class="w-14 h-14 shrink-0 bg-teal-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="target" class="w-7 h-7 text-teal-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-800 mb-1">O Foco Escolhido</h3>
+                                <p class="text-sm text-slate-600">Concentrar os esforços na <strong>Comunicação Efetiva</strong> como o principal estrangulamento gerador do absenteísmo.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition-transform">
+                            <div class="w-14 h-14 shrink-0 bg-teal-100 rounded-full flex items-center justify-center">
+                                <i data-lucide="alert-triangle" class="w-7 h-7 text-teal-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-800 mb-1">Fatores Limitadores</h3>
+                                <p class="text-sm text-slate-600">Detetados problemas socioculturais como o baixo <strong>Letramento Digital</strong> da população atendida e silos de dados.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SLIDE 5 - (RE)DEFINIÇÃO DO PROBLEMA -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card border-l-[12px] border-l-teal-500">
-                    <div class="grid md:grid-cols-3 gap-0">
-                        <div class="bg-teal-50 p-8 md:p-10 flex flex-col justify-center items-center text-center">
-                            <div class="bg-teal-100 w-20 h-20 rounded-2xl flex items-center justify-center text-teal-700 mb-4">
-                                <i data-lucide="target" class="w-10 h-10"></i>
+            <!-- SLIDE 7: ETAPA 5 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="bg-amber-500 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">5</div>
+                    <h2 class="text-3xl font-bold text-amber-900">A Pergunta-Desafio (How Might We)</h2>
+                </div>
+                <div class="slide-body text-center flex flex-col items-center justify-center">
+                    <p class="text-xl text-slate-600 mb-5">Um problema bem definido precisa de inspirar a equipa a criar soluções abrangentes.</p>
+                    
+                    <div class="bg-slate-900 text-white w-full max-w-4xl p-8 rounded-[2rem] shadow-xl relative border-b-4 border-amber-500">
+                        <h3 class="text-3xl font-bold leading-tight relative z-10">
+                            "Como podemos <span class="text-amber-400">tornar efetiva a comunicação</span> com os utilizadores para <span class="text-amber-400">reduzir o absenteísmo</span> nas carretas e a ociosidade da equipa?"
+                        </h3>
+                    </div>
+                    
+                    <p class="text-base text-slate-500 mt-5 bg-amber-50 px-5 py-2 rounded-full border border-amber-100 inline-flex items-center">
+                        <i data-lucide="lightbulb" class="w-4 h-4 mr-2 text-amber-500 shrink-0"></i>
+                        Esta frase não dita a solução (não pede "uma app"), deixando o campo livre para inovação real.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: ETAPA 6 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <div class="bg-cyan-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">6</div>
+                    <h2 class="text-3xl font-bold text-cyan-900">Consolidação (Canva do Desafio)</h2>
+                </div>
+                <div class="slide-body">
+                    <p class="text-xl text-slate-600 mb-5">O artefacto final: um "Termo de Referência" moderno que estabelece a governação para a ideação.</p>
+                    
+                    <div class="grid grid-cols-2 gap-6 items-stretch">
+                        <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-200 shadow-sm flex items-center gap-5">
+                            <div class="bg-cyan-100 w-14 h-14 shrink-0 rounded-xl flex items-center justify-center text-cyan-700">
+                                <i data-lucide="bar-chart-2" class="w-7 h-7"></i>
                             </div>
-                            <div class="text-7xl font-black text-teal-200 mb-2">04</div>
-                            <h2 class="text-2xl md:text-3xl font-bold text-teal-900">(Re)definição do Problema</h2>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">Métricas de Sucesso</h3>
+                                <ul class="text-sm text-slate-700 space-y-1">
+                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i> Redução visível da fila de espera externa.</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i> Aumento da taxa de uso da capacidade das carretas.</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="md:col-span-2 p-8 md:p-10">
-                            <p class="text-slate-700 text-lg mb-6">
-                                A fase de convergência. Onde muitas equipas erram ao tentar resolver tudo de uma vez, esta metodologia exige afunilamento e renúncia. A equipa utilizou uma matriz de redefinição para "enquadrar" o problema.
-                            </p>
-                            <div class="grid sm:grid-cols-2 gap-5">
-                                <div class="bg-teal-50 p-5 rounded-xl border-t-4 border-t-teal-500">
-                                    <h4 class="font-bold text-slate-800 text-lg mb-2">O Foco Escolhido:</h4>
-                                    <p class="text-slate-600">Concentrar esforços na <strong>Comunicação Efetiva</strong> como o principal estrangulamento gerador do absenteísmo.</p>
-                                </div>
-                                <div class="bg-teal-50 p-5 rounded-xl border-t-4 border-t-teal-500">
-                                    <h4 class="font-bold text-slate-800 text-lg mb-2">Análise de Fatores:</h4>
-                                    <p class="text-slate-600">Limitadores socioculturais: <strong>Letramento Digital</strong> da população e falhas na governança de dados.</p>
-                                </div>
+                        
+                        <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200 shadow-sm flex items-center gap-5">
+                            <div class="bg-amber-100 w-14 h-14 shrink-0 rounded-xl flex items-center justify-center text-amber-700">
+                                <i data-lucide="shield-alert" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 mb-1">Gestão de Riscos</h3>
+                                <ul class="text-sm text-slate-700 space-y-1">
+                                    <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-amber-500 shrink-0"></i> Falta de letramento digital impedir o uso da solução.</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-amber-500 shrink-0"></i> Falhas de interoperabilidade entre sistemas de saúde.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SLIDE 6 - PERGUNTA-DESAFIO -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card border-l-[12px] border-l-amber-500">
-                    <div class="grid md:grid-cols-3 gap-0">
-                        <div class="bg-amber-50 p-8 md:p-10 flex flex-col justify-center items-center text-center">
-                            <div class="bg-amber-100 w-20 h-20 rounded-2xl flex items-center justify-center text-amber-700 mb-4">
-                                <i data-lucide="message-square" class="w-10 h-10"></i>
-                            </div>
-                            <div class="text-7xl font-black text-amber-200 mb-2">05</div>
-                            <h2 class="text-2xl md:text-3xl font-bold text-amber-900">Pergunta-Desafio</h2>
+            <!-- SLIDE 9: RESUMO -->
+            <div class="slide">
+                <div class="w-full h-full flex flex-col justify-center px-16 bg-white relative overflow-hidden">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="bg-indigo-100 w-14 h-14 rounded-full flex items-center justify-center">
+                            <i data-lucide="git-commit" class="w-7 h-7 text-indigo-600"></i>
                         </div>
-                        <div class="md:col-span-2 p-8 md:p-10">
-                            <p class="text-slate-700 text-lg mb-6">
-                                Um problema bem definido precisa de ser comunicado de forma inspiradora para instigar a equipa a criar soluções. A técnica do <strong>"Como Podemos...?" (How Might We)</strong> foi aplicada para reescrever o problema sob uma ótica de oportunidade.
-                            </p>
-                            <div class="bg-slate-900 text-white p-8 rounded-2xl text-center shadow-xl relative">
-                                <i data-lucide="quote" class="absolute opacity-20 right-6 top-4 w-16 h-16"></i>
-                                <p class="text-xl md:text-2xl font-medium leading-relaxed">
-                                    "Como podemos tornar efetiva a comunicação com os utilizadores do programa [...] para reduzir o absenteísmo nas carretas e a ociosidade da equipa?"
-                                </p>
-                            </div>
-                            <p class="text-slate-500 mt-5 text-center">Esta formulação não dita a solução, deixando o campo aberto para ideias tecnológicas, analógicas ou de processos.</p>
+                        <div>
+                            <h2 class="text-3xl font-bold text-slate-800">Fluxo Resumo da Jornada</h2>
+                            <p class="text-base text-slate-500 mt-1">Da complexidade do ecossistema à clareza do desafio.</p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline ultra-widescreen amigável -->
+                    <div class="w-full flex justify-between items-start relative mt-2">
+                        <!-- Linha conectora -->
+                        <div class="absolute top-7 left-10 right-10 h-1.5 bg-slate-100 -z-10"></div>
+                        
+                        <!-- Passos -->
+                        <div class="flex flex-col items-center gap-3 w-40">
+                            <div class="w-14 h-14 bg-indigo-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">1</div>
+                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Mapear<br>Ecossistema</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 w-40">
+                            <div class="w-14 h-14 bg-rose-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">2</div>
+                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Levantar<br>Dores</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 w-40">
+                            <div class="w-14 h-14 bg-purple-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">3</div>
+                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Analisar<br>Causas</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 w-40">
+                            <div class="w-14 h-14 bg-teal-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">4</div>
+                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Redefinir<br>Problema</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 w-40">
+                            <div class="w-14 h-14 bg-amber-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">5</div>
+                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Pergunta<br>Desafio</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 w-40">
+                            <div class="w-14 h-14 bg-cyan-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">6</div>
+                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Canva<br>Desafio</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SLIDE 7 - CONSOLIDAÇÃO ESTRATÉGICA -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card border-l-[12px] border-l-cyan-500">
-                    <div class="grid md:grid-cols-3 gap-0">
-                        <div class="bg-cyan-50 p-8 md:p-10 flex flex-col justify-center items-center text-center">
-                            <div class="bg-cyan-100 w-20 h-20 rounded-2xl flex items-center justify-center text-cyan-700 mb-4">
-                                <i data-lucide="layout-template" class="w-10 h-10"></i>
-                            </div>
-                            <div class="text-7xl font-black text-cyan-200 mb-2">06</div>
-                            <h2 class="text-2xl md:text-3xl font-bold text-cyan-900">Canva do Desafio Público</h2>
-                        </div>
-                        <div class="md:col-span-2 p-8 md:p-10">
-                            <p class="text-slate-700 text-lg mb-5">
-                                A etapa final documentada é a materialização de toda a jornada num único artefacto: o Canva do Desafio Público. Este documento age como um "Termo de Referência" moderno e ágil.
-                            </p>
-                            <div class="space-y-4">
-                                <div class="flex items-start gap-4 p-4 bg-green-50 rounded-xl">
-                                    <div class="bg-green-100 p-2 rounded-lg text-green-700"><i data-lucide="bar-chart-2" class="w-6 h-6"></i></div>
-                                    <div><span class="font-bold text-slate-800 text-lg">Métricas de Sucesso (KPIs)</span><br><span class="text-slate-600">Redução de filas de espera e aumento do uso da capacidade das carretas.</span></div>
-                                </div>
-                                <div class="flex items-start gap-4 p-4 bg-amber-50 rounded-xl">
-                                    <div class="bg-amber-100 p-2 rounded-lg text-amber-700"><i data-lucide="alert-triangle" class="w-6 h-6"></i></div>
-                                    <div><span class="font-bold text-slate-800 text-lg">Gestão de Riscos</span><br><span class="text-slate-600">Falta de letramento digital do utilizador e falhas de interoperabilidade entre sistemas.</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div> <!-- Fim Container Fix 1600x400 -->
+    </div> <!-- Fim Wrapper Dinâmico -->
 
-        <!-- SLIDE 8 - SÍNTESE E VALOR DA METODOLOGIA -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card">
-                    <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-10 md:p-12">
-                        <div class="text-center mb-8">
-                            <i data-lucide="award" class="w-16 h-16 text-indigo-600 mx-auto"></i>
-                            <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mt-4">Síntese Prática</h2>
-                            <p class="text-slate-500 text-lg">O Valor da Metodologia</p>
-                        </div>
-                        <div class="grid sm:grid-cols-3 gap-6">
-                            <div class="bg-white p-6 rounded-xl shadow-md text-center">
-                                <i data-lucide="shield-check" class="w-10 h-10 text-indigo-600 mx-auto mb-3"></i>
-                                <h3 class="font-bold text-xl text-slate-800">Governança</h3>
-                                <p class="text-slate-600 text-sm">Evita investimentos equivocados ao garantir que o problema real está a ser atacado.</p>
-                            </div>
-                            <div class="bg-white p-6 rounded-xl shadow-md text-center">
-                                <i data-lucide="users" class="w-10 h-10 text-indigo-600 mx-auto mb-3"></i>
-                                <h3 class="font-bold text-xl text-slate-800">Centrado no Utilizador</h3>
-                                <p class="text-slate-600 text-sm">Limitações da população mapeadas como riscos primários, garantindo soluções acessíveis.</p>
-                            </div>
-                            <div class="bg-white p-6 rounded-xl shadow-md text-center">
-                                <i data-lucide="rocket" class="w-10 h-10 text-indigo-600 mx-auto mb-3"></i>
-                                <h3 class="font-bold text-xl text-slate-800">Inovação Aberta</h3>
-                                <p class="text-slate-600 text-sm">Pronto para Editais, hackathons ou parcerias com GovTechs.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SLIDE 9 - FLUXO RESUMO DA JORNADA -->
-        <section class="slide">
-            <div class="slide-content">
-                <div class="card p-8 md:p-12">
-                    <div class="text-center mb-8">
-                        <div class="bg-gradient-to-br from-indigo-100 to-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="git-commit" class="w-10 h-10 text-indigo-600"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-slate-800">Fluxo Resumo da Jornada</h2>
-                        <p class="text-slate-500">A sequência visual de etapas aplicadas pela equipa</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-                        <div class="flex flex-col items-center text-center p-4 bg-indigo-50 rounded-xl">
-                            <div class="w-10 h-10 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold mb-2">1</div>
-                            <h3 class="font-bold text-indigo-800">Mapeamento</h3>
-                            <p class="text-sm text-slate-600">Ecossistema</p>
-                        </div>
-                        <div class="flex flex-col items-center text-center p-4 bg-rose-50 rounded-xl">
-                            <div class="w-10 h-10 bg-rose-500 text-white rounded-full flex items-center justify-center font-bold mb-2">2</div>
-                            <h3 class="font-bold text-rose-800">Levantamento</h3>
-                            <p class="text-sm text-slate-600">Dores e Cenários</p>
-                        </div>
-                        <div class="flex flex-col items-center text-center p-4 bg-purple-50 rounded-xl">
-                            <div class="w-10 h-10 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold mb-2">3</div>
-                            <h3 class="font-bold text-purple-800">Ishikawa</h3>
-                            <p class="text-sm text-slate-600">Causa e Efeito</p>
-                        </div>
-                        <div class="flex flex-col items-center text-center p-4 bg-teal-50 rounded-xl">
-                            <div class="w-10 h-10 bg-teal-500 text-white rounded-full flex items-center justify-center font-bold mb-2">4</div>
-                            <h3 class="font-bold text-teal-800">Redefinição</h3>
-                            <p class="text-sm text-slate-600">do Problema</p>
-                        </div>
-                        <div class="flex flex-col items-center text-center p-4 bg-amber-50 rounded-xl">
-                            <div class="w-10 h-10 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold mb-2">5</div>
-                            <h3 class="font-bold text-amber-800">Pergunta</h3>
-                            <p class="text-sm text-slate-600">Desafio (HMW)</p>
-                        </div>
-                        <div class="flex flex-col items-center text-center p-4 bg-cyan-50 rounded-xl">
-                            <div class="w-10 h-10 bg-cyan-500 text-white rounded-full flex items-center justify-center font-bold mb-2">6</div>
-                            <h3 class="font-bold text-cyan-800">Canva</h3>
-                            <p class="text-sm text-slate-600">Desafio Público</p>
-                        </div>
-                    </div>
-                    <div class="text-center mt-8 pt-6 border-t border-slate-200">
-                        <p class="text-slate-500 italic">Do mapeamento à solução estruturada: cada etapa reduz incertezas e aumenta a efetividade da política pública.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+    <!-- Controlos de Navegação Flutuantes -->
+    <div class="controls-overlay">
+        <button id="btn-prev" class="nav-btn" onclick="mudarSlide(-1)">
+            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+        <span id="slide-counter" class="font-mono text-sm font-bold min-w-[50px] text-center">1 / 9</span>
+        <button id="btn-next" class="nav-btn" onclick="mudarSlide(1)">
+            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        </button>
+        <div class="w-px h-6 bg-white/20 mx-2"></div>
+        <button class="nav-btn" onclick="toggleFullscreen()" title="Ecrã Inteiro">
+            <i data-lucide="maximize" class="w-5 h-5"></i>
+        </button>
     </div>
 
     <script>
         lucide.createIcons();
 
-        const container = document.getElementById('slidesContainer');
-        const slides = document.querySelectorAll('.slide');
-        const total = slides.length;
-        document.getElementById('totalSlides').innerText = total;
-
-        function updateProgressAndIndex() {
-            const scrollTop = container.scrollTop;
-            const maxScroll = container.scrollHeight - container.clientHeight;
-            const percent = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
-            document.getElementById('progressBar').style.width = percent + '%';
+        // ---- Lógica de Escala Inteligente (Garante o 16:4 em qualquer ecrã) ----
+        function dimensionarApresentacao() {
+            const wrapper = document.getElementById('presentation-wrapper');
+            const area = document.getElementById('presentation-area');
             
-            // Determina slide ativo
-            let activeIndex = 0;
-            for (let i = 0; i < slides.length; i++) {
-                const slideTop = slides[i].offsetTop;
-                if (scrollTop >= slideTop - container.clientHeight * 0.3) {
-                    activeIndex = i;
-                }
-            }
-            document.getElementById('currentSlide').innerText = activeIndex + 1;
+            // O container fixo tem 1600x400. Calculamos qual a escala necessária para caber no ecrã atual
+            // Deixamos um respiro de margem (multiplicando por 0.95)
+            const escalaLargura = (wrapper.clientWidth * 0.95) / 1600;
+            const escalaAltura = (wrapper.clientHeight * 0.85) / 400; 
             
-            // Atualiza botões
-            const prevBtn = document.getElementById('prevSlide');
-            const nextBtn = document.getElementById('nextSlide');
-            prevBtn.disabled = activeIndex === 0;
-            nextBtn.disabled = activeIndex === total - 1;
+            // Escolhemos a menor escala para garantir que nunca corta a tela
+            const escalaFinal = Math.min(escalaLargura, escalaAltura);
+            
+            area.style.transform = `scale(${escalaFinal})`;
         }
 
-        container.addEventListener('scroll', () => {
-            requestAnimationFrame(updateProgressAndIndex);
-        });
-        window.addEventListener('resize', updateProgressAndIndex);
-        updateProgressAndIndex();
+        window.addEventListener('resize', dimensionarApresentacao);
+        // Pequeno atraso na inicialização para o CSS computar os tamanhos corretos
+        setTimeout(dimensionarApresentacao, 100);
 
-        // Navegação
-        document.getElementById('prevSlide').addEventListener('click', () => {
-            const current = parseInt(document.getElementById('currentSlide').innerText) - 1;
-            if (current > 0) {
-                slides[current - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else if (current === 0) {
-                slides[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
+        // ---- Lógica de Navegação dos Slides ----
+        let slideAtual = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        const contador = document.getElementById('slide-counter');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
 
-        document.getElementById('nextSlide').addEventListener('click', () => {
-            const current = parseInt(document.getElementById('currentSlide').innerText) - 1;
-            if (current < total - 1) {
-                slides[current + 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
+        function atualizarUI() {
+            slides.forEach((slide, index) => {
+                if(index === slideAtual) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
 
-        // Teclado
+            contador.innerText = `${slideAtual + 1} / ${totalSlides}`;
+            
+            btnPrev.disabled = slideAtual === 0;
+            btnNext.disabled = slideAtual === totalSlides - 1;
+        }
+
+        function mudarSlide(direcao) {
+            slideAtual += direcao;
+            if (slideAtual < 0) slideAtual = 0;
+            if (slideAtual >= totalSlides) slideAtual = totalSlides - 1;
+            atualizarUI();
+        }
+
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                const current = parseInt(document.getElementById('currentSlide').innerText) - 1;
-                if (current < total - 1) slides[current + 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                const current = parseInt(document.getElementById('currentSlide').innerText) - 1;
-                if (current > 0) slides[current - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                mudarSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                mudarSlide(-1);
             }
         });
+
+        // ---- Ecrã Inteiro ----
+        function toggleFullscreen() {
+            const area = document.documentElement; 
+            if (!document.fullscreenElement) {
+                if (area.requestFullscreen) area.requestFullscreen();
+                else if (area.webkitRequestFullscreen) area.webkitRequestFullscreen();
+                else if (area.msRequestFullscreen) area.msRequestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                else if (document.msExitFullscreen) document.msExitFullscreen();
+            }
+            // Redimensionar logo após entrar/sair
+            setTimeout(dimensionarApresentacao, 200);
+        }
+
+        atualizarUI();
     </script>
 </body>
 </html>
