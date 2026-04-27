@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processo de inovação EMPREL - Exemplo: Absenteísmo nas Carretas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Adicionando a biblioteca para geração direta de PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* Forçando a fonte Runa para todo o documento */
+        * {
+            font-family: 'Runa', sans-serif !important;
+        }
+
+        body {
+            background-color: #f8fafc; /* slate-50 */
+            scroll-behavior: smooth;
+            color: #1e293b; /* slate-800 */
+            line-height: 1.7;
+        }
+
+        /* Animação suave para a barra de progresso */
+        .progress-bar {
+            transition: width 0.15s ease-out;
+        }
+
+        /* Ajustes para impressão limpa */
+        @media print {
+            body { background-color: white; }
+            #progress-container { display: none; }
+            .doc-container { box-shadow: none; border: none; padding: 0; margin: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+<body class="w-full relative">
+
+    <!-- Barra de Progresso no Topo (Multicolorida) -->
+    <div id="progress-container" class="w-full h-2 bg-slate-200 fixed top-0 z-50">
+        <div id="progress" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500 progress-bar shadow-sm" style="width: 0%;"></div>
+    </div>
+
+    <!-- Container Principal do Documento -->
+    <main id="conteudo-pdf" class="w-full max-w-5xl mx-auto my-8 md:my-12 bg-white p-8 md:p-16 rounded-3xl shadow-lg border border-slate-100 doc-container relative">
+        
+        <!-- Botão de Download / Imprimir (Oculto na impressão) -->
+        <div id="area-botao-download" class="absolute top-8 right-8 print:hidden">
+            <button onclick="gerarPDF()" class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm border border-slate-200 transition-colors cursor-pointer">
+                <i data-lucide="download" class="w-4 h-4"></i> Guardar PDF
+            </button>
+        </div>
+
+        <!-- Cabeçalho do Documento -->
+        <header class="mb-16 border-b-2 border-slate-100 pb-12 text-center md:text-left mt-12 md:mt-0">
+            <div class="inline-flex items-center justify-center p-5 bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-2xl mb-8 shadow-md transform hover:scale-105 transition-transform">
+                <i data-lucide="rocket" class="w-10 h-10"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+                Processo de inovação EMPREL <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Exemplo: Absenteísmo nas Carretas</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-500 font-medium mb-6">
+                Metodologia de Design Thinking: Do Mapeamento do Ecossistema à Consolidação do Desafio Estruturado.
+            </p>
+            <div class="flex items-center justify-center md:justify-start text-sm text-slate-400 font-bold uppercase tracking-wider">
+                <span class="flex items-center bg-slate-100 px-4 py-2 rounded-full"><i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Relatório Metodológico</span>
+            </div>
+        </header>
+
+        <!-- Introdução -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6">Contextualização</h2>
+            <p class="text-lg text-slate-600 mb-5 leading-relaxed">
+                No contexto da gestão pública, é comum que as equipes se deparem com problemas complexos e, na urgência de resolvê-los, saltem diretamente para a construção de soluções. Essa abordagem frequentemente resulta em desperdício de recursos, pois ataca apenas os sintomas e ignora as reais causas do problema.
+            </p>
+            <p class="text-lg text-slate-600 leading-relaxed">
+                A metodologia detalhada neste documento baseia-se no <strong class="text-indigo-600">Design Thinking</strong>. A sequência de artefatos produzidos pela equipe demonstra um processo maduro de divergência (exploração do cenário) e convergência (foco estratégico), garantindo que a solução futura seja desenvolvida para o problema correto e para as pessoas certas. A seguir, destrinchamos as 6 etapas dessa jornada.
+            </p>
+        </section>
+
+        <!-- Etapa 1 -->
+        <section class="mb-16 relative">
+            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-indigo-500 rounded-full"></div>
+            <div class="pl-8">
+                <div class="flex items-center mb-6 text-indigo-600">
+                    <div class="bg-indigo-100 p-3 rounded-xl mr-4 shadow-sm"><i data-lucide="map" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold text-slate-800">1. Mapeamento do Ecossistema</h2>
+                </div>
+                <p class="text-lg text-slate-600 mb-6">
+                    O primeiro passo fundamental foi estabelecer uma visão macro de todo o território onde o serviço ocorre. Antes de discutir o que está "quebrado", é necessário entender como o sistema deveria funcionar e quem faz parte dele.
+                </p>
+                <div class="bg-indigo-50 p-8 rounded-2xl border border-indigo-100 mb-6 shadow-sm">
+                    <h3 class="font-bold text-indigo-900 mb-4 text-xl">Elementos Mapeados:</h3>
+                    <ul class="list-none space-y-4 text-indigo-800 text-lg">
+                        <li class="flex items-start"><i data-lucide="check-circle-2" class="w-6 h-6 mr-3 text-indigo-500 flex-shrink-0 mt-0.5"></i><span><strong>Atores:</strong> Identificação de todas as pessoas envolvidas, desde o usuário final (paciente) até profissionais de saúde, gestores de UBS e órgãos reguladores (como a AgSUS).</span></li>
+                        <li class="flex items-start"><i data-lucide="check-circle-2" class="w-6 h-6 mr-3 text-indigo-500 flex-shrink-0 mt-0.5"></i><span><strong>Locais:</strong> Onde os serviços físicos e digitais acontecem (Unidades Básicas de Saúde, Carretas Móveis, Hospitais, Sistemas online).</span></li>
+                        <li class="flex items-start"><i data-lucide="check-circle-2" class="w-6 h-6 mr-3 text-indigo-500 flex-shrink-0 mt-0.5"></i><span><strong>Serviços:</strong> Quais são as entregas de valor realizadas atualmente.</span></li>
+                    </ul>
+                </div>
+                <p class="text-indigo-900 font-medium bg-indigo-100/50 p-4 rounded-lg inline-block">
+                    💡 <strong>Por que é crucial:</strong> Evita-se o "ponto cego", garantindo que soluções futuras não prejudiquem atores secundários não mapeados.
+                </p>
+            </div>
+        </section>
+
+        <!-- Etapa 2 -->
+        <section class="mb-16 relative">
+            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-rose-500 rounded-full"></div>
+            <div class="pl-8">
+                <div class="flex items-center mb-6 text-rose-600">
+                    <div class="bg-rose-100 p-3 rounded-xl mr-4 shadow-sm"><i data-lucide="clipboard-list" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold text-slate-800">2. Levantamento de Dores e Cenários</h2>
+                </div>
+                <p class="text-lg text-slate-600 mb-6">
+                    Com o terreno mapeado, a equipe iniciou a fase de imersão nos problemas cotidianos. Nesta etapa de divergência, o objetivo não é julgar as reclamações, mas sim coletar o máximo de evidências sobre as fricções que ocorrem no serviço.
+                </p>
+                <p class="text-lg text-slate-600 mb-6">
+                    Foram listados múltiplos cenários negativos, tais como: dificuldades de acessibilidade e transporte dos pacientes, aparelhos quebrados por falta de manutenção, e o alto índice de absenteísmo (pacientes que agendam e não comparecem).
+                </p>
+                <div class="bg-gradient-to-r from-rose-50 to-white p-6 rounded-2xl border-l-4 border-rose-500 shadow-sm">
+                    <p class="text-rose-900 text-lg">
+                        <strong>Insight da Etapa:</strong> Tratar estas dores como "sintomas". Uma dor como "o aparelho quebrou" é o que o usuário sente na ponta, mas raramente é a causa raiz do problema gerencial. O agrupamento prepara o terreno para a próxima fase analítica.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Etapa 3 -->
+        <section class="mb-16 relative">
+            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-purple-500 rounded-full"></div>
+            <div class="pl-8">
+                <div class="flex items-center mb-6 text-purple-600">
+                    <div class="bg-purple-100 p-3 rounded-xl mr-4 shadow-sm"><i data-lucide="git-branch" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold text-slate-800">3. Análise de Causa e Efeito (Ishikawa)</h2>
+                </div>
+                <p class="text-lg text-slate-600 mb-6">
+                    Este é o momento de estruturar o caos das reclamações levantadas na etapa anterior. A equipe utilizou uma variação do Diagrama de Ishikawa (Espinha de Peixe) aplicado em um Canva de Imersão.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-purple-50 p-4 rounded-xl text-center border border-purple-100 font-bold text-purple-800">Meio Ambiente</div>
+                    <div class="bg-purple-50 p-4 rounded-xl text-center border border-purple-100 font-bold text-purple-800">Processos e Pessoas</div>
+                    <div class="bg-purple-50 p-4 rounded-xl text-center border border-purple-100 font-bold text-purple-800">Locais e Equipamentos</div>
+                </div>
+                <p class="text-lg text-slate-600">
+                    Ao cruzar essas categorias, ficou claro que a ociosidade das carretas e o absenteísmo não eram primariamente um problema de falta de infraestrutura, mas sim o "Efeito" de causas estruturais mais profundas ligadas a processos falhos e falta de engajamento das pessoas.
+                </p>
+            </div>
+        </section>
+
+        <!-- Etapa 4 -->
+        <section class="mb-16 relative">
+            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-teal-500 rounded-full"></div>
+            <div class="pl-8">
+                <div class="flex items-center mb-6 text-teal-600">
+                    <div class="bg-teal-100 p-3 rounded-xl mr-4 shadow-sm"><i data-lucide="target" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold text-slate-800">4. (Re)definição do Problema</h2>
+                </div>
+                <p class="text-lg text-slate-600 mb-6">
+                    A fase de convergência. Onde muitas equipes erram ao tentar resolver tudo de uma vez, esta metodologia exige afunilamento e renúncia. A equipe utilizou uma matriz de redefinição para "enquadrar" o problema real.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                    <div class="p-8 border border-slate-100 border-t-8 border-t-teal-500 rounded-2xl bg-white shadow-lg hover:-translate-y-1 transition-transform">
+                        <div class="bg-teal-50 w-12 h-12 rounded-full flex items-center justify-center text-teal-600 mb-4"><i data-lucide="crosshair"></i></div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-3">O Foco Escolhido</h4>
+                        <p class="text-slate-600 text-lg">A equipe decidiu concentrar esforços na <strong>Comunicação Efetiva</strong> como o principal gargalo gerador do absenteísmo nas carretas de atendimento.</p>
+                    </div>
+                    <div class="p-8 border border-slate-100 border-t-8 border-t-teal-500 rounded-2xl bg-white shadow-lg hover:-translate-y-1 transition-transform">
+                        <div class="bg-teal-50 w-12 h-12 rounded-full flex items-center justify-center text-teal-600 mb-4"><i data-lucide="search"></i></div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-3">Análise de Fatores</h4>
+                        <p class="text-slate-600 text-lg">Foram mapeados os limitadores que impedem a solução atual, destacando-se fortemente questões socioculturais como o <strong>Letramento Digital</strong> da população e governança de dados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Etapa 5 -->
+        <section class="mb-16 relative">
+            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-amber-500 rounded-full"></div>
+            <div class="pl-8">
+                <div class="flex items-center mb-6 text-amber-500">
+                    <div class="bg-amber-100 p-3 rounded-xl mr-4 shadow-sm"><i data-lucide="lightbulb" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold text-slate-800">5. A Formulação da Pergunta-Desafio</h2>
+                </div>
+                <p class="text-lg text-slate-600 mb-8">
+                    Um problema bem definido precisa ser comunicado de forma inspiradora para instigar a equipe a criar soluções. A técnica do <strong>"Como Podemos...?" (How Might We)</strong> foi aplicada para reescrever o problema sob uma ótica de oportunidade.
+                </p>
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 text-white p-10 rounded-3xl text-center shadow-2xl relative overflow-hidden mb-8 border-b-8 border-amber-500">
+                    <div class="absolute -top-10 -right-10 p-4 opacity-10 text-amber-400 transform rotate-12">
+                        <i data-lucide="quote" class="w-48 h-48"></i>
+                    </div>
+                    <p class="text-2xl md:text-3xl font-bold relative z-10 leading-snug">
+                        "Como podemos tornar efetiva a comunicação com os usuários do programa [...] para reduzir o absenteísmo nas carretas e ociosidade da equipe?"
+                    </p>
+                </div>
+                <p class="text-lg text-slate-600">
+                    Esta formulação é poderosa porque ela não dita a solução tecnológica, deixando o campo aberto para ideias de inovação, sejam elas digitais, analógicas ou mudanças de processo.
+                </p>
+            </div>
+        </section>
+
+        <!-- Etapa 6 -->
+        <section class="mb-16 relative">
+            <div class="absolute -left-4 top-0 bottom-0 w-1 bg-cyan-500 rounded-full"></div>
+            <div class="pl-8">
+                <div class="flex items-center mb-6 text-cyan-600">
+                    <div class="bg-cyan-100 p-3 rounded-xl mr-4 shadow-sm"><i data-lucide="layout-template" class="w-8 h-8"></i></div>
+                    <h2 class="text-3xl font-bold text-slate-800">6. Consolidação (Canva do Desafio Público)</h2>
+                </div>
+                <p class="text-lg text-slate-600 mb-8">
+                    A etapa final é a materialização de toda a jornada em um único artefato: o Canva do Desafio Público. Ele age como um "Termo de Referência" moderno, estabelecendo a governança fundamental para a fase de ideação.
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="flex flex-col bg-cyan-50 p-6 rounded-2xl border border-cyan-100">
+                        <div class="bg-cyan-200 text-cyan-800 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="bar-chart-2" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-2">Métricas de Sucesso (KPIs)</h4>
+                        <p class="text-slate-600 text-lg">Como saberemos que funcionou? Pela medição clara da redução de filas de espera e aumento da taxa de uso da capacidade das carretas.</p>
+                    </div>
+                    
+                    <div class="flex flex-col bg-cyan-50 p-6 rounded-2xl border border-cyan-100">
+                        <div class="bg-amber-200 text-amber-800 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-xl mb-2">Gestão de Riscos</h4>
+                        <p class="text-slate-600 text-lg">Antecipação de que a falta de letramento digital do usuário ou falhas de interoperabilidade podem inviabilizar o projeto.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fluxo da Metodologia / Timeline Vertical -->
+        <section class="pt-16 mt-16 border-t-2 border-slate-100">
+            <div class="flex flex-col items-center justify-center mb-16">
+                <div class="bg-slate-900 text-white p-4 rounded-2xl mb-6 shadow-lg transform -rotate-3">
+                    <i data-lucide="workflow" class="w-10 h-10"></i>
+                </div>
+                <h2 class="text-4xl font-extrabold text-slate-900 text-center">Fluxo Resumo da Jornada</h2>
+                <p class="text-lg text-slate-500 mt-3 text-center">A sequência visual de etapas aplicadas pela equipe EMPREL</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-slate-50 p-8 md:p-12 rounded-3xl border border-slate-200 shadow-inner">
+                <div class="relative border-l-4 border-slate-200 ml-4 md:ml-8 space-y-12">
+                    
+                    <!-- Passo 1 -->
+                    <div class="relative pl-10 md:pl-12">
+                        <div class="absolute -left-[26px] top-0 w-12 h-12 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-slate-50">1</div>
+                        <h3 class="font-bold text-indigo-700 text-2xl">Mapeamento do Ecossistema</h3>
+                        <p class="text-slate-600 text-lg mt-2">Identificação de todos os atores e serviços envolvidos no cenário.</p>
+                    </div>
+
+                    <!-- Passo 2 -->
+                    <div class="relative pl-10 md:pl-12">
+                        <div class="absolute -left-[26px] top-0 w-12 h-12 bg-rose-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-slate-50">2</div>
+                        <h3 class="font-bold text-rose-700 text-2xl">Levantamento de Dores</h3>
+                        <p class="text-slate-600 text-lg mt-2">Mapeamento de cenários negativos e identificação dos sintomas na ponta.</p>
+                    </div>
+
+                    <!-- Passo 3 -->
+                    <div class="relative pl-10 md:pl-12">
+                        <div class="absolute -left-[26px] top-0 w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-slate-50">3</div>
+                        <h3 class="font-bold text-purple-700 text-2xl">Análise de Causa (Ishikawa)</h3>
+                        <p class="text-slate-600 text-lg mt-2">Agrupamento dos sintomas para identificar a origem estrutural do problema.</p>
+                    </div>
+
+                    <!-- Passo 4 -->
+                    <div class="relative pl-10 md:pl-12">
+                        <div class="absolute -left-[26px] top-0 w-12 h-12 bg-teal-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-slate-50">4</div>
+                        <h3 class="font-bold text-teal-700 text-2xl">Redefinição do Problema</h3>
+                        <p class="text-slate-600 text-lg mt-2">Afunilamento e escolha do foco estratégico (Comunicação) para intervenção.</p>
+                    </div>
+
+                    <!-- Passo 5 -->
+                    <div class="relative pl-10 md:pl-12">
+                        <div class="absolute -left-[26px] top-0 w-12 h-12 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-slate-50">5</div>
+                        <h3 class="font-bold text-amber-600 text-2xl">Pergunta-Desafio</h3>
+                        <p class="text-slate-600 text-lg mt-2">Transformação do problema numa oportunidade ("Como Podemos...?").</p>
+                    </div>
+
+                    <!-- Passo 6 -->
+                    <div class="relative pl-10 md:pl-12">
+                        <div class="absolute -left-[26px] top-0 w-12 h-12 bg-cyan-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-slate-50">6</div>
+                        <h3 class="font-bold text-cyan-700 text-2xl">Canva do Desafio Público</h3>
+                        <p class="text-slate-600 text-lg mt-2">Consolidação de métricas, riscos e escopo para guiar a procura de soluções.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="text-center pb-12 text-slate-400 font-medium">
+        <p>Documento estruturado para inovação pública.</p>
+    </footer>
+
+    <script>
+        // Inicializar ícones Lucide
+        lucide.createIcons();
+
+        // Lógica da Barra de Progresso
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+            document.getElementById('progress').style.width = scrolled + '%';
+        });
+
+        // Lógica para forçar a geração e o download do PDF
+        function gerarPDF() {
+            const elemento = document.getElementById('conteudo-pdf');
+            const botaoDownload = document.getElementById('area-botao-download');
+            const botaoOriginalHtml = botaoDownload.innerHTML;
+            
+            // Alterar o visual do botão para mostrar que está a carregar
+            botaoDownload.innerHTML = `<button class="flex items-center gap-2 bg-indigo-100 text-indigo-700 px-4 py-2.5 rounded-xl text-sm font-bold shadow-sm border border-indigo-200 cursor-wait"><svg class="animate-spin h-4 w-4 mr-1 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> A processar...</button>`;
+
+            // Configurações do PDF
+            const opt = {
+                margin:       [10, 10, 10, 10], // Margens [topo, esquerda, baixo, direita]
+                filename:     'Relatorio_Inovacao_EMPREL.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 }, // Força um ecrã largo para não quebrar o layout
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Após gerar, restauramos o botão ao normal
+            setTimeout(() => {
+                botaoDownload.style.display = 'none'; // Esconde na hora de tirar o "print" da tela
+                
+                html2pdf().set(opt).from(elemento).save().then(() => {
+                    botaoDownload.style.display = 'block';
+                    botaoDownload.innerHTML = botaoOriginalHtml; // Restaura o botão
+                }).catch(err => {
+                    console.error("Erro ao gerar PDF:", err);
+                    botaoDownload.style.display = 'block';
+                    botaoDownload.innerHTML = botaoOriginalHtml;
+                    alert("Não foi possível gerar o PDF. Pode tentar imprimir pressionando Ctrl+P (ou Cmd+P).");
+                });
+            }, 100);
+        }
+    </script>
+</body>
+</html>
