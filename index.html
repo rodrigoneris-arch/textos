@@ -1,530 +1,1018 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apresentação 16:4 | Inovação EMPREL</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funcionograma AgSUS</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pres:        #1B4F8A;
+  --pres-l:      #E8F1FB;
+  --pres-m:      #5A8FCA;
+  --pres-b:      #A8C4E8;
+  --dais:        #0D6E4F;
+  --dais-l:      #E4F5EE;
+  --dais-m:      #3FA87C;
+  --dais-b:      #8FCFB5;
+  --diop:        #8B3A1A;
+  --diop-l:      #FAF0EB;
+  --diop-m:      #C4663A;
+  --diop-b:      #E5B49A;
+  --dark:        #0E2A4A;
+  --text:        #1a1a1a;
+  --muted:       #5a5a5a;
+  --light:       #888;
+  --bg:          #F4F3F0;
+  --white:       #ffffff;
+  --border:      #E2DFD9;
+  --r:           10px;
+  --rs:          6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.6}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+/* ── HEADER ─────────────────────────────────────────── */
+.site-header{background:var(--dark);padding:32px 48px 0;position:relative;overflow:hidden}
+.site-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.03)}
+.header-top{max-width:1280px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding-bottom:28px}
+.header-top h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.25}
+.header-top h1 span{display:block;font-family:'Sora',sans-serif;font-size:11px;font-weight:400;color:rgba(255,255,255,0.45);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.header-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;padding-top:4px}
+.badge{background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 11px;font-size:10px;color:rgba(255,255,255,0.55);white-space:nowrap}
 
-        body {
-            background-color: #020617; /* Fundo escuro profundo (slate-950) */
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+/* ── TAB NAV ─────────────────────────────────────────── */
+.tab-nav{max-width:1280px;margin:0 auto;display:flex;gap:4px;padding-top:4px}
+.tab-btn{padding:10px 22px;border:none;border-radius:var(--r) var(--r) 0 0;font-family:'Sora',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;position:relative;top:0}
+.tab-btn.pres{background:rgba(91,143,202,0.18);color:rgba(255,255,255,0.55)}
+.tab-btn.dais{background:rgba(63,168,124,0.18);color:rgba(255,255,255,0.55)}
+.tab-btn.diop{background:rgba(196,102,58,0.18);color:rgba(255,255,255,0.55)}
+.tab-btn.active.pres{background:var(--pres-l);color:var(--pres)}
+.tab-btn.active.dais{background:var(--dais-l);color:var(--dais)}
+.tab-btn.active.diop{background:var(--diop-l);color:var(--diop)}
 
-        /* O wrapper gere o espaço disponível e centraliza o palco */
-        #presentation-wrapper {
-            flex: 1;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+/* ── SECTION ─────────────────────────────────────────── */
+.section{display:none;animation:fadeIn .25s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-        /* O palco tem um tamanho fixo de 1600x400 (Proporção exata de 16:4) */
-        #presentation-area {
-            width: 1600px;
-            height: 400px;
-            transform-origin: center center;
-            position: relative;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-radius: 12px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            overflow: hidden;
-        }
+/* ── SECTION HEADER STRIPE ──────────────────────────── */
+.section-stripe{padding:20px 48px;border-bottom:1px solid var(--border)}
+.section-stripe.pres{background:var(--pres-l)}
+.section-stripe.dais{background:var(--dais-l)}
+.section-stripe.diop{background:var(--diop-l)}
+.stripe-inner{max-width:1280px;margin:0 auto;display:flex;align-items:flex-start;gap:24px}
+.stripe-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.pres .stripe-label{color:var(--pres-m)}
+.dais .stripe-label{color:var(--dais-m)}
+.diop .stripe-label{color:var(--diop-m)}
+.stripe-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500}
+.pres .stripe-title{color:var(--pres)}
+.dais .stripe-title{color:var(--dais)}
+.diop .stripe-title{color:var(--diop)}
+.stripe-desc{font-size:11px;color:var(--muted);max-width:640px;margin-top:4px;line-height:1.55}
 
-        /* Em modo Ecrã Inteiro, removemos as bordas arredondadas para encostar aos limites */
-        :fullscreen #presentation-area {
-            border-radius: 0;
-        }
+/* ── COMMON ATTRS BLOCK ──────────────────────────────── */
+.common-block{max-width:1280px;margin:24px auto 0;padding:0 48px}
+.common-card{border-radius:var(--r);border:1px solid var(--border);background:var(--white);overflow:hidden}
+.common-head{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none}
+.common-head-icon{width:28px;height:28px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.pres .common-head-icon{background:var(--pres-l);color:var(--pres)}
+.dais .common-head-icon{background:var(--dais-l);color:var(--dais)}
+.diop .common-head-icon{background:var(--diop-l);color:var(--diop)}
+.common-head-text{flex:1}
+.common-head-text strong{font-size:12px;font-weight:600;display:block}
+.common-head-text span{font-size:10px;color:var(--light)}
+.chevron{font-size:11px;color:var(--light);transition:transform .2s}
+.chevron.open{transform:rotate(180deg)}
+.common-body{display:none;padding:0 18px 16px;border-top:1px solid var(--border)}
+.common-body.open{display:block}
+.common-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px;margin-top:12px}
+.common-item{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:var(--rs);border:0.5px solid var(--border);background:var(--bg)}
+.common-num{font-size:10px;font-weight:600;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pres .common-num{background:var(--pres-l);color:var(--pres)}
+.dais .common-num{background:var(--dais-l);color:var(--dais)}
+.diop .common-num{background:var(--diop-l);color:var(--diop)}
+.common-item p{font-size:11px;color:var(--muted);line-height:1.4}
 
-        /* Classes base para os slides */
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-            transform: scale(0.98);
-            display: flex;
-            flex-direction: column;
-        }
+/* ── FUNCIONOGRAMA GRID ──────────────────────────────── */
+.func-wrap{max-width:1280px;margin:20px auto 0;padding:0 48px;display:grid;grid-template-columns:1fr;gap:16px}
 
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-            z-index: 10;
-        }
+/* ── UNIT CARD ───────────────────────────────────────── */
+.unit-card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
+.unit-top{display:flex;align-items:flex-start;gap:0}
+.unit-accent{width:5px;flex-shrink:0;align-self:stretch;border-radius:0}
+.pres .unit-accent{background:var(--pres)}
+.dais .unit-accent{background:var(--dais)}
+.diop .unit-accent{background:var(--diop)}
+.unit-main{flex:1;padding:14px 16px 0}
+.unit-hd{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.u-badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
+.pres .u-badge{background:var(--pres);color:#fff}
+.dais .u-badge{background:var(--dais);color:#fff}
+.diop .u-badge{background:var(--diop);color:#fff}
+.u-name{font-size:13px;font-weight:600;color:var(--text);line-height:1.35;padding-top:2px}
+.u-prop{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border)}
+.unit-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-bottom:14px}
+.ucol-title{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.pres .ucol-title{color:var(--pres)}
+.dais .ucol-title{color:var(--dais)}
+.diop .ucol-title{color:var(--diop)}
+.attr-list{list-style:none}
+.attr-list li{font-size:11px;color:var(--muted);padding:3px 0 3px 13px;position:relative;line-height:1.4;border-bottom:0.5px solid #F0ECE6}
+.attr-list li:last-child{border-bottom:none}
+.attr-list li::before{content:'';position:absolute;left:3px;top:9px;width:4px;height:4px;border-radius:50%}
+.pres .attr-list li::before{background:var(--pres-m)}
+.dais .attr-list li::before{background:var(--dais-m)}
+.diop .attr-list li::before{background:var(--diop-m)}
+/* coords */
+.coords-list{display:flex;flex-direction:column;gap:6px}
+.coord{border-radius:var(--rs);border:1px solid var(--border);overflow:hidden}
+.coord-top{display:flex;align-items:flex-start;gap:8px;padding:7px 9px 5px}
+.c-badge{font-size:9px;font-weight:600;padding:2px 7px;border-radius:20px;flex-shrink:0;letter-spacing:.02em;margin-top:1px}
+.pres .c-badge{background:var(--pres);color:#fff}
+.dais .c-badge{background:var(--dais);color:#fff}
+.diop .c-badge{background:var(--diop);color:#fff}
+.c-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.35}
+.c-prop{font-size:10px;color:var(--light);line-height:1.45;padding:0 9px 7px 9px;border-top:0.5px dashed var(--border);margin-top:3px;padding-top:5px}
 
-        /* Elementos de UI sobrepostos (fora do escalonamento) */
-        .controls-overlay {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            padding: 10px 24px;
-            border-radius: 100px;
-            z-index: 50;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+/* ── ORGANOGRAMA ─────────────────────────────────────── */
+.org-wrap{max-width:1280px;margin:28px auto 0;padding:0 48px 48px}
+.org-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.pres .org-title{color:var(--pres)}
+.dais .org-title{color:var(--dais)}
+.diop .org-title{color:var(--diop)}
+.org-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.org-canvas{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:28px 20px;overflow-x:auto}
+/* tree */
+.tree{display:flex;flex-direction:column;align-items:center;gap:0}
+.tree-root{display:flex;justify-content:center}
+.org-node{border-radius:var(--rs);padding:7px 14px;font-size:11px;font-weight:500;text-align:center;white-space:nowrap;border:1.5px solid}
+.org-node.lvl0{font-size:13px;font-weight:600;padding:10px 22px}
+.pres .org-node{border-color:var(--pres);color:var(--pres);background:var(--pres-l)}
+.dais .org-node{border-color:var(--dais);color:var(--dais);background:var(--dais-l)}
+.diop .org-node{border-color:var(--diop);color:var(--diop);background:var(--diop-l)}
+.org-node.lvl1{font-size:11px}
+.org-node.lvl2{font-size:10px;font-weight:400;padding:5px 10px}
+.connector-v{width:1px;height:22px;margin:0 auto}
+.pres .connector-v{background:var(--pres-m)}
+.dais .connector-v{background:var(--dais-m)}
+.diop .connector-v{background:var(--diop-m)}
+.connector-h-wrap{display:flex;justify-content:center;position:relative}
+.connector-h{height:1px;position:absolute;top:0}
+.pres .connector-h{background:var(--pres-m)}
+.dais .connector-h{background:var(--dais-m)}
+.diop .connector-h{background:var(--diop-m)}
+.org-row{display:flex;gap:12px;justify-content:center}
+.org-branch{display:flex;flex-direction:column;align-items:center;gap:0}
+.org-sub-row{display:flex;gap:6px;justify-content:center}
+.org-sub-branch{display:flex;flex-direction:column;align-items:center}
 
-        button.nav-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-
-        button.nav-btn:hover { background: rgba(255,255,255,0.2); }
-        button.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-        /* Estrutura interna dos slides adaptada para pouca altura (400px) */
-        .slide-header {
-            padding: 1.5rem 3rem 0.5rem 3rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .slide-body {
-            flex: 1;
-            padding: 0.5rem 3rem 1.5rem 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-    </style>
+@media(max-width:860px){
+  .unit-cols{grid-template-columns:1fr}
+  .site-header,.section-stripe,.common-block,.func-wrap,.org-wrap{padding-left:18px;padding-right:18px}
+  .tab-btn{padding:9px 14px;font-size:11px}
+}
+</style>
 </head>
 <body>
 
-    <div id="presentation-wrapper">
-        <!-- Container da Apresentação Fixa (1600x400) - Proporção 16:4 -->
-        <div id="presentation-area">
+<!-- ══════════════════ SITE HEADER ══════════════════ -->
+<div class="site-header">
+  <div class="header-top">
+    <h1>
+      <span>Agência Brasileira de Apoio à Gestão do SUS</span>
+      Funcionograma Organizacional
+    </h1>
+    <div class="header-badges">
+      <span class="badge">Aprovado pelo Conselho Deliberativo</span>
+      <span class="badge">Abril de 2024</span>
+      <span class="badge">3 Diretorias · 19 Unidades</span>
+    </div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn pres active" onclick="showTab('pres')">Presidência (PRES)</button>
+    <button class="tab-btn dais" onclick="showTab('dais')">Dir. Atenção Integral à Saúde (DAIS)</button>
+    <button class="tab-btn diop" onclick="showTab('diop')">Dir. de Operações (DIOP)</button>
+  </div>
+</div>
 
-            <!-- SLIDE 1: CAPA -->
-            <div class="slide active">
-                <div class="w-full h-full flex items-center justify-between bg-gradient-to-br from-indigo-800 via-purple-800 to-indigo-900 text-white px-16 relative overflow-hidden">
-                    <!-- Decorativo -->
-                    <div class="absolute -top-32 -right-32 w-[600px] h-[600px] bg-white opacity-5 rounded-full blur-3xl"></div>
-                    <div class="absolute -bottom-32 -left-32 w-[600px] h-[600px] bg-purple-400 opacity-10 rounded-full blur-3xl"></div>
-                    
-                    <div class="z-10 w-2/3 pr-8">
-                        <h1 class="text-5xl font-extrabold mb-4 tracking-tight">Processo de Inovação EMPREL</h1>
-                        <h2 class="text-3xl font-light text-indigo-200 mb-6">Estudo de Caso: <strong class="font-bold text-white">Absenteísmo nas Carretas</strong></h2>
-                        
-                        <div class="inline-flex bg-black/20 px-5 py-2.5 rounded-full border border-white/10 text-indigo-100 items-center gap-3">
-                            <i data-lucide="git-commit" class="w-5 h-5"></i>
-                            <span class="text-lg">Metodologia de Design Thinking aplicada à Inovação Pública</span>
-                        </div>
-                    </div>
 
-                    <div class="z-10 w-1/3 flex justify-end">
-                        <div class="bg-white/10 p-8 rounded-[2rem] backdrop-blur-sm border border-white/10 shadow-2xl">
-                            <i data-lucide="book-open" class="w-32 h-32 text-indigo-200"></i>
-                        </div>
-                    </div>
-                </div>
+<!-- ══════════════════════════════════════════════════
+     SEÇÃO PRESIDÊNCIA
+══════════════════════════════════════════════════ -->
+<div id="tab-pres" class="section pres active">
+
+  <div class="section-stripe pres">
+    <div class="stripe-inner">
+      <div>
+        <div class="stripe-label">Nível Estratégico</div>
+        <div class="stripe-title">Presidência (PRES)</div>
+        <div class="stripe-desc">Dirige, supervisiona e articula as atividades estratégicas, técnico-administrativas e institucionais da AgSUS, atuando na definição de diretrizes, articulação interinstitucional e gestão estratégica para o fortalecimento da governança, transparência, integridade e inovação.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Atribuições Comuns -->
+  <div class="common-block pres">
+    <div class="common-card">
+      <div class="common-head" onclick="toggleCommon('common-pres')">
+        <div class="common-head-icon">≡</div>
+        <div class="common-head-text">
+          <strong>Atribuições Comuns a Todas as Diretorias e Unidades</strong>
+          <span>Clique para expandir · 14 atribuições compartilhadas por toda a estrutura organizacional</span>
+        </div>
+        <div class="chevron" id="chev-common-pres">▾</div>
+      </div>
+      <div class="common-body" id="common-pres">
+        <div class="common-grid">
+          <div class="common-item"><div class="common-num">I</div><p>Assegurar a conformidade legal dos atos e a regularidade fiscal da AgSUS, atuando de acordo com normas, políticas internas e legislações aplicáveis</p></div>
+          <div class="common-item"><div class="common-num">II</div><p>Atuar com ética e transparência em todas as atividades</p></div>
+          <div class="common-item"><div class="common-num">III</div><p>Implementar estratégias para identificar, avaliar e mitigar riscos de gestão</p></div>
+          <div class="common-item"><div class="common-num">IV</div><p>Fornecer informações precisas e em tempo hábil para apoiar a alta gestão na tomada de decisão e na articulação com os parceiros da Agência</p></div>
+          <div class="common-item"><div class="common-num">V</div><p>Subsidiar os órgãos de governança e de controle interno e externo com dados, informações e resultados estratégicos da Agência</p></div>
+          <div class="common-item"><div class="common-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações</p></div>
+          <div class="common-item"><div class="common-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional</p></div>
+          <div class="common-item"><div class="common-num">IX</div><p>Promover a integração e o trabalho entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave</p></div>
+          <div class="common-item"><div class="common-num">X</div><p>Executar as diretrizes de segurança da informação</p></div>
+          <div class="common-item"><div class="common-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos</p></div>
+          <div class="common-item"><div class="common-num">XII</div><p>Propor e promover parcerias de interesse da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação do Presidente da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas pela Presidência ou pela Diretoria Executiva</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Funcionograma PRES -->
+  <div class="func-wrap pres">
+
+    <!-- GAB -->
+    <div class="unit-card pres">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">GAB</span><span class="u-name">Gabinete da Presidência</span></div>
+          <div class="u-prop">Apoia o Diretor-Presidente no cumprimento de suas responsabilidades, coordenando as atividades administrativas da Presidência.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerenciar agenda e compromissos do Diretor-Presidente</li>
+                <li>Gerir a Política de Gestão Documental</li>
+                <li>Gerir o Plano de Segurança da Informação em parceria com o DPO</li>
+                <li>Coordenar participação institucional em eventos estratégicos</li>
+                <li>Executar responsabilidades delegadas pelo Diretor-Presidente</li>
+              </ul>
             </div>
-
-            <!-- SLIDE 2: CONTEXTUALIZAÇÃO -->
-            <div class="slide">
-                <div class="slide-header border-b border-slate-200">
-                    <i data-lucide="info" class="w-8 h-8 text-indigo-600"></i>
-                    <h2 class="text-3xl font-bold text-slate-800">O Problema (O "Sintoma")</h2>
-                </div>
-                <div class="slide-body">
-                    <div class="grid grid-cols-[2fr_1fr] gap-10 h-full items-center">
-                        <div>
-                            <p class="text-xl text-slate-600 leading-relaxed mb-4">Na gestão pública, a urgência em resolver problemas faz com que as equipas saltem frequentemente para a solução, ignorando as causas reais.</p>
-                            <h3 class="text-lg font-bold text-slate-800 mb-3">O Cenário Atual:</h3>
-                            <div class="flex gap-4">
-                                <div class="flex-1 flex items-center text-base text-slate-700 bg-rose-50 p-3 rounded-xl border border-rose-100">
-                                    <i data-lucide="alert-circle" class="w-6 h-6 mr-3 text-rose-500 shrink-0"></i> Alto índice de absenteísmo.
-                                </div>
-                                <div class="flex-1 flex items-center text-base text-slate-700 bg-rose-50 p-3 rounded-xl border border-rose-100">
-                                    <i data-lucide="clock" class="w-6 h-6 mr-3 text-rose-500 shrink-0"></i> Equipas técnicas ociosas.
-                                </div>
-                                <div class="flex-1 flex items-center text-base text-slate-700 bg-rose-50 p-3 rounded-xl border border-rose-100">
-                                    <i data-lucide="users" class="w-6 h-6 mr-3 text-rose-500 shrink-0"></i> Longas filas noutras unidades.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-indigo-50 rounded-3xl h-full py-6 flex items-center justify-center border-4 border-white shadow-inner">
-                            <i data-lucide="search-x" class="w-28 h-28 text-indigo-200"></i>
-                        </div>
-                    </div>
-                </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CGDOC</span><span class="c-name">Coordenação Especial de Gestão Documental</span></div><div class="c-prop">Operacionaliza a produção, uso, armazenamento e destinação de documentos, garantindo padronização, preservação da memória institucional e conformidade arquivística com a Política de Gestão Documental.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COEPI</span><span class="c-name">Coordenação Especial de Eventos e Participação Institucional</span></div><div class="c-prop">Planeja, organiza e executa eventos estratégicos e ações de apoio financeiro, fortalecendo o relacionamento com públicos de interesse e a visibilidade e imagem institucional da AgSUS.</div></div>
+              </div>
             </div>
-
-            <!-- SLIDE 3: ETAPA 1 -->
-            <div class="slide">
-                <div class="slide-header">
-                    <div class="bg-indigo-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">1</div>
-                    <h2 class="text-3xl font-bold text-indigo-900">Mapeamento do Ecossistema</h2>
-                </div>
-                <div class="slide-body">
-                    <p class="text-xl text-slate-600 mb-4">O primeiro passo é estabelecer uma visão macro de todo o território antes de propor qualquer intervenção.</p>
-                    
-                    <div class="grid grid-cols-3 gap-6">
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-indigo-500 flex items-center gap-4 hover:scale-[1.02] transition-transform">
-                            <i data-lucide="users" class="w-10 h-10 text-indigo-500 shrink-0"></i>
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-800 mb-1">Atores</h3>
-                                <p class="text-sm text-slate-600">Pacientes, profissionais de saúde, gestores e AgSUS.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-indigo-500 flex items-center gap-4 hover:scale-[1.02] transition-transform">
-                            <i data-lucide="map-pin" class="w-10 h-10 text-indigo-500 shrink-0"></i>
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-800 mb-1">Locais</h3>
-                                <p class="text-sm text-slate-600">Unidades de Saúde, Carretas Móveis e sistemas digitais.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-indigo-500 flex items-center gap-4 hover:scale-[1.02] transition-transform">
-                            <i data-lucide="activity" class="w-10 h-10 text-indigo-500 shrink-0"></i>
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-800 mb-1">Serviços</h3>
-                                <p class="text-sm text-slate-600">Consultas, exames e entregas de valor na jornada.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SLIDE 4: ETAPA 2 -->
-            <div class="slide">
-                <div class="slide-header">
-                    <div class="bg-rose-500 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">2</div>
-                    <h2 class="text-3xl font-bold text-rose-900">Levantamento de Dores e Cenários</h2>
-                </div>
-                <div class="slide-body">
-                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex gap-6 items-center">
-                        <div class="bg-rose-100 p-5 rounded-full shrink-0 ml-4">
-                            <i data-lucide="clipboard-list" class="w-16 h-16 text-rose-600"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">Sintomas captados no terreno:</h3>
-                            <ul class="text-base text-slate-600 space-y-2 list-disc pl-5">
-                                <li>Dificuldades de acessibilidade e transporte dos pacientes.</li>
-                                <li>Aparelhos médicos avariados por falta de manutenção preventiva.</li>
-                                <li><strong class="text-rose-700">Alto índice de absenteísmo</strong> (agendamentos sem comparência).</li>
-                            </ul>
-                        </div>
-                        <div class="w-1/3 bg-rose-50 p-5 border-l-4 border-rose-500 text-rose-800 text-base font-medium rounded-r-2xl mr-4">
-                            <i data-lucide="lightbulb" class="inline-block w-4 h-4 mr-1 text-rose-600"></i>
-                            O objetivo aqui não é julgar, mas recolher evidências brutas das fricções do serviço na ponta.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SLIDE 5: ETAPA 3 -->
-            <div class="slide">
-                <div class="slide-header">
-                    <div class="bg-purple-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">3</div>
-                    <h2 class="text-3xl font-bold text-purple-900">Análise de Causa e Efeito (Ishikawa)</h2>
-                </div>
-                <div class="slide-body">
-                    <p class="text-xl text-slate-600 mb-4">Estruturação do caos: agrupar os sintomas para encontrar a origem estrutural.</p>
-                    
-                    <div class="grid grid-cols-[1fr_1.5fr] gap-6 h-full items-stretch">
-                        <div class="flex flex-col justify-center gap-3">
-                            <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl flex items-center gap-4">
-                                <div class="bg-purple-200 p-2 rounded-lg"><i data-lucide="settings" class="text-purple-700 w-5 h-5"></i></div>
-                                <span class="text-base font-semibold text-slate-700">Falhas em Processos</span>
-                            </div>
-                            <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl flex items-center gap-4">
-                                <div class="bg-purple-200 p-2 rounded-lg"><i data-lucide="users" class="text-purple-700 w-5 h-5"></i></div>
-                                <span class="text-base font-semibold text-slate-700">Falta de Informação (Pessoas)</span>
-                            </div>
-                            <div class="bg-purple-50 border border-purple-200 p-3 rounded-xl flex items-center gap-4">
-                                <div class="bg-purple-200 p-2 rounded-lg"><i data-lucide="thermometer" class="text-purple-700 w-5 h-5"></i></div>
-                                <span class="text-base font-semibold text-slate-700">Meio Ambiente & Equipamentos</span>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white p-6 rounded-2xl shadow-md border-l-8 border-purple-600 flex flex-col justify-center">
-                            <h3 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
-                                <i data-lucide="search" class="text-purple-600 w-5 h-5"></i> A Grande Descoberta
-                            </h3>
-                            <p class="text-base text-slate-600 leading-relaxed">
-                                A ociosidade das carretas <strong class="text-slate-800">não era um problema de infraestrutura</strong> ou falta de médicos. Era o <em>"efeito colateral"</em> de causas estruturais ligadas a falhas de processo de agendamento e falta de compromisso/informação das pessoas.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SLIDE 6: ETAPA 4 -->
-            <div class="slide">
-                <div class="slide-header">
-                    <div class="bg-teal-500 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">4</div>
-                    <h2 class="text-3xl font-bold text-teal-900">(Re)definição do Problema</h2>
-                </div>
-                <div class="slide-body">
-                    <p class="text-xl text-slate-600 mb-5">A fase de convergência: focar os esforços escolhendo a batalha certa para lutar.</p>
-                    
-                    <div class="grid grid-cols-2 gap-6 items-stretch">
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition-transform">
-                            <div class="w-14 h-14 shrink-0 bg-teal-100 rounded-full flex items-center justify-center">
-                                <i data-lucide="target" class="w-7 h-7 text-teal-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-800 mb-1">O Foco Escolhido</h3>
-                                <p class="text-sm text-slate-600">Concentrar os esforços na <strong>Comunicação Efetiva</strong> como o principal estrangulamento gerador do absenteísmo.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition-transform">
-                            <div class="w-14 h-14 shrink-0 bg-teal-100 rounded-full flex items-center justify-center">
-                                <i data-lucide="alert-triangle" class="w-7 h-7 text-teal-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-800 mb-1">Fatores Limitadores</h3>
-                                <p class="text-sm text-slate-600">Detetados problemas socioculturais como o baixo <strong>Letramento Digital</strong> da população atendida e silos de dados.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SLIDE 7: ETAPA 5 -->
-            <div class="slide">
-                <div class="slide-header">
-                    <div class="bg-amber-500 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">5</div>
-                    <h2 class="text-3xl font-bold text-amber-900">A Pergunta-Desafio (How Might We)</h2>
-                </div>
-                <div class="slide-body text-center flex flex-col items-center justify-center">
-                    <p class="text-xl text-slate-600 mb-5">Um problema bem definido precisa de inspirar a equipa a criar soluções abrangentes.</p>
-                    
-                    <div class="bg-slate-900 text-white w-full max-w-4xl p-8 rounded-[2rem] shadow-xl relative border-b-4 border-amber-500">
-                        <h3 class="text-3xl font-bold leading-tight relative z-10">
-                            "Como podemos <span class="text-amber-400">tornar efetiva a comunicação</span> com os utilizadores para <span class="text-amber-400">reduzir o absenteísmo</span> nas carretas e a ociosidade da equipa?"
-                        </h3>
-                    </div>
-                    
-                    <p class="text-base text-slate-500 mt-5 bg-amber-50 px-5 py-2 rounded-full border border-amber-100 inline-flex items-center">
-                        <i data-lucide="lightbulb" class="w-4 h-4 mr-2 text-amber-500 shrink-0"></i>
-                        Esta frase não dita a solução (não pede "uma app"), deixando o campo livre para inovação real.
-                    </p>
-                </div>
-            </div>
-
-            <!-- SLIDE 8: ETAPA 6 -->
-            <div class="slide">
-                <div class="slide-header">
-                    <div class="bg-cyan-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl">6</div>
-                    <h2 class="text-3xl font-bold text-cyan-900">Consolidação (Canva do Desafio)</h2>
-                </div>
-                <div class="slide-body">
-                    <p class="text-xl text-slate-600 mb-5">O artefacto final: um "Termo de Referência" moderno que estabelece a governação para a ideação.</p>
-                    
-                    <div class="grid grid-cols-2 gap-6 items-stretch">
-                        <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-200 shadow-sm flex items-center gap-5">
-                            <div class="bg-cyan-100 w-14 h-14 shrink-0 rounded-xl flex items-center justify-center text-cyan-700">
-                                <i data-lucide="bar-chart-2" class="w-7 h-7"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-800 mb-1">Métricas de Sucesso</h3>
-                                <ul class="text-sm text-slate-700 space-y-1">
-                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i> Redução visível da fila de espera externa.</li>
-                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-500 shrink-0"></i> Aumento da taxa de uso da capacidade das carretas.</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200 shadow-sm flex items-center gap-5">
-                            <div class="bg-amber-100 w-14 h-14 shrink-0 rounded-xl flex items-center justify-center text-amber-700">
-                                <i data-lucide="shield-alert" class="w-7 h-7"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-800 mb-1">Gestão de Riscos</h3>
-                                <ul class="text-sm text-slate-700 space-y-1">
-                                    <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-amber-500 shrink-0"></i> Falta de letramento digital impedir o uso da solução.</li>
-                                    <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4 text-amber-500 shrink-0"></i> Falhas de interoperabilidade entre sistemas de saúde.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SLIDE 9: RESUMO -->
-            <div class="slide">
-                <div class="w-full h-full flex flex-col justify-center px-16 bg-white relative overflow-hidden">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="bg-indigo-100 w-14 h-14 rounded-full flex items-center justify-center">
-                            <i data-lucide="git-commit" class="w-7 h-7 text-indigo-600"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-3xl font-bold text-slate-800">Fluxo Resumo da Jornada</h2>
-                            <p class="text-base text-slate-500 mt-1">Da complexidade do ecossistema à clareza do desafio.</p>
-                        </div>
-                    </div>
-
-                    <!-- Timeline ultra-widescreen amigável -->
-                    <div class="w-full flex justify-between items-start relative mt-2">
-                        <!-- Linha conectora -->
-                        <div class="absolute top-7 left-10 right-10 h-1.5 bg-slate-100 -z-10"></div>
-                        
-                        <!-- Passos -->
-                        <div class="flex flex-col items-center gap-3 w-40">
-                            <div class="w-14 h-14 bg-indigo-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">1</div>
-                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Mapear<br>Ecossistema</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-3 w-40">
-                            <div class="w-14 h-14 bg-rose-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">2</div>
-                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Levantar<br>Dores</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-3 w-40">
-                            <div class="w-14 h-14 bg-purple-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">3</div>
-                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Analisar<br>Causas</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-3 w-40">
-                            <div class="w-14 h-14 bg-teal-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">4</div>
-                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Redefinir<br>Problema</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-3 w-40">
-                            <div class="w-14 h-14 bg-amber-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">5</div>
-                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Pergunta<br>Desafio</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-3 w-40">
-                            <div class="w-14 h-14 bg-cyan-500 text-white rounded-full flex items-center justify-center text-xl font-bold shadow-lg ring-4 ring-white">6</div>
-                            <span class="font-bold text-slate-700 text-center text-sm uppercase leading-tight">Canva<br>Desafio</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div> <!-- Fim Container Fix 1600x400 -->
-    </div> <!-- Fim Wrapper Dinâmico -->
-
-    <!-- Controlos de Navegação Flutuantes -->
-    <div class="controls-overlay">
-        <button id="btn-prev" class="nav-btn" onclick="mudarSlide(-1)">
-            <i data-lucide="chevron-left" class="w-6 h-6"></i>
-        </button>
-        <span id="slide-counter" class="font-mono text-sm font-bold min-w-[50px] text-center">1 / 9</span>
-        <button id="btn-next" class="nav-btn" onclick="mudarSlide(1)">
-            <i data-lucide="chevron-right" class="w-6 h-6"></i>
-        </button>
-        <div class="w-px h-6 bg-white/20 mx-2"></div>
-        <button class="nav-btn" onclick="toggleFullscreen()" title="Ecrã Inteiro">
-            <i data-lucide="maximize" class="w-5 h-5"></i>
-        </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script>
-        lucide.createIcons();
+    <!-- SEAR -->
+    <div class="unit-card pres">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">SEAR</span><span class="u-name">Secretaria Executiva e de Articulação</span></div>
+          <div class="u-prop">Gere as atividades estratégicas da AgSUS, articulando a Presidência, órgãos de governança, unidades internas e parceiros externos para promover o alcance dos objetivos institucionais.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Prover apoio estratégico, tático e operacional à Direx</li>
+                <li>Implantar e supervisionar escritórios regionais e distritais</li>
+                <li>Gerir elaboração e padronização de atos normativos</li>
+                <li>Coordenar instrumentos de governança interna</li>
+                <li>Acompanhar Contrato de Gestão e Termos de Parceria</li>
+                <li>Articular parcerias estratégicas com entidades públicas e privadas</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">COADI</span><span class="c-name">Coordenação de Articulação e Desenvolvimento Institucional</span></div><div class="c-prop">Apoia o desenvolvimento e monitoramento da estrutura organizacional, gestão dos normativos internos e acompanhamento das responsabilidades institucionais, assegurando coerência com os normativos internos da Agência.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COES</span><span class="c-name">Coordenação dos Escritórios</span></div><div class="c-prop">Coordena e supervisiona a implantação e funcionamento dos escritórios regionais e distritais, promovendo apoio qualificado à execução de projetos e programas descentralizados da Agência.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // ---- Lógica de Escala Inteligente (Garante o 16:4 em qualquer ecrã) ----
-        function dimensionarApresentacao() {
-            const wrapper = document.getElementById('presentation-wrapper');
-            const area = document.getElementById('presentation-area');
-            
-            // O container fixo tem 1600x400. Calculamos qual a escala necessária para caber no ecrã atual
-            // Deixamos um respiro de margem (multiplicando por 0.95)
-            const escalaLargura = (wrapper.clientWidth * 0.95) / 1600;
-            const escalaAltura = (wrapper.clientHeight * 0.85) / 400; 
-            
-            // Escolhemos a menor escala para garantir que nunca corta a tela
-            const escalaFinal = Math.min(escalaLargura, escalaAltura);
-            
-            area.style.transform = `scale(${escalaFinal})`;
-        }
+    <!-- UINT -->
+    <div class="unit-card pres">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UINT</span><span class="u-name">Unidade de Integridade</span></div>
+          <div class="u-prop">Promove e zela pela probidade e integridade institucional, sustentando transparência, auditoria interna, prevenção e apuração de irregularidades e gestão da ética.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerir o Programa de Integridade da AgSUS</li>
+                <li>Promover transparência e acesso à informação</li>
+                <li>Executar auditorias e consultorias internas independentes</li>
+                <li>Apurar vulnerabilidades e responsabilidades de pessoas físicas</li>
+                <li>Secretariar a Comissão de Ética da AgSUS</li>
+                <li>Manter ativos os canais de denúncia (plataforma Fala.BR)</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">AUDINT</span><span class="c-name">Coordenação de Auditoria Interna</span></div><div class="c-prop">Executa atividade independente e objetiva de avaliação e consultoria, com abordagem sistemática e disciplinada para avaliação da efetividade dos processos de gerenciamento de riscos, controle interno e governança.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">PREV</span><span class="c-name">Coordenação de Prevenção e Disciplina</span></div><div class="c-prop">Executa ações de prevenção, orientação e instrução de processos de apuração de condutas, zelando pela conformidade com o Código de Conduta e Ética e o Programa de Integridade da AgSUS.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        window.addEventListener('resize', dimensionarApresentacao);
-        // Pequeno atraso na inicialização para o CSS computar os tamanhos corretos
-        setTimeout(dimensionarApresentacao, 100);
+    <!-- UJUR -->
+    <div class="unit-card pres">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UJUR</span><span class="u-name">Unidade Jurídica</span></div>
+          <div class="u-prop">Fornece aconselhamento e soluções jurídicas, garantindo conformidade com o ordenamento jurídico e representando a AgSUS em processos judiciais e extrajudiciais.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Orientar a Direx e unidades em questões jurídicas</li>
+                <li>Examinar legalidade de contratos, compras e atos normativos</li>
+                <li>Representar juridicamente a AgSUS em juízo</li>
+                <li>Monitorar passivo jurídico e prevenir litígios</li>
+                <li>Emitir pareceres e manifestações jurídicas diversas</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CJC</span><span class="c-name">Coordenação Jurídica Consultivo</span></div><div class="c-prop">Presta suporte técnico-consultivo em matérias jurídicas, orientando a Direx e as unidades, examinando a legalidade de atos, contratos e procedimentos, e propondo soluções que garantam segurança jurídica.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CJCC</span><span class="c-name">Coordenação Jurídica Contencioso Cível</span></div><div class="c-prop">Representa juridicamente a AgSUS em demandas cíveis, acompanhando as ações processuais necessárias, monitorando o passivo jurídico e implementando medidas para mitigação de litígios.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CJCT</span><span class="c-name">Coordenação Jurídica Contencioso Trabalhista</span></div><div class="c-prop">Representa juridicamente a AgSUS em demandas trabalhistas, acompanhando as ações processuais, monitorando o passivo jurídico trabalhista e implementando medidas para mitigação de litígios.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // ---- Lógica de Navegação dos Slides ----
-        let slideAtual = 0;
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        
-        const contador = document.getElementById('slide-counter');
-        const btnPrev = document.getElementById('btn-prev');
-        const btnNext = document.getElementById('btn-next');
+    <!-- UCOM -->
+    <div class="unit-card pres">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UCOM</span><span class="u-name">Unidade de Comunicação</span></div>
+          <div class="u-prop">Gerencia as ações de comunicação, zelando pela reputação e publicidade das atribuições e competências da AgSUS no apoio à gestão do SUS.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerir a Política e o Plano de Comunicação da AgSUS</li>
+                <li>Gerir relacionamento com a imprensa e ações de divulgação</li>
+                <li>Coordenar atuação em mídias e redes sociais</li>
+                <li>Criar e gerir a identidade visual e logomarca institucional</li>
+                <li>Monitorar matérias de interesse nos meios de comunicação</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">COINT</span><span class="c-name">Coordenação de Comunicação Interna</span></div><div class="c-prop">Planeja, coordena e executa ações de comunicação interna, garantindo integração, consistência e fluidez da informação entre as unidades, zelando pela identidade institucional nos canais internos.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COEXT</span><span class="c-name">Coordenação de Comunicação Externa</span></div><div class="c-prop">Planeja, coordena e executa ações de comunicação externa, fortalecendo o relacionamento com imprensa, parceiros e sociedade, assegurando consistência da imagem pública e alinhamento das narrativas.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        function atualizarUI() {
-            slides.forEach((slide, index) => {
-                if(index === slideAtual) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
-            });
+    <!-- UFOC -->
+    <div class="unit-card pres">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UFOC</span><span class="u-name">Unidade de Finanças, Orçamento, Contabilidade e Prestação de Contas</span></div>
+          <div class="u-prop">Assegura gestão eficaz e transparente nas esferas financeira, orçamentária e contábil, visando sustentabilidade e eficiência operacional da Agência.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerir execução orçamentária, financeira e contábil</li>
+                <li>Gerir ativos financeiros e otimizar fluxo de caixa</li>
+                <li>Elaborar prestação de contas dos contratos de gestão</li>
+                <li>Garantir conformidade fiscal, tributária e contábil</li>
+                <li>Orientar demandas orçamentárias das unidades</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CCONTAB</span><span class="c-name">Coordenação de Contabilidade</span></div><div class="c-prop">Coordena as atividades contábeis, assegurando fidedignidade dos registros, conformidade com a legislação e geração de informações econômico-financeiras que subsidiem a tomada de decisão e a prestação de contas.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CPC</span><span class="c-name">Coordenação de Prestação de Contas</span></div><div class="c-prop">Assegura conformidade documental, rastreabilidade e transparência dos processos de prestação de contas, integrando informações técnico-contábeis e orçamentárias com as obrigações legais e contratuais.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COFIN</span><span class="c-name">Coordenação de Finanças</span></div><div class="c-prop">Coordena as operações financeiras da AgSUS, assegurando cumprimento tempestivo das obrigações, correta conciliação bancária, otimização de aplicações e suporte documental para transparência.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CORC</span><span class="c-name">Coordenação de Orçamento</span></div><div class="c-prop">Coordena o ciclo orçamentário de forma integrada, garantindo planejamento, controle e alocação eficiente dos recursos em alinhamento com as diretrizes estratégicas e o Contrato de Gestão.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COFIT</span><span class="c-name">Coordenação de Conformidade Fiscal e Tributária</span></div><div class="c-prop">Assegura a conformidade fiscal e tributária em todas as esferas federativas, garantindo correta emissão de notas fiscais, recolhimento de tributos e transmissão de obrigações acessórias.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            contador.innerText = `${slideAtual + 1} / ${totalSlides}`;
-            
-            btnPrev.disabled = slideAtual === 0;
-            btnNext.disabled = slideAtual === totalSlides - 1;
-        }
+    <!-- UPGE -->
+    <div class="unit-card pres">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UPGE</span><span class="u-name">Unidade de Planejamento e Gestão Estratégica</span></div>
+          <div class="u-prop">Desenvolve e implementa o planejamento institucional, assegurando qualidade e gestão de riscos nos planos, programas, projetos e processos da Agência.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerir o Planejamento Institucional</li>
+                <li>Monitorar e avaliar metas do plano estratégico</li>
+                <li>Gerir portfólio institucional de programas e projetos</li>
+                <li>Gerir Política de Qualidade e Gestão da Qualidade</li>
+                <li>Gerir a Política de Gestão de Riscos da AgSUS</li>
+                <li>Elaborar relatórios de gestão e de contratos de gestão</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CGR</span><span class="c-name">Coordenação de Gestão de Riscos</span></div><div class="c-prop">Implementa e monitora a Política e o Sistema de Gestão de Riscos, atuando como segunda linha de defesa para supervisão, suporte técnico e alinhamento contínuo das ações de gestão de riscos institucionais.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COP</span><span class="c-name">Coordenação de Planejamento Institucional</span></div><div class="c-prop">Coordena o processo de planejamento institucional, garantindo alinhamento estratégico das metas e indicadores, integrando informações gerenciais e monitorando resultados para subsidiar a tomada de decisão.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CQI</span><span class="c-name">Coordenação de Qualidade Institucional</span></div><div class="c-prop">Executa e acompanha as ações do Sistema de Gestão da Qualidade, promovendo gestão por processos, padronização e conformidade institucional, contribuindo para a melhoria contínua e eficiência operacional.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        function mudarSlide(direcao) {
-            slideAtual += direcao;
-            if (slideAtual < 0) slideAtual = 0;
-            if (slideAtual >= totalSlides) slideAtual = totalSlides - 1;
-            atualizarUI();
-        }
+  </div><!-- /func-wrap pres -->
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                mudarSlide(1);
-            } else if (e.key === 'ArrowLeft') {
-                mudarSlide(-1);
-            }
-        });
+  <!-- ORGANOGRAMA PRES -->
+  <div class="org-wrap pres">
+    <div class="org-title pres">Organograma — Presidência (PRES)</div>
+    <div class="org-canvas">
+      <div class="tree pres">
+        <div class="tree-root"><div class="org-node lvl0">Presidência (PRES)</div></div>
+        <div class="connector-v"></div>
+        <div style="position:relative;width:100%">
+          <div class="org-row" id="pres-row1">
+            <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">GAB</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CGDOC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COEPI</div></div></div></div>
+            <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">SEAR</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COADI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COES</div></div></div></div>
+            <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UINT</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">AUDINT</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">PREV</div></div></div></div>
+            <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UJUR</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CJC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CJCC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CJCT</div></div></div></div>
+            <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UCOM</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COINT</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COEXT</div></div></div></div>
+            <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UFOC</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CCONTAB</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CPC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COFIN</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CORC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COFIT</div></div></div></div>
+            <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UPGE</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CGR</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COP</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CQI</div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // ---- Ecrã Inteiro ----
-        function toggleFullscreen() {
-            const area = document.documentElement; 
-            if (!document.fullscreenElement) {
-                if (area.requestFullscreen) area.requestFullscreen();
-                else if (area.webkitRequestFullscreen) area.webkitRequestFullscreen();
-                else if (area.msRequestFullscreen) area.msRequestFullscreen();
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-                else if (document.msExitFullscreen) document.msExitFullscreen();
-            }
-            // Redimensionar logo após entrar/sair
-            setTimeout(dimensionarApresentacao, 200);
-        }
+</div><!-- /pres -->
 
-        atualizarUI();
-    </script>
+
+<!-- ══════════════════════════════════════════════════
+     SEÇÃO DAIS
+══════════════════════════════════════════════════ -->
+<div id="tab-dais" class="section dais">
+
+  <div class="section-stripe dais">
+    <div class="stripe-inner">
+      <div>
+        <div class="stripe-label">Nível Estratégico</div>
+        <div class="stripe-title">Diretoria de Atenção Integral à Saúde (DAIS)</div>
+        <div class="stripe-desc">Planeja, define e dirige as diretrizes e estratégias voltadas ao desenvolvimento dos serviços de saúde contratados, estabelecendo parâmetros para processos de trabalho, dimensionamento e provimento de pessoal, além de promover ensino, pesquisa, inovação e transformação digital em saúde.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-block dais">
+    <div class="common-card">
+      <div class="common-head" onclick="toggleCommon('common-dais')">
+        <div class="common-head-icon">≡</div>
+        <div class="common-head-text">
+          <strong>Atribuições Comuns a Todas as Diretorias e Unidades</strong>
+          <span>Clique para expandir · 14 atribuições compartilhadas por toda a estrutura organizacional</span>
+        </div>
+        <div class="chevron" id="chev-common-dais">▾</div>
+      </div>
+      <div class="common-body" id="common-dais">
+        <div class="common-grid">
+          <div class="common-item"><div class="common-num">I</div><p>Assegurar a conformidade legal dos atos e a regularidade fiscal da AgSUS, atuando de acordo com normas, políticas internas e legislações aplicáveis</p></div>
+          <div class="common-item"><div class="common-num">II</div><p>Atuar com ética e transparência em todas as atividades</p></div>
+          <div class="common-item"><div class="common-num">III</div><p>Implementar estratégias para identificar, avaliar e mitigar riscos de gestão</p></div>
+          <div class="common-item"><div class="common-num">IV</div><p>Fornecer informações precisas e em tempo hábil para apoiar a alta gestão na tomada de decisão e na articulação com os parceiros da Agência</p></div>
+          <div class="common-item"><div class="common-num">V</div><p>Subsidiar os órgãos de governança e de controle interno e externo com dados, informações e resultados estratégicos da Agência</p></div>
+          <div class="common-item"><div class="common-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações</p></div>
+          <div class="common-item"><div class="common-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional</p></div>
+          <div class="common-item"><div class="common-num">IX</div><p>Promover a integração e o trabalho entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave</p></div>
+          <div class="common-item"><div class="common-num">X</div><p>Executar as diretrizes de segurança da informação</p></div>
+          <div class="common-item"><div class="common-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos</p></div>
+          <div class="common-item"><div class="common-num">XII</div><p>Propor e promover parcerias de interesse da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação do Presidente da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas pela Presidência ou pela Diretoria Executiva</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="func-wrap dais">
+
+    <!-- USI -->
+    <div class="unit-card dais">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">USI</span><span class="u-name">Unidade de Saúde Indígena</span></div>
+          <div class="u-prop">Gere a execução de ações e serviços voltados à Saúde Indígena nos diferentes níveis de atenção, promovendo interculturalidade e atendendo às especificidades dos povos indígenas.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Implementar ações e serviços de saúde indígena nos territórios</li>
+                <li>Garantir respeito às especificidades culturais e à PNSPI</li>
+                <li>Apoiar processos formativos com foco em interculturalidade</li>
+                <li>Monitorar e avaliar continuamente a execução das ações</li>
+                <li>Articular com SESAI, DSEI e Controle Social Indígena</li>
+                <li>Planejar o atendimento aos gestores e representações indígenas</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CAESI</span><span class="c-name">Coord. Atenção Especializada na Saúde Indígena</span></div><div class="c-prop">Promove a qualificação e ampliação do acesso à atenção especializada voltada aos povos indígenas, garantindo suporte técnico-operacional aos DSEI e à SESAI com foco na integralidade e interculturalidade.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CAASI</span><span class="c-name">Coord. de Articulação e Apoio Administrativo da Saúde Indígena</span></div><div class="c-prop">Promove a articulação e gestão administrativa dos processos de trabalho da saúde indígena junto aos territórios, com foco no diagnóstico situacional e qualificação das demandas administrativas descentralizadas.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COAGSI</span><span class="c-name">Coord. de Apoio à Gestão da Saúde Indígena</span></div><div class="c-prop">Promove articulação institucional, planejamento operacional e acompanhamento territorial das ações da AgSUS voltadas à saúde indígena, integrando demais unidades, DSEI e SESAI.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COACSI</span><span class="c-name">Coord. de Apoio ao Controle Social e à Participação Social Indígena</span></div><div class="c-prop">Fortalece o controle social e a participação dos Povos Indígenas na saúde, articulando com conselhos e lideranças, induzindo a formação de conselheiros e monitorando demandas sociais.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CFI</span><span class="c-name">Coord. de Formação e Interculturalidade</span></div><div class="c-prop">Promove a qualificação e fortalecimento da interculturalidade nos processos formativos nos DSEI e na AgSUS, induzindo práticas pedagógicas alinhadas à realidade dos Povos Indígenas.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CGTSI</span><span class="c-name">Coord. de Gestão do Trabalho na Saúde Indígena</span></div><div class="c-prop">Apoia o SUS no dimensionamento, provimento e readequação da força de trabalho, coordenando estratégias para valorização, retenção, qualificação e cuidado com os trabalhadores da saúde indígena.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UAPS -->
+    <div class="unit-card dais">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UAPS</span><span class="u-name">Unidade de Atenção Primária à Saúde</span></div>
+          <div class="u-prop">Gerencia a execução de ações e serviços que promovam o fortalecimento da Atenção Primária à Saúde e a resposta a emergências sanitárias.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerir implementação de ações conforme contratos firmados</li>
+                <li>Desenvolver modelos inovadores para a APS</li>
+                <li>Monitorar desempenho dos profissionais da AgSUS</li>
+                <li>Coordenar provimento, mobilidade e permanência profissional</li>
+                <li>Acompanhar ações em emergências sanitárias</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">COAG</span><span class="c-name">Coordenação de Apoio à Gestão</span></div><div class="c-prop">Apoia a gestão do SUS na APS, promovendo qualificação e integração de processos técnicos, administrativos e institucionais voltados à gestão, governança, contratos e prestação de contas.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CGQA</span><span class="c-name">Coordenação de Gestão da Qualidade Assistencial</span></div><div class="c-prop">Promove a qualidade da atenção à saúde prestada pelos empregados da AgSUS na APS, por meio de estratégias de avaliação de desempenho profissional e qualificação contínua das práticas.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CMGS</span><span class="c-name">Coordenação de Modelagem e Gestão de Serviços</span></div><div class="c-prop">Desenvolve, implementa e gerencia modelos inovadores para a APS e emergências sanitárias, focando em análise de necessidades, fluxos eficientes, tecnologias adequadas e melhoria contínua.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CSPRO</span><span class="c-name">Coordenação de Serviços de Provimento Profissional</span></div><div class="c-prop">Gerencia a alocação, movimentação e retenção dos profissionais da AgSUS em programas de provimento para a APS, garantindo preenchimento estratégico de vagas e suporte à gestão do trabalho.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UAE -->
+    <div class="unit-card dais">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UAE</span><span class="u-name">Unidade de Atenção Especializada</span></div>
+          <div class="u-prop">Gerencia a execução de ações e serviços que promovam o fortalecimento da Atenção Especializada à Saúde, em articulação com o Ministério da Saúde.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Participar do planejamento e contratação de serviços especializados</li>
+                <li>Monitorar e avaliar execução das ações especializadas</li>
+                <li>Padronizar indicadores de qualidade e segurança do paciente</li>
+                <li>Apoiar Núcleos de Gestão do Cuidado e de Regulação</li>
+                <li>Monitorar indicadores de Segurança do Paciente nos serviços móveis</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CRTA</span><span class="c-name">Coordenação de Requisitos Técnicos Assistenciais</span></div><div class="c-prop">Coordena os processos de credenciamento e contratação dos serviços de atenção especializada, por meio da definição de critérios e análise técnica de propostas, garantindo conformidade legal e segurança jurídica.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CIPE</span><span class="c-name">Coordenação de Provimento de Serviços Especializados</span></div><div class="c-prop">Coordena, de forma regionalizada, a implantação e o provimento de serviços de atenção especializada, assegurando adequada operação e integração das respostas assistenciais às necessidades dos territórios.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COGEC</span><span class="c-name">Coordenação de Gestão do Cuidado</span></div><div class="c-prop">Apoia a qualificação da gestão do cuidado nos serviços especializados, por meio da padronização de protocolos técnico-assistenciais e da educação permanente de gestores e prestadores.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CQSP</span><span class="c-name">Coordenação de Qualidade e Segurança do Paciente</span></div><div class="c-prop">Estabelece requisitos técnico-operacionais para promover qualidade assistencial e segurança do paciente nos serviços especializados contratados, por meio de padronização e monitoramento contínuo.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UMA -->
+    <div class="unit-card dais">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UMA</span><span class="u-name">Unidade de Monitoramento e Avaliação</span></div>
+          <div class="u-prop">Estrutura a coleta, análise e produção de indicadores dos serviços de saúde contratados para subsidiar decisões e desenvolver inteligência analítica orientada a dados na DAIS.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Monitorar programas e projetos de serviços de saúde</li>
+                <li>Produzir indicadores para tomada de decisão estratégica</li>
+                <li>Conduzir análise e avaliação contínua dos serviços executados</li>
+                <li>Desenvolver produtos de inteligência de dados (data driven)</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CMAG</span><span class="c-name">Coordenação de Monitoramento e Avaliação da Gestão</span></div><div class="c-prop">Produz análises, indicadores e relatórios técnico-analíticos sobre processos, resultados, programas e contratos de gestão da AgSUS, subsidiando a tomada de decisão estratégica e fortalecendo políticas de saúde.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CMAE</span><span class="c-name">Coordenação de Monitoramento e Avaliação Estratégica</span></div><div class="c-prop">Promove o monitoramento sistemático dos indicadores do planejamento estratégico, por meio de bases de dados, soluções em ciência de dados e painéis de monitoramento institucionais.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPI -->
+    <div class="unit-card dais">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UPI</span><span class="u-name">Unidade de Projetos e Inovação</span></div>
+          <div class="u-prop">Coordena o desenvolvimento de projetos que impulsionam a inovação na DAIS, garantindo eficiência das soluções e ampliação do portfólio da Agência para o SUS.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Identificar necessidades e desafios do SUS para novos projetos</li>
+                <li>Prospectar, iniciar e planejar projetos na DAIS</li>
+                <li>Gerir parcerias com universidades e instituições de pesquisa</li>
+                <li>Promover cultura de inovação (hackathons, laboratórios de ideias)</li>
+                <li>Medir resultados e impactos dos projetos implementados</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">EGP</span><span class="c-name">Escritório de Gerenciamento de Projetos</span></div><div class="c-prop">Oferece suporte operacional e metodológico para a gestão dos projetos e iniciativas de inovação da DAIS, induzindo boas práticas e controle eficiente do portfólio departamental.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CGI</span><span class="c-name">Coordenação de Gestão da Inovação</span></div><div class="c-prop">Desenvolve e articula projetos e iniciativas de inovação alinhados aos objetivos estratégicos da AgSUS, promovendo parcerias institucionais e fomentando cultura de inovação na DAIS.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CNP</span><span class="c-name">Coordenação de Negócios e Parcerias</span></div><div class="c-prop">Prospecta, desenvolve e consolida novos negócios e parcerias no âmbito dos serviços ofertados pela Agência, em articulação com o planejamento estratégico e as demais Diretorias.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UEP -->
+    <div class="unit-card dais">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UEP</span><span class="u-name">Unidade de Ensino e Pesquisa</span></div>
+          <div class="u-prop">Gerencia processos formativos para profissionais das ações executadas pela Agência, assegurando integração entre ensino e serviços de saúde, com foco em educação permanente.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Propor e gerir ações educativas e de qualificação profissional</li>
+                <li>Gerir parcerias com instituições de ensino e pesquisa</li>
+                <li>Apoiar diretrizes de formação de especialistas para o SUS</li>
+                <li>Fomentar pesquisas aplicadas ao SUS</li>
+                <li>Promover divulgação do conhecimento científico</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CAPED</span><span class="c-name">Coordenação de Acompanhamento Pedagógico</span></div><div class="c-prop">Promove o acompanhamento pedagógico contínuo dos processos formativos e do ambiente virtual de aprendizagem, de acordo com as diretrizes de educação permanente da Agência.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CAP</span><span class="c-name">Coordenação de Aperfeiçoamento Profissional</span></div><div class="c-prop">Promove o aperfeiçoamento profissional por meio de ofertas formativas no âmbito das ações executadas pela Agência, visando a melhoria constante dos serviços do SUS.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COPES</span><span class="c-name">Coordenação de Pesquisa</span></div><div class="c-prop">Fomenta a cultura científica institucional na AgSUS e promove pesquisas aplicadas ao SUS, fortalecendo a integração entre ensino, pesquisa e serviços de saúde.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UDIGIS -->
+    <div class="unit-card dais">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UDIGIS</span><span class="u-name">Unidade de Transformação Digital em Saúde</span></div>
+          <div class="u-prop">Prospecta, planeja e propõe soluções tecnológicas em saúde para aplicação na gestão e nos serviços, em sintonia com ecossistemas de inovação e parceiros institucionais.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Identificar necessidades e fomentar tecnologias em saúde</li>
+                <li>Estruturar projetos de soluções tecnológicas em saúde</li>
+                <li>Propor e gerir parcerias e cooperações técnicas em TI saúde</li>
+                <li>Apoiar propriedade intelectual e transferência de tecnologia</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CSESD</span><span class="c-name">Coordenação de Soluções Estratégicas em Saúde Digital</span></div><div class="c-prop">Implementa soluções tecnológicas inovadoras por meio da prospecção, estruturação e qualificação de ferramentas digitais, contribuindo para a transformação digital dos serviços da AgSUS no SUS.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CNSD</span><span class="c-name">Coordenação do Núcleo de Saúde Digital</span></div><div class="c-prop">Coordena e implementa os serviços do Núcleo de Saúde Digital da AgSUS, organizando produção e análise de dados para ampliar acesso e qualificar a atenção à saúde por meio da transformação digital.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CTAE</span><span class="c-name">Coordenação de Tecnologias Aplicadas à Atenção Especializada</span></div><div class="c-prop">Planeja e coordena ações voltadas ao desenvolvimento de soluções tecnológicas no âmbito da Atenção Especializada, conforme necessidades identificadas na execução do Contrato de Gestão.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /func-wrap dais -->
+
+  <!-- ORGANOGRAMA DAIS -->
+  <div class="org-wrap dais">
+    <div class="org-title dais">Organograma — Dir. Atenção Integral à Saúde (DAIS)</div>
+    <div class="org-canvas">
+      <div class="tree dais">
+        <div class="tree-root"><div class="org-node lvl0">DAIS</div></div>
+        <div class="connector-v"></div>
+        <div class="org-row">
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">USI</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CAESI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CAASI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COAGSI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COACSI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CFI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CGTSI</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UAPS</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COAG</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CGQA</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CMGS</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CSPRO</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UAE</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CRTA</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CIPE</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COGEC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CQSP</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UMA</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CMAG</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CMAE</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UPI</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">EGP</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CGI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CNP</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UEP</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CAPED</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CAP</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COPES</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UDIGIS</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CSESD</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CNSD</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CTAE</div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /dais -->
+
+
+<!-- ══════════════════════════════════════════════════
+     SEÇÃO DIOP
+══════════════════════════════════════════════════ -->
+<div id="tab-diop" class="section diop">
+
+  <div class="section-stripe diop">
+    <div class="stripe-inner">
+      <div>
+        <div class="stripe-label">Nível Estratégico</div>
+        <div class="stripe-title">Diretoria de Operações (DIOP)</div>
+        <div class="stripe-desc">Assegura o funcionamento da Agência e viabiliza a execução de seus projetos e programas por meio da gestão e operacionalização de ações nas áreas de gestão de pessoas, aquisições, logística, suprimentos, patrimônio, infraestrutura e soluções de TIC.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-block diop">
+    <div class="common-card">
+      <div class="common-head" onclick="toggleCommon('common-diop')">
+        <div class="common-head-icon">≡</div>
+        <div class="common-head-text">
+          <strong>Atribuições Comuns a Todas as Diretorias e Unidades</strong>
+          <span>Clique para expandir · 14 atribuições compartilhadas por toda a estrutura organizacional</span>
+        </div>
+        <div class="chevron" id="chev-common-diop">▾</div>
+      </div>
+      <div class="common-body" id="common-diop">
+        <div class="common-grid">
+          <div class="common-item"><div class="common-num">I</div><p>Assegurar a conformidade legal dos atos e a regularidade fiscal da AgSUS, atuando de acordo com normas, políticas internas e legislações aplicáveis</p></div>
+          <div class="common-item"><div class="common-num">II</div><p>Atuar com ética e transparência em todas as atividades</p></div>
+          <div class="common-item"><div class="common-num">III</div><p>Implementar estratégias para identificar, avaliar e mitigar riscos de gestão</p></div>
+          <div class="common-item"><div class="common-num">IV</div><p>Fornecer informações precisas e em tempo hábil para apoiar a alta gestão na tomada de decisão e na articulação com os parceiros da Agência</p></div>
+          <div class="common-item"><div class="common-num">V</div><p>Subsidiar os órgãos de governança e de controle interno e externo com dados, informações e resultados estratégicos da Agência</p></div>
+          <div class="common-item"><div class="common-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações</p></div>
+          <div class="common-item"><div class="common-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional</p></div>
+          <div class="common-item"><div class="common-num">IX</div><p>Promover a integração e o trabalho entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave</p></div>
+          <div class="common-item"><div class="common-num">X</div><p>Executar as diretrizes de segurança da informação</p></div>
+          <div class="common-item"><div class="common-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos</p></div>
+          <div class="common-item"><div class="common-num">XII</div><p>Propor e promover parcerias de interesse da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação do Presidente da AgSUS</p></div>
+          <div class="common-item"><div class="common-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas pela Presidência ou pela Diretoria Executiva</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="func-wrap diop">
+
+    <!-- UGP -->
+    <div class="unit-card diop">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UGP</span><span class="u-name">Unidade de Gestão de Pessoas</span></div>
+          <div class="u-prop">Promove a gestão de pessoas integrada às políticas e processos inovadores, por meio do desenvolvimento, saúde, segurança e bem-estar dos empregados.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerir a Política de Gestão de Pessoas</li>
+                <li>Gerir folhas de pagamento e obrigações trabalhistas</li>
+                <li>Desenvolver capital humano e promover capacitação contínua</li>
+                <li>Gerir recrutamento, seleção e contratação</li>
+                <li>Negociar e zelar por Acordos Coletivos de Trabalho</li>
+                <li>Promover saúde e segurança ocupacional dos trabalhadores</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">COAPE</span><span class="c-name">Coordenação de Administração de Pessoal</span></div><div class="c-prop">Coordena os processos de administração de pessoal, abrangendo folha de pagamento, gestão de eventos trabalhistas, benefícios e obrigações legais e previdenciárias.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CDHO</span><span class="c-name">Coordenação de Desenvolvimento Humano e Organizacional</span></div><div class="c-prop">Promove o desenvolvimento humano e organizacional por meio de programas de capacitação, gestão do desempenho, bem-estar, diversidade e inovação, assegurando ambiente saudável e colaborativo.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COGIP</span><span class="c-name">Coordenação de Gestão da Informação de Pessoal</span></div><div class="c-prop">Aprimora os processos de gestão de pessoas por meio do desenvolvimento de soluções tecnológicas, estruturando dados, automatizando processos e disponibilizando informações estratégicas para decisão.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COGPSI</span><span class="c-name">Coordenação de Gestão de Pessoal da Saúde Indígena</span></div><div class="c-prop">Coordena os processos de gestão de pessoal da saúde indígena de forma intercultural, articulando fluxos de informação e fortalecendo a governança territorial e identitária nos territórios.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CORES</span><span class="c-name">Coordenação de Recrutamento e Seleção</span></div><div class="c-prop">Coordena os processos de recrutamento, admissão, movimentação, desligamento e integração de pessoas, garantindo suporte documental, cadastral e logístico para as relações de trabalho.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">COAT</span><span class="c-name">Coordenação de Atendimento e Frequência</span></div><div class="c-prop">Atua como ponto de contato ágil para os trabalhadores da AgSUS, prestando atendimento, realizando triagens e orientações, e garantindo o fluxo de informações entre empregados e gestores.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CSSO</span><span class="c-name">Coordenação de Saúde e Segurança Ocupacional</span></div><div class="c-prop">Promove a saúde e segurança ocupacional dos trabalhadores, gerenciando riscos laborais, elaborando programas obrigatórios e garantindo cumprimento das normas legais para ambiente saudável e seguro.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UAC -->
+    <div class="unit-card diop">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UAC</span><span class="u-name">Unidade de Aquisições e Contratos</span></div>
+          <div class="u-prop">Gere, coordena e aprimora os processos de aquisições e contratações, zelando pela legalidade, eficiência, economicidade e transparência na gestão dos recursos.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Garantir adequação técnica, jurídica e econômica das compras</li>
+                <li>Normatizar e padronizar procedimentos de compras</li>
+                <li>Desenvolver planejamento anual de contratações</li>
+                <li>Realizar pesquisas de preços e análises de vantajosidade</li>
+                <li>Monitorar execução, prazos e vigência de contratos</li>
+                <li>Orientar e capacitar fiscais e gestores de contrato</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CASS</span><span class="c-name">Coordenação de Aquisições e Serviços Singulares</span></div><div class="c-prop">Coordena aquisições de insumos, produtos e serviços singulares, especialmente os voltados à saúde indígena, assegurando respeito às especificidades culturais, sanitárias e logísticas dos territórios.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CCS</span><span class="c-name">Coordenação de Contratações de Serviços</span></div><div class="c-prop">Coordena os processos de contratação de serviços de mão de obra, locação de bens, consultorias e demais serviços voltados ao atendimento das demandas da Sede, filiais e programas estratégicos.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CGC</span><span class="c-name">Coordenação de Gestão Contratual</span></div><div class="c-prop">Coordena o acompanhamento da fase gerencial dos contratos e Atas de Registro de Preços, monitorando prazos, renovações, saldos, aditivos, rescisões e apuração de penalidades aplicáveis.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CPA</span><span class="c-name">Coordenação de Preços e Aquisições</span></div><div class="c-prop">Coordena os processos de aquisição de bens e insumos por meio de Pregão, Concorrência e Atas de Registro de Preços, incluindo pesquisa de preços e análise de vantajosidade econômica.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CPAS</span><span class="c-name">Coordenação de Preços e Aquisições Simplificadas</span></div><div class="c-prop">Coordena os processos de aquisição de bens e insumos de pequena monta por meio de Cotação de Preços, assegurando celeridade e efetividade das aquisições por rito simplificado.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ULOG -->
+    <div class="unit-card diop">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">ULOG</span><span class="u-name">Unidade de Logística, Suprimentos e Patrimônio</span></div>
+          <div class="u-prop">Gere estrategicamente suprimentos, patrimônio, logística e viagens institucionais, promovendo uso racional dos recursos e continuidade das operações da AgSUS.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerenciar viagens, diárias, passagens e hospedagens</li>
+                <li>Gerir fornecimento de bens e serviços institucionais</li>
+                <li>Administrar patrimônio e garantir rastreabilidade dos bens</li>
+                <li>Supervisionar contratos de serviços terceirizados</li>
+                <li>Assegurar segurança física e ambiental da AgSUS</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CAAD</span><span class="c-name">Coordenação de Apoio Administrativo</span></div><div class="c-prop">Coordena o planejamento e fiscalização dos contratos administrativos, assegurando o funcionamento da sede e dos escritórios por meio da gestão de manutenção predial, bens imóveis e serviços.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CISLOG</span><span class="c-name">Coordenação de Suprimentos, Patrimônio e Logística</span></div><div class="c-prop">Coordena os processos de suprimentos, logística e patrimônio, assegurando planejamento, controle e distribuição eficiente de recursos materiais e conservação dos bens patrimoniais da Agência.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CVI</span><span class="c-name">Coordenação de Viagens Institucionais</span></div><div class="c-prop">Coordena as viagens institucionais da AgSUS por meio da emissão de passagens, pagamento de diárias e contratação de apoio logístico, viabilizando o transporte de pessoas e bens.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UINFRA -->
+    <div class="unit-card diop">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UINFRA</span><span class="u-name">Unidade de Infraestrutura</span></div>
+          <div class="u-prop">Gerencia estrategicamente os recursos de infraestrutura física e operacional, assegurando condições adequadas para execução das atividades com qualidade e conformidade normativa.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Gerir manutenção preventiva e corretiva dos prédios e instalações</li>
+                <li>Coordenar e acompanhar projetos de obras e reformas</li>
+                <li>Assegurar normas de segurança, acessibilidade e meio ambiente</li>
+                <li>Elaborar e revisar projetos arquitetônicos e de engenharia</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CIAMI</span><span class="c-name">Coordenação de Infraestrutura e Ambiência Institucional</span></div><div class="c-prop">Planeja e desenvolve projetos de arquitetura e engenharia voltados à expansão, manutenção e padronização dos ambientes físicos da AgSUS, promovendo ambiência, ergonomia, acessibilidade e identidade institucional.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UTIC -->
+    <div class="unit-card diop">
+      <div class="unit-top"><div class="unit-accent"></div>
+        <div class="unit-main">
+          <div class="unit-hd"><span class="u-badge">UTIC</span><span class="u-name">Unidade de Tecnologia da Informação e Comunicação</span></div>
+          <div class="u-prop">Desenvolve, disponibiliza e mantém soluções de TIC que apoiam os modelos de negócio e a gestão da Agência, contribuindo para eficiência, inovação e cumprimento da missão institucional.</div>
+          <div class="unit-cols">
+            <div>
+              <div class="ucol-title">Atribuições</div>
+              <ul class="attr-list">
+                <li>Elaborar e implementar o PDTIC da Agência</li>
+                <li>Garantir segurança da informação e proteção de dados</li>
+                <li>Manter e evoluir a infraestrutura tecnológica</li>
+                <li>Gerir portfólio de projetos e serviços de TIC</li>
+                <li>Promover integração com plataformas do Ministério da Saúde</li>
+                <li>Oferecer suporte técnico e capacitação digital às áreas</li>
+              </ul>
+            </div>
+            <div>
+              <div class="ucol-title">Coordenações</div>
+              <div class="coords-list">
+                <div class="coord"><div class="coord-top"><span class="c-badge">CSI</span><span class="c-name">Coordenação de Sistemas de Informação</span></div><div class="c-prop">Planeja, desenvolve e mantém os sistemas de informação da AgSUS, assegurando automação de processos internos, transformação digital e integração com plataformas externas.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CPGTIC</span><span class="c-name">Coordenação de Projetos e Governança de TIC</span></div><div class="c-prop">Planeja, coordena e monitora os projetos e portfólios de TIC, estruturando processos, metodologias e indicadores de gestão e implementando o modelo de governança de TIC da AgSUS.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CISTIC</span><span class="c-name">Coordenação de Infraestrutura e Segurança</span></div><div class="c-prop">Planeja, implementa e mantém a infraestrutura tecnológica da AgSUS, garantindo disponibilidade, integridade, desempenho e segurança e apoiando a continuidade dos serviços de TIC.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CSD</span><span class="c-name">Coordenação de Segurança de Dados</span></div><div class="c-prop">Propõe, coordena e monitora as estratégias de segurança da informação e proteção de dados, assegurando conformidade com a legislação vigente e promovendo cultura organizacional de proteção da informação.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /func-wrap diop -->
+
+  <!-- ORGANOGRAMA DIOP -->
+  <div class="org-wrap diop">
+    <div class="org-title diop">Organograma — Diretoria de Operações (DIOP)</div>
+    <div class="org-canvas">
+      <div class="tree diop">
+        <div class="tree-root"><div class="org-node lvl0">DIOP</div></div>
+        <div class="connector-v"></div>
+        <div class="org-row">
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UGP</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COAPE</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CDHO</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COGIP</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COGPSI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CORES</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">COAT</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CSSO</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UAC</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CASS</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CCS</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CGC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CPA</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CPAS</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">ULOG</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CAAD</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CISLOG</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CVI</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UINFRA</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CIAMI</div></div></div></div>
+          <div class="org-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl1">UTIC</div><div class="connector-v"></div><div class="org-sub-row"><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CSI</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CPGTIC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CISTIC</div></div><div class="org-sub-branch"><div class="connector-v" style="height:10px"></div><div class="org-node lvl2">CSD</div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /diop -->
+
+
+<script>
+function showTab(name){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelector('.tab-btn.'+name).classList.add('active');
+}
+function toggleCommon(id){
+  var body=document.getElementById(id);
+  var chev=document.getElementById('chev-'+id);
+  var open=body.classList.toggle('open');
+  chev.classList.toggle('open',open);
+}
+</script>
 </body>
 </html>
