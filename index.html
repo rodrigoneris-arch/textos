@@ -11,14 +11,22 @@
   --pres-l:      #E5F0F7;
   --pres-m:      #1A8EE9; /* Azul Claro (Ag) */
   --pres-b:      #A8D4F5;
+  
   --dais:        #008F20; /* Verde escurecido para contraste em textos */
   --dais-l:      #E5F8E9;
   --dais-m:      #00C22B; /* Verde vivo (Logo) */
   --dais-b:      #A3E8B3;
+  
   --diop:        #D90000; /* Vermelho escurecido para contraste */
   --diop-l:      #FFEBEC;
   --diop-m:      #FF0000; /* Vermelho vivo (Logo) */
   --diop-b:      #FFB3B3;
+  
+  --comuns:      #997A00; /* Amarelo escurecido para contraste (Logo) */
+  --comuns-l:    #FFFDF0;
+  --comuns-m:    #FFCC00; /* Amarelo vivo (Logo) */
+  --comuns-b:    #FFE680;
+
   --dark:        #003366; /* Tom mais profundo do azul para o cabeçalho */
   --text:        #1a1a1a;
   --muted:       #5a5a5a;
@@ -41,12 +49,17 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 .header-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;padding-top:4px}
 .badge{background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 11px;font-size:10px;color:rgba(255,255,255,0.55);white-space:nowrap}
 
-/* ── TAB NAV ─────────────────────────────────────────── */
-.tab-nav{max-width:1280px;margin:0 auto;display:flex;gap:4px;padding-top:4px}
-.tab-btn{padding:10px 22px;border:none;border-radius:var(--r) var(--r) 0 0;font-family:'Sora',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;position:relative;top:0}
-.tab-btn.pres{background:rgba(91,143,202,0.18);color:rgba(255,255,255,0.55)}
-.tab-btn.dais{background:rgba(63,168,124,0.18);color:rgba(255,255,255,0.55)}
-.tab-btn.diop{background:rgba(196,102,58,0.18);color:rgba(255,255,255,0.55)}
+/* ── TAB NAV (Mais destaque) ─────────────────────────────────────────── */
+.tab-nav{max-width:1280px;margin:0 auto;display:flex;gap:8px;padding-top:12px; flex-wrap: wrap;}
+.tab-btn{padding:14px 26px;border:none;border-radius:var(--r) var(--r) 0 0;font-family:'Sora',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;position:relative;top:0; letter-spacing: 0.02em;}
+.tab-btn:hover {transform: translateY(-2px);}
+
+.tab-btn.comuns{background:rgba(255, 204, 0, 0.12);color:rgba(255,255,255,0.85)}
+.tab-btn.pres{background:rgba(26, 142, 233, 0.12);color:rgba(255,255,255,0.85)}
+.tab-btn.dais{background:rgba(0, 194, 43, 0.12);color:rgba(255,255,255,0.85)}
+.tab-btn.diop{background:rgba(255, 0, 0, 0.12);color:rgba(255,255,255,0.85)}
+
+.tab-btn.active.comuns{background:var(--comuns-l);color:var(--comuns)}
 .tab-btn.active.pres{background:var(--pres-l);color:var(--pres)}
 .tab-btn.active.dais{background:var(--dais-l);color:var(--dais)}
 .tab-btn.active.diop{background:var(--diop-l);color:var(--diop)}
@@ -57,46 +70,33 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── SECTION HEADER STRIPE ──────────────────────────── */
-.section-stripe{padding:20px 48px;border-bottom:1px solid var(--border)}
+.section-stripe{padding:24px 48px;border-bottom:1px solid var(--border)}
+.section-stripe.comuns{background:var(--comuns-l)}
 .section-stripe.pres{background:var(--pres-l)}
 .section-stripe.dais{background:var(--dais-l)}
 .section-stripe.diop{background:var(--diop-l)}
 .stripe-inner{max-width:1280px;margin:0 auto;display:flex;align-items:flex-start;gap:24px}
 .stripe-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.comuns .stripe-label{color:var(--comuns-m)}
 .pres .stripe-label{color:var(--pres-m)}
 .dais .stripe-label{color:var(--dais-m)}
 .diop .stripe-label{color:var(--diop-m)}
-.stripe-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500}
+.stripe-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:500}
+.comuns .stripe-title{color:var(--comuns)}
 .pres .stripe-title{color:var(--pres)}
 .dais .stripe-title{color:var(--dais)}
 .diop .stripe-title{color:var(--diop)}
-.stripe-desc{font-size:11px;color:var(--muted);max-width:640px;margin-top:4px;line-height:1.55}
+.stripe-desc{font-size:12px;color:var(--muted);max-width:720px;margin-top:6px;line-height:1.55}
 
-/* ── COMMON ATTRS BLOCK ──────────────────────────────── */
-.common-block{max-width:1280px;margin:24px auto 0;padding:0 48px}
-.common-card{border-radius:var(--r);border:1px solid var(--border);background:var(--white);overflow:hidden}
-.common-head{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none}
-.common-head-icon{width:28px;height:28px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.pres .common-head-icon{background:var(--pres-l);color:var(--pres)}
-.dais .common-head-icon{background:var(--dais-l);color:var(--dais)}
-.diop .common-head-icon{background:var(--diop-l);color:var(--diop)}
-.common-head-text{flex:1}
-.common-head-text strong{font-size:12px;font-weight:600;display:block}
-.common-head-text span{font-size:10px;color:var(--light)}
-.chevron{font-size:11px;color:var(--light);transition:transform .2s}
-.chevron.open{transform:rotate(180deg)}
-.common-body{display:none;padding:0 18px 16px;border-top:1px solid var(--border)}
-.common-body.open{display:block}
-.common-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px;margin-top:12px}
-.common-item{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:var(--rs);border:0.5px solid var(--border);background:var(--bg)}
-.common-num{font-size:10px;font-weight:600;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.pres .common-num{background:var(--pres-l);color:var(--pres)}
-.dais .common-num{background:var(--dais-l);color:var(--dais)}
-.diop .common-num{background:var(--diop-l);color:var(--diop)}
-.common-item p{font-size:11px;color:var(--muted);line-height:1.4}
+/* ── ATRIBUIÇÕES COMUNS GRID ─────────────────────────── */
+.comuns-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;max-width:1280px;margin:32px auto 64px;padding:0 48px}
+.comuns-item{display:flex;gap:16px;align-items:flex-start;padding:24px;border-radius:var(--r);border:1px solid var(--border);background:var(--white);box-shadow:0 2px 10px rgba(0,0,0,0.02);transition:transform 0.2s}
+.comuns-item:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.05)}
+.comuns-num{font-size:14px;font-weight:700;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--comuns-l);color:var(--comuns);border:1px solid var(--comuns-b)}
+.comuns-item p{font-size:13px;color:var(--text);line-height:1.5;margin-top:4px}
 
 /* ── FUNCIONOGRAMA GRID ──────────────────────────────── */
-.func-wrap{max-width:1280px;margin:20px auto 0;padding:0 48px;display:grid;grid-template-columns:1fr;gap:16px}
+.func-wrap{max-width:1280px;margin:24px auto 0;padding:0 48px;display:grid;grid-template-columns:1fr;gap:16px}
 
 /* ── UNIT CARD ───────────────────────────────────────── */
 .unit-card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
@@ -170,8 +170,10 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 
 @media(max-width:860px){
   .unit-cols{grid-template-columns:1fr}
-  .site-header,.section-stripe,.common-block,.func-wrap,.org-wrap{padding-left:18px;padding-right:18px}
-  .tab-btn{padding:9px 14px;font-size:11px}
+  .site-header,.section-stripe,.comuns-grid,.func-wrap,.org-wrap{padding-left:18px;padding-right:18px}
+  .comuns-grid{grid-template-columns:1fr}
+  .tab-nav{flex-wrap: wrap;}
+  .tab-btn{padding:12px 16px;font-size:12px; flex: 1 1 auto; text-align: center;}
 }
 </style>
 </head>
@@ -191,9 +193,42 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     </div>
   </div>
   <div class="tab-nav">
-    <button class="tab-btn pres active" onclick="showTab('pres')">Presidência (PRES)</button>
+    <button class="tab-btn comuns active" onclick="showTab('comuns')">Atribuições Comuns</button>
+    <button class="tab-btn pres" onclick="showTab('pres')">Presidência (PRES)</button>
     <button class="tab-btn dais" onclick="showTab('dais')">Dir. Atenção Integral à Saúde (DAIS)</button>
     <button class="tab-btn diop" onclick="showTab('diop')">Dir. de Operações (DIOP)</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SEÇÃO ATRIBUIÇÕES COMUNS
+══════════════════════════════════════════════════ -->
+<div id="tab-comuns" class="section comuns active">
+  <div class="section-stripe comuns">
+    <div class="stripe-inner">
+      <div>
+        <div class="stripe-label">Nível Transversal</div>
+        <div class="stripe-title">Atribuições Comuns</div>
+        <div class="stripe-desc">14 atribuições compartilhadas por toda a estrutura organizacional, garantindo alinhamento estratégico, conformidade, transparência e inovação em todas as Diretorias e Unidades da AgSUS.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comuns-grid">
+    <div class="comuns-item"><div class="comuns-num">I</div><p>Assegurar a conformidade legal dos atos e a regularidade fiscal da AgSUS, atuando de acordo com normas, políticas internas e legislações aplicáveis.</p></div>
+    <div class="comuns-item"><div class="comuns-num">II</div><p>Atuar com ética e transparência em todas as atividades institucionais.</p></div>
+    <div class="comuns-item"><div class="comuns-num">III</div><p>Implementar estratégias para identificar, avaliar e mitigar riscos de gestão.</p></div>
+    <div class="comuns-item"><div class="comuns-num">IV</div><p>Fornecer informações precisas e em tempo hábil para apoiar a alta gestão na tomada de decisão e na articulação com os parceiros da Agência.</p></div>
+    <div class="comuns-item"><div class="comuns-num">V</div><p>Subsidiar os órgãos de governança e de controle interno e externo com dados, informações e resultados estratégicos da Agência.</p></div>
+    <div class="comuns-item"><div class="comuns-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações.</p></div>
+    <div class="comuns-item"><div class="comuns-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS.</p></div>
+    <div class="comuns-item"><div class="comuns-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional.</p></div>
+    <div class="comuns-item"><div class="comuns-num">IX</div><p>Promover a integração e o trabalho em equipe entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave.</p></div>
+    <div class="comuns-item"><div class="comuns-num">X</div><p>Executar estritamente as diretrizes de segurança da informação.</p></div>
+    <div class="comuns-item"><div class="comuns-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos.</p></div>
+    <div class="comuns-item"><div class="comuns-num">XII</div><p>Propor e promover ativamente novas parcerias de interesse da AgSUS.</p></div>
+    <div class="comuns-item"><div class="comuns-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação expressa do Presidente da AgSUS.</p></div>
+    <div class="comuns-item"><div class="comuns-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas de forma contingencial pela Presidência ou pela Diretoria Executiva.</p></div>
   </div>
 </div>
 
@@ -201,7 +236,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 <!-- ══════════════════════════════════════════════════
      SEÇÃO PRESIDÊNCIA
 ══════════════════════════════════════════════════ -->
-<div id="tab-pres" class="section pres active">
+<div id="tab-pres" class="section pres">
 
   <div class="section-stripe pres">
     <div class="stripe-inner">
@@ -209,38 +244,6 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
         <div class="stripe-label">Nível Estratégico</div>
         <div class="stripe-title">Presidência (PRES)</div>
         <div class="stripe-desc">Dirige, supervisiona e articula as atividades estratégicas, técnico-administrativas e institucionais da AgSUS, atuando na definição de diretrizes, articulação interinstitucional e gestão estratégica para o fortalecimento da governança, transparência, integridade e inovação.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Atribuições Comuns -->
-  <div class="common-block pres">
-    <div class="common-card">
-      <div class="common-head" onclick="toggleCommon('common-pres')">
-        <div class="common-head-icon">≡</div>
-        <div class="common-head-text">
-          <strong>Atribuições Comuns a Todas as Diretorias e Unidades</strong>
-          <span>Clique para expandir · 14 atribuições compartilhadas por toda a estrutura organizacional</span>
-        </div>
-        <div class="chevron" id="chev-common-pres">▾</div>
-      </div>
-      <div class="common-body" id="common-pres">
-        <div class="common-grid">
-          <div class="common-item"><div class="common-num">I</div><p>Assegurar a conformidade legal dos atos e a regularidade fiscal da AgSUS, atuando de acordo com normas, políticas internas e legislações aplicáveis</p></div>
-          <div class="common-item"><div class="common-num">II</div><p>Atuar com ética e transparência em todas as atividades</p></div>
-          <div class="common-item"><div class="common-num">III</div><p>Implementar estratégias para identificar, avaliar e mitigar riscos de gestão</p></div>
-          <div class="common-item"><div class="common-num">IV</div><p>Fornecer informações precisas e em tempo hábil para apoiar a alta gestão na tomada de decisão e na articulação com os parceiros da Agência</p></div>
-          <div class="common-item"><div class="common-num">V</div><p>Subsidiar os órgãos de governança e de controle interno e externo com dados, informações e resultados estratégicos da Agência</p></div>
-          <div class="common-item"><div class="common-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações</p></div>
-          <div class="common-item"><div class="common-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional</p></div>
-          <div class="common-item"><div class="common-num">IX</div><p>Promover a integração e o trabalho entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave</p></div>
-          <div class="common-item"><div class="common-num">X</div><p>Executar as diretrizes de segurança da informação</p></div>
-          <div class="common-item"><div class="common-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos</p></div>
-          <div class="common-item"><div class="common-num">XII</div><p>Propor e promover parcerias de interesse da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação do Presidente da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas pela Presidência ou pela Diretoria Executiva</p></div>
-        </div>
       </div>
     </div>
   </div>
@@ -501,37 +504,6 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     </div>
   </div>
 
-  <div class="common-block dais">
-    <div class="common-card">
-      <div class="common-head" onclick="toggleCommon('common-dais')">
-        <div class="common-head-icon">≡</div>
-        <div class="common-head-text">
-          <strong>Atribuições Comuns a Todas as Diretorias e Unidades</strong>
-          <span>Clique para expandir · 14 atribuições compartilhadas por toda a estrutura organizacional</span>
-        </div>
-        <div class="chevron" id="chev-common-dais">▾</div>
-      </div>
-      <div class="common-body" id="common-dais">
-        <div class="common-grid">
-          <div class="common-item"><div class="common-num">I</div><p>Assegurar a conformidade legal dos atos e a regularidade fiscal da AgSUS, atuando de acordo com normas, políticas internas e legislações aplicáveis</p></div>
-          <div class="common-item"><div class="common-num">II</div><p>Atuar com ética e transparência em todas as atividades</p></div>
-          <div class="common-item"><div class="common-num">III</div><p>Implementar estratégias para identificar, avaliar e mitigar riscos de gestão</p></div>
-          <div class="common-item"><div class="common-num">IV</div><p>Fornecer informações precisas e em tempo hábil para apoiar a alta gestão na tomada de decisão e na articulação com os parceiros da Agência</p></div>
-          <div class="common-item"><div class="common-num">V</div><p>Subsidiar os órgãos de governança e de controle interno e externo com dados, informações e resultados estratégicos da Agência</p></div>
-          <div class="common-item"><div class="common-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações</p></div>
-          <div class="common-item"><div class="common-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional</p></div>
-          <div class="common-item"><div class="common-num">IX</div><p>Promover a integração e o trabalho entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave</p></div>
-          <div class="common-item"><div class="common-num">X</div><p>Executar as diretrizes de segurança da informação</p></div>
-          <div class="common-item"><div class="common-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos</p></div>
-          <div class="common-item"><div class="common-num">XII</div><p>Propor e promover parcerias de interesse da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação do Presidente da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas pela Presidência ou pela Diretoria Executiva</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="func-wrap dais">
 
     <!-- USI -->
@@ -787,37 +759,6 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     </div>
   </div>
 
-  <div class="common-block diop">
-    <div class="common-card">
-      <div class="common-head" onclick="toggleCommon('common-diop')">
-        <div class="common-head-icon">≡</div>
-        <div class="common-head-text">
-          <strong>Atribuições Comuns a Todas as Diretorias e Unidades</strong>
-          <span>Clique para expandir · 14 atribuições compartilhadas por toda a estrutura organizacional</span>
-        </div>
-        <div class="chevron" id="chev-common-diop">▾</div>
-      </div>
-      <div class="common-body" id="common-diop">
-        <div class="common-grid">
-          <div class="common-item"><div class="common-num">I</div><p>Assegurar a conformidade legal dos atos e a regularidade fiscal da AgSUS, atuando de acordo com normas, políticas internas e legislações aplicáveis</p></div>
-          <div class="common-item"><div class="common-num">II</div><p>Atuar com ética e transparência em todas as atividades</p></div>
-          <div class="common-item"><div class="common-num">III</div><p>Implementar estratégias para identificar, avaliar e mitigar riscos de gestão</p></div>
-          <div class="common-item"><div class="common-num">IV</div><p>Fornecer informações precisas e em tempo hábil para apoiar a alta gestão na tomada de decisão e na articulação com os parceiros da Agência</p></div>
-          <div class="common-item"><div class="common-num">V</div><p>Subsidiar os órgãos de governança e de controle interno e externo com dados, informações e resultados estratégicos da Agência</p></div>
-          <div class="common-item"><div class="common-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações</p></div>
-          <div class="common-item"><div class="common-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional</p></div>
-          <div class="common-item"><div class="common-num">IX</div><p>Promover a integração e o trabalho entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave</p></div>
-          <div class="common-item"><div class="common-num">X</div><p>Executar as diretrizes de segurança da informação</p></div>
-          <div class="common-item"><div class="common-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos</p></div>
-          <div class="common-item"><div class="common-num">XII</div><p>Propor e promover parcerias de interesse da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação do Presidente da AgSUS</p></div>
-          <div class="common-item"><div class="common-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas pela Presidência ou pela Diretoria Executiva</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="func-wrap diop">
 
     <!-- UGP -->
@@ -1006,12 +947,6 @@ function showTab(name){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   document.querySelector('.tab-btn.'+name).classList.add('active');
-}
-function toggleCommon(id){
-  var body=document.getElementById(id);
-  var chev=document.getElementById('chev-'+id);
-  var open=body.classList.toggle('open');
-  chev.classList.toggle('open',open);
 }
 </script>
 </body>
