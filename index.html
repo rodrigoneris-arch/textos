@@ -43,13 +43,21 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 /* ── HEADER ─────────────────────────────────────────── */
 .site-header{background:var(--dark);padding:32px 48px 0;position:relative;overflow:hidden}
 .site-header::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.03)}
-.header-top{max-width:1280px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;padding-bottom:28px}
+.header-top{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:28px;flex-wrap:wrap}
+.header-left{flex:1;min-width:300px}
+.header-right{width:100%;max-width:340px}
+
 .header-top h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.25}
 .header-top h1 span{display:block;font-family:'Sora',sans-serif;font-size:11px;font-weight:400;color:rgba(255,255,255,0.45);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
-.header-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;padding-top:4px}
+.header-badges{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;padding-top:10px}
 .badge{background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 11px;font-size:10px;color:rgba(255,255,255,0.55);white-space:nowrap}
 
-/* ── TAB NAV (Mais destaque) ─────────────────────────────────────────── */
+/* ── SEARCH BAR ──────────────────────────────────────── */
+.search-input{width:100%;padding:14px 20px 14px 44px;border-radius:30px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>') no-repeat 16px center;color:#fff;font-family:'Sora',sans-serif;font-size:14px;outline:none;transition:all 0.2s}
+.search-input:focus{background-color:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.3)}
+.search-input::placeholder{color:rgba(255,255,255,0.45)}
+
+/* ── TAB NAV ─────────────────────────────────────────── */
 .tab-nav{max-width:1280px;margin:0 auto;display:flex;gap:8px;padding-top:12px; flex-wrap: wrap;}
 .tab-btn{padding:14px 26px;border:none;border-radius:var(--r) var(--r) 0 0;font-family:'Sora',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;position:relative;top:0; letter-spacing: 0.02em;}
 .tab-btn:hover {transform: translateY(-2px);}
@@ -168,6 +176,10 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 .org-sub-row{display:flex;gap:6px;justify-content:center}
 .org-sub-branch{display:flex;flex-direction:column;align-items:center}
 
+/* ── SEARCH FEEDBACK ─────────────────────────────────── */
+.no-results{display:none;text-align:center;padding:60px 20px;color:var(--muted);font-size:15px}
+body.is-searching .no-results.show{display:block}
+
 @media(max-width:860px){
   .unit-cols{grid-template-columns:1fr}
   .site-header,.section-stripe,.comuns-grid,.func-wrap,.org-wrap{padding-left:18px;padding-right:18px}
@@ -182,14 +194,19 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 <!-- ══════════════════ SITE HEADER ══════════════════ -->
 <div class="site-header">
   <div class="header-top">
-    <h1>
-      <span>Agência Brasileira de Apoio à Gestão do SUS</span>
-      Funcionograma Organizacional
-    </h1>
-    <div class="header-badges">
-      <span class="badge">Aprovado pelo Conselho Deliberativo</span>
-      <span class="badge">Abril de 2024</span>
-      <span class="badge">3 Diretorias · 19 Unidades</span>
+    <div class="header-left">
+      <h1>
+        <span>Agência Brasileira de Apoio à Gestão do SUS</span>
+        Funcionograma Organizacional
+      </h1>
+      <div class="header-badges">
+        <span class="badge">Aprovado pelo Conselho Deliberativo</span>
+        <span class="badge">Abril de 2024</span>
+        <span class="badge">3 Diretorias · 19 Unidades</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <input type="text" id="searchInput" class="search-input" placeholder="Buscar unidade ou coordenação...">
     </div>
   </div>
   <div class="tab-nav">
@@ -199,6 +216,8 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     <button class="tab-btn diop" onclick="showTab('diop')">Dir. de Operações (DIOP)</button>
   </div>
 </div>
+
+<div id="noResults" class="no-results">Nenhuma unidade ou coordenação encontrada para esta busca.</div>
 
 <!-- ══════════════════════════════════════════════════
      SEÇÃO ATRIBUIÇÕES COMUNS
@@ -361,7 +380,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
               <div class="ucol-title">Coordenações</div>
               <div class="coords-list">
                 <div class="coord"><div class="coord-top"><span class="c-badge">CJC</span><span class="c-name">Coordenação Jurídica Consultivo</span></div><div class="c-prop">Presta suporte técnico-consultivo em matérias jurídicas, orientando a Direx e as unidades, examinando a legalidade de atos, contratos e procedimentos, e propondo soluções que garantam segurança jurídica.</div></div>
-                <div class="coord"><div class="coord-top"><span class="c-badge">CJCC</span><span class="c-name">Coordenação Jurídica Contencioso Cível</span></div><div class="c-prop">Representa juridicamente a AgSUS em demandas cíveis, acompanhando as ações processuais necessárias, monitorando o passivo jurídico e implementando medidas para mitigação de litígios.</div></div>
+                <div class="coord"><div class="coord-top"><span class="c-badge">CJCC</span><span class="c-name">Coordenação Jurídica Contencioso Cível</span></div><div class="c-prop">Representa juridicamente a AgSUS em demandas cíveis, acompanhando as ações processuais necessárias, monitorando o passivo jurídico trabalhista e implementando medidas para mitigação de litígios.</div></div>
                 <div class="coord"><div class="coord-top"><span class="c-badge">CJCT</span><span class="c-name">Coordenação Jurídica Contencioso Trabalhista</span></div><div class="c-prop">Representa juridicamente a AgSUS em demandas trabalhistas, acompanhando as ações processuais, monitorando o passivo jurídico trabalhista e implementando medidas para mitigação de litígios.</div></div>
               </div>
             </div>
@@ -943,11 +962,97 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 
 <script>
 function showTab(name){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  // Limpar formatações manuais aplicadas pela busca
+  document.querySelectorAll('.section').forEach(s => {
+      s.classList.remove('active');
+      s.style.display = ''; // Limpa override
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  
+  // Ativar aba solicitada
   document.getElementById('tab-'+name).classList.add('active');
   document.querySelector('.tab-btn.'+name).classList.add('active');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('searchInput');
+    const noResults = document.getElementById('noResults');
+    
+    input.addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase().trim();
+        
+        // Se a busca estiver vazia, restaura o visual padrão
+        if (term === '') {
+            document.body.classList.remove('is-searching');
+            document.querySelector('.tab-nav').style.display = '';
+            document.querySelectorAll('.org-wrap').forEach(el => el.style.display = '');
+            document.querySelectorAll('.unit-card, .coord').forEach(el => el.style.display = '');
+            noResults.classList.remove('show');
+            
+            // Restaura a aba que estava ativa
+            const activeBtn = document.querySelector('.tab-btn.active');
+            if(activeBtn) {
+                if(activeBtn.classList.contains('comuns')) showTab('comuns');
+                if(activeBtn.classList.contains('pres')) showTab('pres');
+                if(activeBtn.classList.contains('dais')) showTab('dais');
+                if(activeBtn.classList.contains('diop')) showTab('diop');
+            }
+            return;
+        }
+        
+        // Ativa modo de busca
+        document.body.classList.add('is-searching');
+        document.querySelector('.tab-nav').style.display = 'none'; // Oculta as abas
+        document.getElementById('tab-comuns').style.display = 'none'; // Oculta seção Comuns
+        document.querySelectorAll('.org-wrap').forEach(el => el.style.display = 'none'); // Oculta gráficos
+        
+        let anyMatchTotal = false;
+        
+        // Percorre apenas as seções que contêm Unidades e Coordenações (pres, dais, diop)
+        document.querySelectorAll('.section:not(.comuns)').forEach(section => {
+            let sectionMatches = false;
+            
+            section.querySelectorAll('.unit-card').forEach(unit => {
+                let unitMatches = false;
+                const unitName = unit.querySelector('.unit-hd').textContent.toLowerCase();
+                
+                // Se o nome da Unidade bater com a busca, exibe ela e todas as suas coordenações
+                if (unitName.includes(term)) {
+                    unitMatches = true;
+                    unit.querySelectorAll('.coord').forEach(c => c.style.display = '');
+                } else {
+                    // Senão, checa cada coordenação individualmente
+                    let coordMatches = false;
+                    unit.querySelectorAll('.coord').forEach(coord => {
+                        const coordName = coord.querySelector('.coord-top').textContent.toLowerCase();
+                        if (coordName.includes(term)) {
+                            coord.style.display = '';
+                            coordMatches = true;
+                        } else {
+                            coord.style.display = 'none';
+                        }
+                    });
+                    if (coordMatches) unitMatches = true;
+                }
+                
+                // Oculta ou exibe o cartão da Unidade
+                unit.style.display = unitMatches ? '' : 'none';
+                if (unitMatches) sectionMatches = true;
+            });
+            
+            // Exibe a seção caso alguma unidade dentro dela tenha dado match
+            section.style.display = sectionMatches ? 'block' : 'none';
+            if (sectionMatches) anyMatchTotal = true;
+        });
+        
+        // Exibe mensagem caso nenhum resultado seja encontrado
+        if (!anyMatchTotal) {
+            noResults.classList.add('show');
+        } else {
+            noResults.classList.remove('show');
+        }
+    });
+});
 </script>
 </body>
 </html>
