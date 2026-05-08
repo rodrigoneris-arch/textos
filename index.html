@@ -229,7 +229,7 @@ body.is-searching .no-results.show{display:block}
       </div>
     </div>
     <div class="header-right">
-      <input type="text" id="searchInput" class="search-input" placeholder="Buscar unidade ou coordenação...">
+      <input type="text" id="searchInput" class="search-input" placeholder="Buscar unidade ou atribuições...">
     </div>
   </div>
   <div class="tab-nav">
@@ -1146,6 +1146,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.org-wrap').forEach(el => el.style.display = '');
             document.querySelectorAll('.unit-card, .coord').forEach(el => el.style.display = '');
             document.querySelectorAll('.dir-attr-block').forEach(el => el.style.display = ''); // Restaura atributos da diretoria
+            document.querySelectorAll('.comuns-item, .common-item').forEach(el => el.style.display = ''); // Restaura itens de lista
             noResults.classList.remove('show');
             
             // Restaura a aba que estava ativa
@@ -1162,30 +1163,76 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ativa modo de busca
         document.body.classList.add('is-searching');
         document.querySelector('.tab-nav').style.display = 'none'; // Oculta as abas
-        document.getElementById('tab-comuns').style.display = 'none'; // Oculta seção Comuns
         document.querySelectorAll('.org-wrap').forEach(el => el.style.display = 'none'); // Oculta gráficos
-        document.querySelectorAll('.dir-attr-block').forEach(el => el.style.display = 'none'); // Oculta atributos da diretoria na busca
         
         let anyMatchTotal = false;
+
+        // 1. Busca na aba de Atribuições Comuns
+        let comunsSectionMatches = false;
+        document.querySelectorAll('#tab-comuns .comuns-item').forEach(item => {
+            if (item.textContent.toLowerCase().includes(term)) {
+                item.style.display = '';
+                comunsSectionMatches = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+        const tabComuns = document.getElementById('tab-comuns');
+        if (comunsSectionMatches) {
+            tabComuns.style.display = 'block';
+            anyMatchTotal = true;
+        } else {
+            tabComuns.style.display = 'none';
+        }
         
-        // Percorre apenas as seções que contêm Unidades e Coordenações (pres, dais, diop)
+        // 2. Busca nas abas de Diretorias (PRES, DAIS, DIOP)
         document.querySelectorAll('.section:not(.comuns)').forEach(section => {
             let sectionMatches = false;
             
+            // 2.a Busca nas Atribuições da Diretoria
+            const dirAttrBlock = section.querySelector('.dir-attr-block');
+            if (dirAttrBlock) {
+                let dirAttrMatches = false;
+                dirAttrBlock.querySelectorAll('.common-item').forEach(item => {
+                    if (item.textContent.toLowerCase().includes(term)) {
+                        item.style.display = '';
+                        dirAttrMatches = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                if (dirAttrMatches) {
+                    dirAttrBlock.style.display = 'block';
+                    sectionMatches = true;
+                } else {
+                    dirAttrBlock.style.display = 'none';
+                }
+            }
+            
+            // 2.b Busca nas Unidades e Coordenações
             section.querySelectorAll('.unit-card').forEach(unit => {
                 let unitMatches = false;
-                const unitName = unit.querySelector('.unit-hd').textContent.toLowerCase();
                 
-                // Se o nome da Unidade bater com a busca, exibe ela e todas as suas coordenações
-                if (unitName.includes(term)) {
+                // Texto do Título, Sigla e Propósito da Unidade
+                const unitHdText = unit.querySelector('.unit-hd') ? unit.querySelector('.unit-hd').textContent.toLowerCase() : '';
+                const unitPropText = unit.querySelector('.u-prop') ? unit.querySelector('.u-prop').textContent.toLowerCase() : '';
+                
+                // Texto das Atribuições da Unidade
+                let attrMatches = false;
+                const attrList = unit.querySelector('.attr-list');
+                if (attrList && attrList.textContent.toLowerCase().includes(term)) {
+                    attrMatches = true;
+                }
+                
+                // Se a unidade em si (nome, propósito ou atribuição) tiver a palavra-chave, mostramos a unidade inteira e suas coordenações
+                if (unitHdText.includes(term) || unitPropText.includes(term) || attrMatches) {
                     unitMatches = true;
-                    unit.querySelectorAll('.coord').forEach(c => c.style.display = '');
+                    unit.querySelectorAll('.coord').forEach(c => c.style.display = ''); // Mostra todas as coordenações desta unidade
                 } else {
                     // Senão, checa cada coordenação individualmente
                     let coordMatches = false;
                     unit.querySelectorAll('.coord').forEach(coord => {
-                        const coordName = coord.querySelector('.coord-top').textContent.toLowerCase();
-                        if (coordName.includes(term)) {
+                        if (coord.textContent.toLowerCase().includes(term)) {
                             coord.style.display = '';
                             coordMatches = true;
                         } else {
@@ -1200,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (unitMatches) sectionMatches = true;
             });
             
-            // Exibe a seção caso alguma unidade dentro dela tenha dado match
+            // Exibe a seção caso alguma unidade ou diretoria dentro dela tenha correspondência
             section.style.display = sectionMatches ? 'block' : 'none';
             if (sectionMatches) anyMatchTotal = true;
         });
