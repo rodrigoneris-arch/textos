@@ -96,7 +96,30 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 .diop .stripe-title{color:var(--diop)}
 .stripe-desc{font-size:12px;color:var(--muted);max-width:720px;margin-top:6px;line-height:1.55}
 
-/* ── ATRIBUIÇÕES COMUNS GRID ─────────────────────────── */
+/* ── COMMON ATTRS BLOCK (Para atribuições da Diretoria) ───────────────── */
+.common-block{max-width:1280px;margin:20px auto 0;padding:0 48px}
+.common-card{border-radius:var(--r);border:1px solid var(--border);background:var(--white);overflow:hidden}
+.common-head{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none}
+.common-head-icon{width:28px;height:28px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.pres .common-head-icon{background:var(--pres-l);color:var(--pres)}
+.dais .common-head-icon{background:var(--dais-l);color:var(--dais)}
+.diop .common-head-icon{background:var(--diop-l);color:var(--diop)}
+.common-head-text{flex:1}
+.common-head-text strong{font-size:12px;font-weight:600;display:block}
+.common-head-text span{font-size:10px;color:var(--light)}
+.chevron{font-size:11px;color:var(--light);transition:transform .2s}
+.chevron.open{transform:rotate(180deg)}
+.common-body{display:none;padding:0 18px 16px;border-top:1px solid var(--border)}
+.common-body.open{display:block}
+.common-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px;margin-top:12px}
+.common-item{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:var(--rs);border:0.5px solid var(--border);background:var(--bg)}
+.common-num{font-size:10px;font-weight:600;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pres .common-num{background:var(--pres-l);color:var(--pres)}
+.dais .common-num{background:var(--dais-l);color:var(--dais)}
+.diop .common-num{background:var(--diop-l);color:var(--diop)}
+.common-item p{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* ── ATRIBUIÇÕES COMUNS GRID (Nível Transversal) ─────────────────────────── */
 .comuns-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;max-width:1280px;margin:32px auto 64px;padding:0 48px}
 .comuns-item{display:flex;gap:16px;align-items:flex-start;padding:24px;border-radius:var(--r);border:1px solid var(--border);background:var(--white);box-shadow:0 2px 10px rgba(0,0,0,0.02);transition:transform 0.2s}
 .comuns-item:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.05)}
@@ -127,7 +150,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 .dais .ucol-title{color:var(--dais)}
 .diop .ucol-title{color:var(--diop)}
 .attr-list{list-style:none}
-.attr-list li{font-size:11px;color:var(--muted);padding:3px 0 3px 13px;position:relative;line-height:1.4;border-bottom:0.5px solid #F0ECE6}
+.attr-list li{font-size:11px;color:var(--muted);padding:3px 0 3px 13px;position:relative;line-height:1.45;border-bottom:0.5px solid #F0ECE6}
 .attr-list li:last-child{border-bottom:none}
 .attr-list li::before{content:'';position:absolute;left:3px;top:9px;width:4px;height:4px;border-radius:50%}
 .pres .attr-list li::before{background:var(--pres-m)}
@@ -182,7 +205,7 @@ body.is-searching .no-results.show{display:block}
 
 @media(max-width:860px){
   .unit-cols{grid-template-columns:1fr}
-  .site-header,.section-stripe,.comuns-grid,.func-wrap,.org-wrap{padding-left:18px;padding-right:18px}
+  .site-header,.section-stripe,.comuns-grid,.func-wrap,.org-wrap, .common-block{padding-left:18px;padding-right:18px}
   .comuns-grid{grid-template-columns:1fr}
   .tab-nav{flex-wrap: wrap;}
   .tab-btn{padding:12px 16px;font-size:12px; flex: 1 1 auto; text-align: center;}
@@ -242,12 +265,12 @@ body.is-searching .no-results.show{display:block}
     <div class="comuns-item"><div class="comuns-num">VI</div><p>Melhorar continuamente os processos da Unidade buscando a máxima eficiência e desenvolver mecanismos, estratégias e ações.</p></div>
     <div class="comuns-item"><div class="comuns-num">VII</div><p>Propor a elaboração, alteração, complementação e regulamentação das normas e procedimentos, visando fortalecer e aprimorar a gestão da AgSUS.</p></div>
     <div class="comuns-item"><div class="comuns-num">VIII</div><p>Fomentar a inovação na gestão, buscando e adotando novas tecnologias e práticas para melhorar a eficácia operacional.</p></div>
-    <div class="comuns-item"><div class="comuns-num">IX</div><p>Promover a integração e o trabalho em equipe entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave.</p></div>
-    <div class="comuns-item"><div class="comuns-num">X</div><p>Executar estritamente as diretrizes de segurança da informação.</p></div>
+    <div class="comuns-item"><div class="comuns-num">IX</div><p>Promover a integração e o trabalho entre as Unidades da Agência para alcançar os objetivos estratégicos e resultados chave.</p></div>
+    <div class="comuns-item"><div class="comuns-num">X</div><p>Executar as diretrizes de segurança da informação.</p></div>
     <div class="comuns-item"><div class="comuns-num">XI</div><p>Contribuir para a sustentabilidade econômica e financeira da AgSUS por meio de uma gestão prudente e estratégica dos recursos.</p></div>
-    <div class="comuns-item"><div class="comuns-num">XII</div><p>Propor e promover ativamente novas parcerias de interesse da AgSUS.</p></div>
-    <div class="comuns-item"><div class="comuns-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação expressa do Presidente da AgSUS.</p></div>
-    <div class="comuns-item"><div class="comuns-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas de forma contingencial pela Presidência ou pela Diretoria Executiva.</p></div>
+    <div class="comuns-item"><div class="comuns-num">XII</div><p>Propor e promover parcerias de interesse da AgSUS.</p></div>
+    <div class="comuns-item"><div class="comuns-num">XIII</div><p>Promover o funcionamento de comitês e comissões conforme designação do Presidente da AgSUS.</p></div>
+    <div class="comuns-item"><div class="comuns-num">XIV</div><p>Exercer outras atribuições que lhes forem designadas pela Presidência ou pela Diretoria Executiva.</p></div>
   </div>
 </div>
 
@@ -267,6 +290,39 @@ body.is-searching .no-results.show{display:block}
     </div>
   </div>
 
+  <!-- Atribuições da Diretoria -->
+  <div class="common-block dir-attr-block pres">
+    <div class="common-card">
+      <div class="common-head" onclick="toggleCommon('dir-attr-pres')">
+        <div class="common-head-icon">≡</div>
+        <div class="common-head-text">
+          <strong>Atribuições da Diretoria (PRES)</strong>
+          <span>Clique para expandir · 15 atribuições em nível estratégico</span>
+        </div>
+        <div class="chevron" id="chev-dir-attr-pres">▾</div>
+      </div>
+      <div class="common-body" id="dir-attr-pres">
+        <div class="common-grid">
+          <div class="common-item"><div class="common-num">I</div><p>Dirigir a Agência e seus escritórios com foco na eficiência e na eficácia da gestão.</p></div>
+          <div class="common-item"><div class="common-num">II</div><p>Promover uma gestão colegiada e orientada pelo cumprimento do Planejamento Institucional.</p></div>
+          <div class="common-item"><div class="common-num">III</div><p>Gerir a elaboração, revisão e implementação do Estatuto, Regimento Interno e demais atos normativos da Agência.</p></div>
+          <div class="common-item"><div class="common-num">IV</div><p>Definir diretrizes e executar a política orçamentária da AgSUS.</p></div>
+          <div class="common-item"><div class="common-num">V</div><p>Dirigir os processos de monitoramento, articulação e integração da Agência.</p></div>
+          <div class="common-item"><div class="common-num">VI</div><p>Dirigir e supervisionar a prestação de serviços, programas e projetos de cooperação com os agentes de interesse da Agência.</p></div>
+          <div class="common-item"><div class="common-num">VII</div><p>Supervisionar e acompanhar a gestão dos processos relacionados ao Contrato de Gestão e Termos de Parceria.</p></div>
+          <div class="common-item"><div class="common-num">VIII</div><p>Conduzir os processos relacionados à apuração de responsabilidade, ao relacionamento com órgãos de controle e à atuação jurídica da Agência.</p></div>
+          <div class="common-item"><div class="common-num">IX</div><p>Definir diretrizes e supervisionar os processos relacionados à conformidade, controle interno e gerenciamento de riscos.</p></div>
+          <div class="common-item"><div class="common-num">X</div><p>Estabelecer diretrizes e coordenar a comunicação institucional da Agência.</p></div>
+          <div class="common-item"><div class="common-num">XI</div><p>Definir diretrizes institucionais de segurança de dados e informações.</p></div>
+          <div class="common-item"><div class="common-num">XII</div><p>Dirigir o planejamento e definir as diretrizes das ações para a implementação e o fortalecimento da gestão por processos, gestão de portfólios, inovação corporativa e gestão do conhecimento na AgSUS.</p></div>
+          <div class="common-item"><div class="common-num">XIII</div><p>Definir as diretrizes da gestão documental e da preservação do acervo institucional, conforme as normas vigentes.</p></div>
+          <div class="common-item"><div class="common-num">XIV</div><p>Coordenar o funcionamento do Núcleo de Inovação Tecnologia - NIT, e supervisionar a atuação dos laboratórios e projetos de inovação instituídos pela Agência.</p></div>
+          <div class="common-item"><div class="common-num">XV</div><p>Definir diretrizes e acompanhar a gestão da Política de Inovação da AgSUS, garantindo que ela viabilize o cumprimento das metas de inovação e desenvolvimento da Agência.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Funcionograma PRES -->
   <div class="func-wrap pres">
 
@@ -280,11 +336,14 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerenciar agenda e compromissos do Diretor-Presidente</li>
-                <li>Gerir a Política de Gestão Documental</li>
-                <li>Gerir o Plano de Segurança da Informação em parceria com o DPO</li>
-                <li>Coordenar participação institucional em eventos estratégicos</li>
-                <li>Executar responsabilidades delegadas pelo Diretor-Presidente</li>
+                <li>Planejar e gerenciar a agenda do Diretor-Presidente, assessorando-o no cumprimento dos compromissos internos e externos, no Brasil e no exterior;</li>
+                <li>Organizar e produzir os subsídios e materiais de apoio para as atividades e agendas do Diretor-Presidente;</li>
+                <li>Assessorar o Diretor-Presidente nas atividades administrativas e na coordenação dos assuntos de interesse da Presidência;</li>
+                <li>Assistir ao Diretor-Presidente sobre programas e projetos de interesse da Agência no controle dos documentos e dos processos encaminhados à Presidência;</li>
+                <li>Gerir a Política de Gestão Documental, promovendo a padronização dos documentos institucionais, a normatização dos procedimentos e a otimização dos espaços físicos e digitais para armazenamento, com vistas à preservação da memória institucional;</li>
+                <li>Gerir o Plano de Segurança da Informação da AgSUS, atuando em conjunto com o Encarregado de Dados (DPO) para garantir a conformidade às leis de proteção de dados pessoais e à Política de Segurança da Informação da Agência;</li>
+                <li>Organizar e coordenar a participação institucional e estratégica em eventos, conferências e outros espaços de interesse da AgSUS, apoiando a interlocução com os parceiros da Agência;</li>
+                <li>Executar outras responsabilidades delegadas pelo Diretor-Presidente.</li>
               </ul>
             </div>
             <div>
@@ -309,12 +368,16 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Prover apoio estratégico, tático e operacional à Direx</li>
-                <li>Implantar e supervisionar escritórios regionais e distritais</li>
-                <li>Gerir elaboração e padronização de atos normativos</li>
-                <li>Coordenar instrumentos de governança interna</li>
-                <li>Acompanhar Contrato de Gestão e Termos de Parceria</li>
-                <li>Articular parcerias estratégicas com entidades públicas e privadas</li>
+                <li>Promover o apoio estratégico, tático e operacional à Diretoria Executiva, incluindo o acompanhamento de processos internos de relevância e seus encaminhamentos;</li>
+                <li>Implantar, coordenar e supervisionar a organização e o funcionamento dos escritórios regionais e distritais da AgSUS;</li>
+                <li>Promover a articulação com as Unidades Administrativas da AgSUS para a execução dos processos de trabalho que demandem a atuação dos escritórios, em conformidade com as competências originárias de cada unidade;</li>
+                <li>Acompanhar, no âmbito da articulação institucional, o cumprimento das responsabilidades da AgSUS previstas no Contrato de Gestão e Termos de Parceria, promovendo a interlocução com as Unidades da Agência e parceiros externos;</li>
+                <li>Gerir a elaboração, revisão e padronização de atos normativos, realizando a gestão técnica de seu portfólio e assegurando a conveniência administrativa, a adequação e coerência das propostas com os normativos internos da Agência;</li>
+                <li>Gerir a estruturação organizacional e administrativa da Agência, em articulação com as instâncias superiores;</li>
+                <li>Coordenar os instrumentos de governança interna, abrangendo a estrutura organizacional e outros instrumentos de interesse da Presidência;</li>
+                <li>Acompanhar a implementação de processos e procedimentos de relevância institucional, em articulação com a Unidade de Planejamento e Gestão Estratégica (UPGE);</li>
+                <li>Articular e definir atividades estratégicas em conjunto com a Unidade de Planejamento e Gestão Estratégica e a Unidade de Finanças, Orçamento e Contabilidade (UFOC);</li>
+                <li>Atuar com entidades públicas e privadas, em articulação com a Presidência, desenvolvendo parcerias estratégicas que contribuam para o alcance dos objetivos finalísticos da Agência.</li>
               </ul>
             </div>
             <div>
@@ -339,12 +402,15 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerir o Programa de Integridade da AgSUS</li>
-                <li>Promover transparência e acesso à informação</li>
-                <li>Executar auditorias e consultorias internas independentes</li>
-                <li>Apurar vulnerabilidades e responsabilidades de pessoas físicas</li>
-                <li>Secretariar a Comissão de Ética da AgSUS</li>
-                <li>Manter ativos os canais de denúncia (plataforma Fala.BR)</li>
+                <li>Gerir a implementação do Programa de Integridade da Agência, supervisionando-o com vistas ao seu aperfeiçoamento, para a promoção das ações de integridade da AgSUS;</li>
+                <li>Promover, em articulação com a Unidade de Gestão de Pessoas (UGP) e a Comissão Interna de Prevenção de Acidentes e Assédio (CIPAA) e outras instâncias internas, orientação e treinamento sobre os temas de integridade e assédio moral;</li>
+                <li>Promover e fomentar a transparência, o acesso à informação, o controle e a participação social junto às Unidades da Agência;</li>
+                <li>Assistir às instâncias de governança da AgSUS e atuar como sua interlocutora na Agência, emitindo manifestações técnicas sobre as prestações de contas e temas correlatos, em apoio às Unidades Administrativas;</li>
+                <li>Gerir a execução de auditorias e consultorias internas, de forma independente, com a finalidade de agregar valor e aprimorar as operações da Agência;</li>
+                <li>Gerir a apuração de vulnerabilidades para a tomada de decisão da alta administração da AgSUS, com vistas à responsabilização de pessoas físicas, observado o devido processo legal e o direito à ampla defesa;</li>
+                <li>Propor mecanismos, em conjunto com outras unidades, para mitigar eventuais vulnerabilidades identificadas;</li>
+                <li>Apoiar e secretariar a Comissão de Ética da AgSUS, assegurando as condições necessárias ao seu funcionamento;</li>
+                <li>Garantir a interlocução entre o cidadão e a AgSUS, recepcionando as demandas relativas ao desempenho e à atuação da Agência, mantendo ativo os canais de denúncia da plataforma Fala.BR.</li>
               </ul>
             </div>
             <div>
@@ -369,11 +435,16 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Orientar a Direx e unidades em questões jurídicas</li>
-                <li>Examinar legalidade de contratos, compras e atos normativos</li>
-                <li>Representar juridicamente a AgSUS em juízo</li>
-                <li>Monitorar passivo jurídico e prevenir litígios</li>
-                <li>Emitir pareceres e manifestações jurídicas diversas</li>
+                <li>Assistir à Diretoria Executiva da AgSUS e orientar as demais Unidades Administrativas da Agência, dirimindo dúvidas, propondo soluções jurídicas quanto à aplicação das normas e manifestando-se sobre os assuntos de natureza jurídica, assegurando a observância do ordenamento jurídico;</li>
+                <li>Gerir as atividades de consultoria jurídica e representação processual, incluindo elaboração e atualização dos instrumentos de mandato, como procurações e delegações de poderes;</li>
+                <li>Apoiar a SEAR na coordenação da elaboração de atos normativos, emitindo manifestação jurídica acerca das matérias de interesse da Agência;</li>
+                <li>Colaborar com todas as áreas da AgSUS, promovendo uma cultura de conformidade jurídica e ética, auxiliando para que as ações da entidade estejam sempre alinhadas com a legislação vigente e os princípios de boa governança;</li>
+                <li>Examinar a legalidade dos procedimentos dispostos no Regulamento de Compras e Contratações da AgSUS, inclusive os recursos, rescisões e distratos, bem como orientar sobre a aplicação de sanções, penalidades, ressalvadas as situações cuja padronização torne desnecessária a manifestação específica;</li>
+                <li>Examinar questões jurídicas referentes a acordos, cooperações e parcerias nacionais e internacionais em que a AgSUS seja parte ou interveniente;</li>
+                <li>Elaborar, com base em subsídios fornecidos pelas Unidades Administrativas, as informações a serem prestadas pela AgSUS a órgãos externos;</li>
+                <li>Emitir manifestação jurídica prévia em processos disciplinares de empregados que possam resultar na aplicação de sanção de dispensa por justa causa;</li>
+                <li>Representar juridicamente a AgSUS em juízo ou fora dele, perante quaisquer instâncias judiciais ou administrativas, acompanhando todos os trâmites de processos judiciais e extrajudiciais, recebendo intimações e notificações a eles inerentes, assim como monitorando o passivo jurídico e adotando medidas para prevenção de litígios;</li>
+                <li>Elaborar pareceres jurídicos sobre questões diversas relacionadas às atividades da AgSUS.</li>
               </ul>
             </div>
             <div>
@@ -399,11 +470,15 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerir a Política e o Plano de Comunicação da AgSUS</li>
-                <li>Gerir relacionamento com a imprensa e ações de divulgação</li>
-                <li>Coordenar atuação em mídias e redes sociais</li>
-                <li>Criar e gerir a identidade visual e logomarca institucional</li>
-                <li>Monitorar matérias de interesse nos meios de comunicação</li>
+                <li>Gerir a Política e o Plano de Comunicação da AgSUS;</li>
+                <li>Gerir o processo de comunicação interna da Agência, estabelecendo e acompanhando os instrumentos e canais de integração da informação, a partir da atuação conjunta com as Unidades;</li>
+                <li>Gerir o relacionamento com a imprensa, bem como as ações de divulgação;</li>
+                <li>Identificar e monitorar as matérias de interesse da AgSUS nos meios de comunicação, adotando medidas de comunicação institucional para mitigar impactos negativos e zelar pela imagem da Agência;</li>
+                <li>Gerir as ações para acompanhamento, cobertura e divulgação das atividades de interesse da AgSUS;</li>
+                <li>Coordenar a atuação da Agência nos meios de comunicação digital, internos e externos, mídias e redes sociais, mantendo-os atualizados;</li>
+                <li>Gerenciar e supervisionar a produção de conteúdo noticioso para os canais de comunicação institucional da AgSUS, assegurando a coerência da mensagem e o alinhamento com a estratégia de comunicação da Agência;</li>
+                <li>Realizar, sob demanda, a diagramação de materiais institucionais produzidos pelas Diretorias e Unidades da AgSUS;</li>
+                <li>Criar a logomarca e a identidade visual da AgSUS e gerir sua aplicação institucional.</li>
               </ul>
             </div>
             <div>
@@ -428,11 +503,13 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerir execução orçamentária, financeira e contábil</li>
-                <li>Gerir ativos financeiros e otimizar fluxo de caixa</li>
-                <li>Elaborar prestação de contas dos contratos de gestão</li>
-                <li>Garantir conformidade fiscal, tributária e contábil</li>
-                <li>Orientar demandas orçamentárias das unidades</li>
+                <li>Gerir a implementação da Política de Gestão Financeira, Orçamentária e Contábil e o Plano de Investimentos e Aplicações da Agência;</li>
+                <li>Gerenciar, executar e monitorar as atividades inerentes ao planejamento e à execução orçamentária, financeira e contábil da AgSUS;</li>
+                <li>Promover o alinhamento do orçamento com a estratégia da AgSUS e garantir a eficiência dos processos relativos ao planejamento, execução e controle orçamentário;</li>
+                <li>Gerir os ativos financeiros da AgSUS otimizando o fluxo de caixa;</li>
+                <li>Prover a conformidade legal, fiscal e tributária dos atos e fatos contábeis e a mitigação dos riscos de gestão, fornecendo informações econômico-financeiras em parceria com as demais Unidades da Agência;</li>
+                <li>Coordenar e elaborar a prestação de contas da execução financeira, orçamentária e contábil, de acordo com a legislação aplicável;</li>
+                <li>Padronizar os instrumentos, fornecer orientações técnicas e opinar sobre as demandas de orçamento dos projetos e demais iniciativas da Agência.</li>
               </ul>
             </div>
             <div>
@@ -460,12 +537,13 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerir o Planejamento Institucional</li>
-                <li>Monitorar e avaliar metas do plano estratégico</li>
-                <li>Gerir portfólio institucional de programas e projetos</li>
-                <li>Gerir Política de Qualidade e Gestão da Qualidade</li>
-                <li>Gerir a Política de Gestão de Riscos da AgSUS</li>
-                <li>Elaborar relatórios de gestão e de contratos de gestão</li>
+                <li>Gerir o Planejamento institucional;</li>
+                <li>Coordenar tecnicamente o monitoramento do cumprimento das responsabilidades previstas nos contratos de gestão e outros instrumentos de parceria firmados pela Agência, consolidando informações e relatórios de desempenho;</li>
+                <li>Gerir, de forma integrada, o monitoramento e a avaliação das metas previstas no plano estratégico e plano de gestão anual da Agência;</li>
+                <li>Coordenar e elaborar os relatórios de atividades, de execução de contratos de gestão e de outros instrumentos de parcerias, o relatório de gestão anual e outros relatórios institucionais definidos pela Diretoria Executiva;</li>
+                <li>Gerir o portfólio institucional de programas e projetos, com foco no alinhamento estratégico e relevância para a saúde pública brasileira, em articulação com as unidades responsáveis pela abertura, planejamento, execução, monitoramento e encerramento das iniciativas;</li>
+                <li>Gerir a Política de Qualidade Institucional e o Sistema de Gestão da Qualidade, promovendo a gestão por processos por meio da padronização e conformidade, visando a melhoria contínua e o incremento da eficiência operacional;</li>
+                <li>Gerir a Política de Gestão de Riscos da AgSUS, monitorando as áreas quanto à sua execução na gestão dos programas, projetos e processos de trabalho da Agência.</li>
               </ul>
             </div>
             <div>
@@ -523,6 +601,31 @@ body.is-searching .no-results.show{display:block}
     </div>
   </div>
 
+  <!-- Atribuições da Diretoria -->
+  <div class="common-block dir-attr-block dais">
+    <div class="common-card">
+      <div class="common-head" onclick="toggleCommon('dir-attr-dais')">
+        <div class="common-head-icon">≡</div>
+        <div class="common-head-text">
+          <strong>Atribuições da Diretoria (DAIS)</strong>
+          <span>Clique para expandir · 7 atribuições em nível estratégico</span>
+        </div>
+        <div class="chevron" id="chev-dir-attr-dais">▾</div>
+      </div>
+      <div class="common-body" id="dir-attr-dais">
+        <div class="common-grid">
+          <div class="common-item"><div class="common-num">I</div><p>Promover a articulação e a transversalidade das pautas técnicas institucionais de saúde entre a DAIS, as demais Diretorias da Agência e os órgãos e entidades externas, garantindo a integração e a sinergia das ações.</p></div>
+          <div class="common-item"><div class="common-num">II</div><p>Gerir as ações voltadas ao planejamento, modelagem, gestão, monitoramento e avaliação dos serviços de saúde contratados junto à AgSUS, assegurando sua efetividade, com o uso de inteligência de dados.</p></div>
+          <div class="common-item"><div class="common-num">III</div><p>Promover o desenvolvimento, a qualificação e a capacitação dos profissionais envolvidos nos programas, projetos e serviços de saúde executados pela Agência, além de estabelecer diretrizes internas voltadas à formação desses profissionais e dos gestores do SUS, em articulação com o Ministério da Saúde.</p></div>
+          <div class="common-item"><div class="common-num">IV</div><p>Promover a integração entre ensino e serviço mediante o fomento e a articulação de atividades de ensino, pesquisa e extensão.</p></div>
+          <div class="common-item"><div class="common-num">V</div><p>Estimular e produzir novos conhecimentos e práticas direcionados às necessidades do SUS a partir de projetos tecnológicos e de inovação.</p></div>
+          <div class="common-item"><div class="common-num">VI</div><p>Estabelecer as diretrizes para o funcionamento do Núcleo de Inovação Tecnológica NIT, e supervisionar atuação dos laboratórios e projetos de inovação instituídos pela Agência.</p></div>
+          <div class="common-item"><div class="common-num">VII</div><p>Implementar e desenvolver a Política de Inovação da AgSUS, garantindo que ela suporte as metas de inovação e desenvolvimento da Agência.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="func-wrap dais">
 
     <!-- USI -->
@@ -535,12 +638,12 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Implementar ações e serviços de saúde indígena nos territórios</li>
-                <li>Garantir respeito às especificidades culturais e à PNSPI</li>
-                <li>Apoiar processos formativos com foco em interculturalidade</li>
-                <li>Monitorar e avaliar continuamente a execução das ações</li>
-                <li>Articular com SESAI, DSEI e Controle Social Indígena</li>
-                <li>Planejar o atendimento aos gestores e representações indígenas</li>
+                <li>Participar ativamente nas fases de prospecção, planejamento e execução de ações e serviços de saúde indígena, fornecendo subsídios essenciais para o desenvolvimento de propostas alinhadas às necessidades e especificidades dos povos indígenas;</li>
+                <li>Gerenciar, no âmbito da Agência, a implementação das ações e serviços de saúde indígena, garantindo que sejam atendidas as especificidades culturais e as diretrizes estabelecidas pela Política Nacional de Saúde dos Povos Indígenas;</li>
+                <li>Apoiar e acompanhar as demais Unidades da Agência na execução de projetos e processos de trabalho voltados para a saúde indígena, assegurando a integração da interculturalidade nas práticas de gestão e de cuidado;</li>
+                <li>Apoiar processos formativos internos no âmbito da saúde indígena, visando à qualificação contínua das ações e serviços e a promoção da interculturalidade;</li>
+                <li>Monitorar, avaliar e aperfeiçoar continuamente a execução das ações e serviços da Saúde Indígena, em todas as fases do processo, em conformidade com os objetivos contratuais e regulatórios;</li>
+                <li>Planejar e organizar o atendimento aos gestores, trabalhadores, Controle Social e representações indígenas envolvidas nas ações e serviços de saúde indígena executados pela Agência.</li>
               </ul>
             </div>
             <div>
@@ -569,11 +672,11 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerir implementação de ações conforme contratos firmados</li>
-                <li>Desenvolver modelos inovadores para a APS</li>
-                <li>Monitorar desempenho dos profissionais da AgSUS</li>
-                <li>Coordenar provimento, mobilidade e permanência profissional</li>
-                <li>Acompanhar ações em emergências sanitárias</li>
+                <li>Participar ativamente, no âmbito da Agência, nas fases de prospecção, planejamento e contratação de novas ações e serviços de atenção primária à saúde e em situações de emergências sanitárias, fornecendo subsídios para a elaboração de propostas;</li>
+                <li>Gerir a implementação de ações e serviços de saúde de acordo com os contratos e parcerias firmadas, em consonância com os objetivos e diretrizes da Política Nacional da Atenção Básica (PNAB), incluindo o desenvolvimento e gestão de modelos inovadores para a APS e emergências sanitárias;</li>
+                <li>Acompanhar, avaliar e aprimorar continuamente a execução das ações e serviços de atenção primária à saúde e emergências sanitárias executados pela AgSUS em parceria com as Unidades Administrativas da Agência, em consonância com os parceiros, objetivos contratuais e normativos;</li>
+                <li>Gerir o monitoramento e avaliação de desempenho dos profissionais da AgSUS, coordenando o provimento, a mobilidade e a permanência desses profissionais;</li>
+                <li>Gerenciar o atendimento aos gestores e profissionais envolvidos nas ações e serviços de atenção primária à saúde e emergências sanitárias executados pela Agência.</li>
               </ul>
             </div>
             <div>
@@ -600,11 +703,14 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Participar do planejamento e contratação de serviços especializados</li>
-                <li>Monitorar e avaliar execução das ações especializadas</li>
-                <li>Padronizar indicadores de qualidade e segurança do paciente</li>
-                <li>Apoiar Núcleos de Gestão do Cuidado e de Regulação</li>
-                <li>Monitorar indicadores de Segurança do Paciente nos serviços móveis</li>
+                <li>Participar ativamente nas fases de prospecção, planejamento e contratação de novas ações e serviços de atenção especializada à saúde, fornecendo subsídios e dados essenciais para a elaboração de propostas;</li>
+                <li>Gerir, em articulação com o Ministério da Saúde, a implementação das ações e serviços de atenção especializada à saúde de acordo com os contratos estabelecidos;</li>
+                <li>Monitorar, avaliar e aperfeiçoar continuamente a execução das ações e serviços de atenção especializada realizados pela AgSUS, em parceria com as Unidades Administrativas da Agência e em consonância com os aos objetivos contratuais, regulatórios e aos regramentos técnico-assistenciais;</li>
+                <li>Gerir o monitoramento e avaliação de desempenho dos profissionais da AgSUS que atuam nos serviços de atenção especializada à saúde;</li>
+                <li>Planejar e organizar o atendimento aos gestores em parceria com o Ministério da Saúde, profissionais, prestadores de serviços e usuários beneficiados pelas ações e serviços de atenção especializada executadas pela Agência;</li>
+                <li>Apoiar a implementação de programas e iniciativas voltadas à gestão assistencial da atenção especializada para a qualificação dos Núcleos de Gestão do Cuidado e de Regulação;</li>
+                <li>Padronizar e implementar indicadores de avaliação da qualidade nos serviços especializados contratados pela AgSUS, em consonância com os normativos do Sistema Único de Saúde e as boas práticas instituídas em regulamentos estabelecidos;</li>
+                <li>Implementar e monitorar indicadores de Segurança do Paciente nos serviços móveis especializados.</li>
               </ul>
             </div>
             <div>
@@ -631,10 +737,10 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Monitorar programas e projetos de serviços de saúde</li>
-                <li>Produzir indicadores para tomada de decisão estratégica</li>
-                <li>Conduzir análise e avaliação contínua dos serviços executados</li>
-                <li>Desenvolver produtos de inteligência de dados (data driven)</li>
+                <li>Monitorar, no nível tático e operacional, programas e projetos de serviços de saúde por meio da estruturação de instrumentos para coleta, organização, processamento e análise de dados e a respectiva produção de indicadores para subsidiar a tomada de decisão;</li>
+                <li>Gerenciar o fornecimento das informações sobre contratos de gestão, programas e projetos, para compor relatórios estratégicos e outros relatórios institucionais definidos pela Diretoria Executiva;</li>
+                <li>Conduzir, com base nos indicadores monitorados, análise e avaliação dos serviços de saúde executados, visando identificar oportunidades de melhoria nos programas e projetos;</li>
+                <li>Desenvolver produtos de inteligência de dados que sejam estratégicos para subsidiar a tomada de decisão, ampliar o portfólio da Agência e promover um ambiente orientado por dados (data driven) no âmbito da Agência.</li>
               </ul>
             </div>
             <div>
@@ -659,11 +765,16 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Identificar necessidades e desafios do SUS para novos projetos</li>
-                <li>Prospectar, iniciar e planejar projetos na DAIS</li>
-                <li>Gerir parcerias com universidades e instituições de pesquisa</li>
-                <li>Promover cultura de inovação (hackathons, laboratórios de ideias)</li>
-                <li>Medir resultados e impactos dos projetos implementados</li>
+                <li>Identificar as necessidades e os desafios do SUS, visando desenvolver novos projetos e iniciativas;</li>
+                <li>Demandar, organizar e coordenar a estruturação de novos projetos e iniciativas de inovação para subsidiar a formulação de propostas de ações e serviços de saúde;</li>
+                <li>Prospectar, iniciar e planejar projetos no âmbito da DAIS, assegurando o alinhamento com o Planejamento Institucional e com as prioridades do SUS;</li>
+                <li>Planejar e monitorar a gestão e execução de portfólios e projetos junto às Unidades da DAIS, assegurando o cumprimento dos objetivos dentro dos prazos, orçamentos e padrões de qualidade estabelecidos;</li>
+                <li>Propor e gerir parcerias com instituições de pesquisa, universidades e outros setores relevantes para estimular o desenvolvimento de soluções para o SUS;</li>
+                <li>Identificar, testar e implementar soluções inovadoras em gestão, atenção, formação e tecnologia para a DAIS;</li>
+                <li>Promover a cultura de inovação na Agência por meio de trilhas de capacitação, hackathons, desafios internos, laboratórios de ideias e demais estratégias pertinentes para a Agência;</li>
+                <li>Avaliar e incubar propostas internas com potencial de ganho em eficiência, escalabilidade ou impacto social;</li>
+                <li>Medir os resultados e impactos dos projetos de inovação e parcerias implementados;</li>
+                <li>Criar e gerir repositórios de boas práticas replicáveis na Agência e no SUS.</li>
               </ul>
             </div>
             <div>
@@ -689,11 +800,12 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Propor e gerir ações educativas e de qualificação profissional</li>
-                <li>Gerir parcerias com instituições de ensino e pesquisa</li>
-                <li>Apoiar diretrizes de formação de especialistas para o SUS</li>
-                <li>Fomentar pesquisas aplicadas ao SUS</li>
-                <li>Promover divulgação do conhecimento científico</li>
+                <li>Propor e gerir ações educativas, formativas e de qualificação para os profissionais participantes dos programas, projetos e serviços de saúde executados pela Agência;</li>
+                <li>Gerenciar a divulgação de conhecimento por meio de publicações e participação em eventos técnico-científicos relacionados à produção da Agência;</li>
+                <li>Apoiar a implementação de diretrizes nacionais de formação de especialistas para o SUS;</li>
+                <li>Gerir parcerias com instituições de ensino e pesquisa, no âmbito da AgSUS, para o desenvolvimento da educação e da pesquisa aplicada em saúde;</li>
+                <li>Fomentar intercâmbio de conhecimentos e experiências, de educação em saúde, por meio de parcerias com instituições nacionais e internacionais;</li>
+                <li>Fomentar a realização de pesquisas aplicadas ao SUS, com foco na melhoria dos serviços de saúde.</li>
               </ul>
             </div>
             <div>
@@ -719,10 +831,10 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Identificar necessidades e fomentar technologies em saúde</li>
-                <li>Estruturar projetos de soluções tecnológicas em saúde</li>
-                <li>Propor e gerir parcerias e cooperações técnicas em TI saúde</li>
-                <li>Apoiar propriedade intelectual e transferência de tecnologia</li>
+                <li>Identificar as necessidades observadas nos programas e projetos de serviços de saúde desenvolvidos pela Agência, de modo a fomentar a formulação, proposição e implementação de tecnologias que apoiem na melhoria de processos de gestão e cuidado em saúde;</li>
+                <li>Estruturar projetos nas áreas de desenvolvimento de soluções tecnológicas em saúde;</li>
+                <li>Propor e gerenciar parcerias e cooperações técnicas relacionadas às tecnologias em saúde;</li>
+                <li>Apoiar as iniciativas que envolvam propriedade intelectual e transferência de tecnologia relativos a bens e produtos ligados à saúde digital.</li>
               </ul>
             </div>
             <div>
@@ -778,6 +890,30 @@ body.is-searching .no-results.show{display:block}
     </div>
   </div>
 
+  <!-- Atribuições da Diretoria -->
+  <div class="common-block dir-attr-block diop">
+    <div class="common-card">
+      <div class="common-head" onclick="toggleCommon('dir-attr-diop')">
+        <div class="common-head-icon">≡</div>
+        <div class="common-head-text">
+          <strong>Atribuições da Diretoria (DIOP)</strong>
+          <span>Clique para expandir · 6 atribuições em nível estratégico</span>
+        </div>
+        <div class="chevron" id="chev-dir-attr-diop">▾</div>
+      </div>
+      <div class="common-body" id="dir-attr-diop">
+        <div class="common-grid">
+          <div class="common-item"><div class="common-num">I</div><p>Estabelecer diretrizes, planejar e supervisionar a gestão de pessoal, incluindo recrutamento, folha de pagamento, alocação e obrigações fiscais.</p></div>
+          <div class="common-item"><div class="common-num">II</div><p>Estabelecer diretrizes para a gestão de suprimentos, logística, transporte e distribuição de bens e materiais para a operação da Agência.</p></div>
+          <div class="common-item"><div class="common-num">III</div><p>Estabelecer diretrizes para a gestão da aquisição, gestão de estoques e a manutenção corretiva e preventiva da infraestrutura física, tecnológica, instalações e equipamentos da Agência, garantindo ambientes seguros, adequados e funcionais.</p></div>
+          <div class="common-item"><div class="common-num">IV</div><p>Estabelecer diretrizes e acompanhar a gestão dos contratos administrativos, assegurando conformidade legal, eficiência e otimização de recursos.</p></div>
+          <div class="common-item"><div class="common-num">V</div><p>Administrar a infraestrutura tecnológica da Agência, promovendo a eficiência operacional, integração de sistemas, segurança da informação e privacidade dos dados.</p></div>
+          <div class="common-item"><div class="common-num">VI</div><p>Promover a sustentabilidade nas operações, com foco em eficiência energética, gestão de resíduos e redução de impacto ambiental.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="func-wrap diop">
 
     <!-- UGP -->
@@ -790,12 +926,14 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerir a Política de Gestão de Pessoas</li>
-                <li>Gerir folhas de pagamento e obrigações trabalhistas</li>
-                <li>Desenvolver capital humano e promover capacitação contínua</li>
-                <li>Gerir recrutamento, seleção e contratação</li>
-                <li>Negociar e zelar por Acordos Coletivos de Trabalho</li>
-                <li>Promover saúde e segurança ocupacional dos trabalhadores</li>
+                <li>Gerir a Política de Gestão de Pessoas, implementando e avaliando seus instrumentos e apoiando as demais unidades na sua aplicação;</li>
+                <li>Gerir as folhas de pagamentos de pessoal, referentes a todas as modalidades de vínculos administrativos, com controle e garantia do cumprimento das obrigações trabalhistas e previdenciárias;</li>
+                <li>Desenvolver o capital humano da Agência, ampliando suas capacidades, promovendo um ambiente organizacional saudável e fortalecendo a cultura de inovação e experimentação em Gestão de Pessoas, com foco na busca contínua por soluções aos desafios institucionais;</li>
+                <li>Gerenciar a oferta e a contratação de cursos e atividades correlatas que promovam formação continuada dos empregados da Agência;</li>
+                <li>Gerir os processos de recrutamento e seleção, contratação, acompanhamento de frequência, férias, afastamentos e dispensas de pessoal, fortalecendo os canais de atendimento aos empregados da Agência;</li>
+                <li>Gerenciar a atualização da base de dados de pessoal da Agência, desenvolvendo ações de inteligência e ciência de dados voltados à gestão de pessoas;</li>
+                <li>Participar da negociação e formalização de Acordos Coletivos de Trabalho e zelar pelo seu cumprimento e atualização;</li>
+                <li>Promover a saúde dos trabalhadores, por meio da gestão integrada da saúde e dos riscos ocupacionais, assegurando condições de trabalho seguras, o cumprimento das obrigações legais e a prevenção de doenças e agravos relacionados ao trabalho.</li>
               </ul>
             </div>
             <div>
@@ -825,12 +963,20 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Garantir adequação técnica, jurídica e econômica das compras</li>
-                <li>Normatizar e padronizar procedimentos de compras</li>
-                <li>Desenvolver planejamento anual de contratações</li>
-                <li>Realizar pesquisas de preços e análises de vantajosidade</li>
-                <li>Monitorar execução, prazos e vigência de contratos</li>
-                <li>Orientar e capacitar fiscais e gestores de contrato</li>
+                <li>Garantir a adequação técnica, jurídica e econômica dos processos de aquisição e contratação de bens, insumos, serviços e obras, assegurando sua conformidade com os normativos internos e a aderência aos objetivos estratégicos e operacionais da Agência;</li>
+                <li>Dialogar com as áreas técnicas demandantes para a construção de soluções que atendam às necessidades institucionais com agilidade, qualidade e racionalidade de custos, respeitando as especificidades logísticas, territoriais, culturais e epidemiológicas dos contextos de atuação da Agência;</li>
+                <li>Normatizar e padronizar procedimentos internos de compras e contratações, bem como desenvolver ferramentas de planejamento e controle que promovam maior eficiência nos fluxos operacionais;</li>
+                <li>Prover suporte técnico e orientação continuada aos funcionários envolvidos nas etapas de planejamento da contratação, instrução processual, fiscalização e gestão contratual;</li>
+                <li>Coordenar os processos de aquisição de bens, insumos e serviços comuns e especializados, por meio das diversas modalidades previstas na legislação e nos normativos internos da Agência;</li>
+                <li>Atuar na estruturação e gestão de processos de credenciamento e cadastro de fornecedores;</li>
+                <li>Desenvolver e monitorar o planejamento anual de contratações, em articulação com as áreas técnicas e administrativas;</li>
+                <li>Realizar pesquisas de preços, análises de vantajosidade econômica e estudos de viabilidade de contratações;</li>
+                <li>Promover a padronização documental e a uniformização de critérios de análise e decisão de recursos nos processos de compras e contratações;</li>
+                <li>Garantir a adequada instrução processual e a conformidade legal dos expedientes administrativos de aquisição e contratação;</li>
+                <li>Monitorar a execução dos contratos firmados pela AgSUS, abrangendo suas alterações, renovações, encerramentos, bem como o cumprimento de prazos, obrigações contratuais, e eventuais penalidades aplicáveis;</li>
+                <li>Subsidiar a Diretoria Executiva com informações estratégicas sobre o desempenho contratual e oportunidades de melhoria dos processos;</li>
+                <li>Apoiar a capacitação e orientação técnica dos fiscais e gestores de contrato no exercício de suas atribuições;</li>
+                <li>Atuar de forma integrada com as demais Unidades da Agência, promovendo a eficiência sistêmica na gestão dos recursos operacionais da Instituição.</li>
               </ul>
             </div>
             <div>
@@ -858,11 +1004,14 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerenciar viagens, diárias, passagens e hospedagens</li>
-                <li>Gerir fornecimento de bens e serviços institucionais</li>
-                <li>Administrar patrimônio e garantir rastreabilidade dos bens</li>
-                <li>Supervisionar contratos de serviços terceirizados</li>
-                <li>Assegurar segurança física e ambiental da AgSUS</li>
+                <li>Gerenciar demandas de passagens, diárias, hospedagens, locação de veículos e serviços correlatos, assegurando a logística de viagens e o transporte de pessoas e bens, com foco em eficiência, economicidade e controle, contribuindo diretamente para a execução das ações institucionais por meio da gestão e fiscalização dos serviços logísticos;</li>
+                <li>Gerir de forma integrada o fornecimento de bens e serviços, e a respectiva execução contratual, essenciais ao pleno funcionamento da Agência e de seus programas e projetos, assegurando a disponibilidade contínua de suprimentos por meio de processos eficientes de planejamento, armazenamento e distribuição, com foco na otimização de custos, sustentabilidade e apoio às metas institucionais;</li>
+                <li>Administrar de forma eficaz o patrimônio da Agência, assegurando o controle, a rastreabilidade e a integridade dos bens, contribuindo para a confiabilidade do balanço patrimonial;</li>
+                <li>Monitorar a distribuição dos bens permanentes não incorporados ao patrimônio, garantindo a transparência e o alinhamento às diretrizes institucionais;</li>
+                <li>Supervisionar contratos de serviços terceirizados relacionados à infraestrutura;</li>
+                <li>Assegurar a segurança física e ambiental da AgSUS, incluindo seus escritórios;</li>
+                <li>Gerenciar a padronização e a otimização das práticas de utilização de bens e serviços na Agência;</li>
+                <li>Implementar e manter sistemas inteligentes de informação, em articulação técnica com a UTIC, para o acompanhamento da disponibilidade de bens, suprimentos e serviços da Agência, promovendo a racionalização do consumo, a otimização dos recursos e o suporte ágil e embasado à tomada de decisão estratégica.</li>
               </ul>
             </div>
             <div>
@@ -888,10 +1037,12 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Gerir manutenção preventiva e corretiva dos prédios e instalações</li>
-                <li>Coordenar e acompanhar projetos de obras e reformas</li>
-                <li>Assegurar normas de segurança, acessibilidade e meio ambiente</li>
-                <li>Elaborar e revisar projetos arquitetônicos e de engenharia</li>
+                <li>Gerir a manutenção preventiva e corretiva dos prédios, instalações e equipamentos sob responsabilidade da AgSUS;</li>
+                <li>Coordenar e acompanhar projetos de obras e reformas, assegurando a conformidade com normas técnicas e os limites de recursos estabelecidos à AgSUS;</li>
+                <li>Assegurar o cumprimento das normas de segurança, acessibilidade, saúde ocupacional, meio ambiente e demais exigências legais aplicáveis à infraestrutura;</li>
+                <li>Executar outras atividades correlatas à matéria de infraestrutura, projetos arquitetônicos e de engenharia da AgSUS e de seus contratos firmados;</li>
+                <li>Elaborar e revisar projetos arquitetônicos, complementares e de engenharia vinculados à AgSUS e seus contratos;</li>
+                <li>Executar outras atividades correlatas à infraestrutura institucional.</li>
               </ul>
             </div>
             <div>
@@ -915,12 +1066,15 @@ body.is-searching .no-results.show{display:block}
             <div>
               <div class="ucol-title">Atribuições</div>
               <ul class="attr-list">
-                <li>Elaborar e implementar o PDTIC da Agência</li>
-                <li>Garantir segurança da informação e proteção de dados</li>
-                <li>Manter e evoluir a infraestrutura tecnológica</li>
-                <li>Gerir portfólio de projetos e serviços de TIC</li>
-                <li>Promover integração com plataformas do Ministério da Saúde</li>
-                <li>Oferecer suporte técnico e capacitação digital às áreas</li>
+                <li>Elaborar, implementar, supervisionar e, quando necessário, propor revisão do Plano Diretor de Tecnologia da Informação e Comunicação da Agência (PDTIC);</li>
+                <li>Garantir a segurança da informação e comunicação, promovendo a mitigação de riscos, a conformidade com marcos legais e a proteção de ativos digitais estratégicos;</li>
+                <li>Gerir o portfólio de projetos e serviços de TIC, promovendo a integração das soluções, sua aderência às necessidades institucionais e seu alinhamento com a estratégia corporativa;</li>
+                <li>Manter, monitorar e evoluir a infraestrutura tecnológica da Agência, incluindo redes de computadores, sistemas de telecomunicações, servidores, serviços em nuvem, armazenamento de dados e equipamentos de conectividade;</li>
+                <li>Organizar, manter e testar rotinas de cópia de segurança (backup) das bases de dados e sistemas corporativos;</li>
+                <li>Sustentar a infraestrutura de TIC necessária ao desenvolvimento de painéis de dados, indicadores e soluções de Business Intelligence (BI);</li>
+                <li>Apoiar tecnicamente a formulação, a revisão e implementação de normas, políticas, diretrizes e ferramentas de TIC, especialmente aquelas voltadas à segurança da informação, privacidade e continuidade dos serviços;</li>
+                <li>Manter relacionamento proativo com as áreas usuárias, oferecendo suporte técnico, capacitação digital, mediação de demandas e prospecção de novas tecnologias que impulsionam a transformação digital da Agência;</li>
+                <li>Promover a interoperabilidade de sistemas e a integração com plataformas externas, especialmente as do Ministério da Saúde e outros órgãos parceiros.</li>
               </ul>
             </div>
             <div>
@@ -974,6 +1128,13 @@ function showTab(name){
   document.querySelector('.tab-btn.'+name).classList.add('active');
 }
 
+function toggleCommon(id){
+  var body=document.getElementById(id);
+  var chev=document.getElementById('chev-'+id);
+  var open=body.classList.toggle('open');
+  chev.classList.toggle('open',open);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('searchInput');
     const noResults = document.getElementById('noResults');
@@ -987,6 +1148,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.tab-nav').style.display = '';
             document.querySelectorAll('.org-wrap').forEach(el => el.style.display = '');
             document.querySelectorAll('.unit-card, .coord').forEach(el => el.style.display = '');
+            document.querySelectorAll('.dir-attr-block').forEach(el => el.style.display = ''); // Restaura atributos da diretoria
             noResults.classList.remove('show');
             
             // Restaura a aba que estava ativa
@@ -1005,6 +1167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.tab-nav').style.display = 'none'; // Oculta as abas
         document.getElementById('tab-comuns').style.display = 'none'; // Oculta seção Comuns
         document.querySelectorAll('.org-wrap').forEach(el => el.style.display = 'none'); // Oculta gráficos
+        document.querySelectorAll('.dir-attr-block').forEach(el => el.style.display = 'none'); // Oculta atributos da diretoria na busca
         
         let anyMatchTotal = false;
         
